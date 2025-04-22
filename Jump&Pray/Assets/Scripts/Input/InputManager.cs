@@ -1,12 +1,11 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEngine.Timeline.DirectorControlPlayable;
 
 public class InputManager : MonoBehaviour
 {
-    [SerializeField] private Player player;
-    [SerializeField] private JumpBehaviour jumpBehaviour;
-    [SerializeField] private MovementBehaviour movementBehaviour;
+    [SerializeField] private CharacterController characterController;
 
     private PlayerInput playerInput;
 
@@ -31,8 +30,8 @@ public class InputManager : MonoBehaviour
             playerInput.currentActionMap.FindAction("Move").started += Move;
             playerInput.currentActionMap.FindAction("Move").performed += Move;
             playerInput.currentActionMap.FindAction("Move").canceled += Move;
-            playerInput.currentActionMap.FindAction("Jump").started += jumpBehaviour.Jump;
-            playerInput.currentActionMap.FindAction("Jump").performed += jumpBehaviour.Jump;
+            playerInput.currentActionMap.FindAction("Jump").started += Jump;
+            playerInput.currentActionMap.FindAction("Jump").performed += Jump;
         }
     }
 
@@ -52,21 +51,27 @@ public class InputManager : MonoBehaviour
 
         if (callbackContext.started)
         {
-            movementBehaviour.SetInputDirection(callbackContext.ReadValue<Vector2>());
-            print("Input started");
+            characterController.SetDirection(callbackContext.ReadValue<Vector2>());
         }
 
         if (callbackContext.performed)
         {
-            movementBehaviour.SetInputDirection(callbackContext.ReadValue<Vector2>());
-            print("Input performed");
+            characterController.SetDirection(callbackContext.ReadValue<Vector2>());
         }
 
         if (callbackContext.canceled)
         {
-            movementBehaviour.SetInputDirection(Vector2.zero);
-            print("Input canceled");
+            characterController.SetDirection(Vector2.zero);
         }
 
+    }
+
+    public void Jump(InputAction.CallbackContext callbackContext)
+    {
+        if (callbackContext.started)
+        {
+            characterController.Jump();
+            print("Jump started");
+        }
     }
 }
