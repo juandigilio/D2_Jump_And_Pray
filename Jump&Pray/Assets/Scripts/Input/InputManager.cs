@@ -30,8 +30,10 @@ public class InputManager : MonoBehaviour
             playerInput.currentActionMap.FindAction("Move").started += Move;
             playerInput.currentActionMap.FindAction("Move").performed += Move;
             playerInput.currentActionMap.FindAction("Move").canceled += Move;
+
             playerInput.currentActionMap.FindAction("Jump").started += Jump;
             playerInput.currentActionMap.FindAction("Jump").performed += Jump;
+            playerInput.currentActionMap.FindAction("Jump").canceled += Jump;
         }
     }
 
@@ -70,8 +72,17 @@ public class InputManager : MonoBehaviour
     {
         if (callbackContext.started)
         {
-            characterController.Jump();
-            print("Jump started");
+            characterController.LoadJumpCharge ();
+        }
+
+        if (callbackContext.performed)
+        {
+            //characterController.Jump();
+        }
+
+        if (callbackContext.canceled)
+        {
+            characterController.ReleaseJumpCharge();
         }
     }
 }

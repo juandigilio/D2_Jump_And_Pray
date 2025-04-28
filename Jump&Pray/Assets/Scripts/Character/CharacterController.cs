@@ -28,9 +28,14 @@ public class CharacterController : MonoBehaviour
         
     }
 
-    public void Jump()
+    public void LoadJumpCharge()
     {
-        jumpBehaviour.Jump();
+        jumpBehaviour.StartCharge();
+    }
+
+    public void ReleaseJumpCharge()
+    {
+        jumpBehaviour.StopCharge();
     }
 
     public void SetDirection(Vector2 input)

@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -5,8 +6,18 @@ using UnityEngine.InputSystem;
 public class JumpBehaviour : MonoBehaviour
 {
     [SerializeField] private float jumpForce = 5f;
+    [SerializeField] private float groundCheckDistance = 0.1f;
+    [SerializeField] private float maxJumpCharge = 1.0f;
+    [SerializeField] private float minJumpCharge = 0.2f;
 
     private Rigidbody rb;
+
+    private bool isJumping = false;
+    private bool doubleJump = false;
+    private bool isGrounded = false;
+    private bool isCharging = false;
+    private float chargingStartTime;
+    private float chargeTime;
 
 
     private void Start()
@@ -21,18 +32,55 @@ public class JumpBehaviour : MonoBehaviour
 
     private void Update()
     {
-
+        CheckCharginTime();
     }
 
-    public void Jump()
+    public void StartCharge()
     {
-        if (rb != null)
+        if (!isJumping && isGrounded)
         {
-            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            chargingStartTime = Time.time;
+
+            isCharging = true;
         }
-        else
+    }
+
+    public void StopCharge()
+    {
+        if (isCharging)
         {
-            Debug.LogError("Rigidbody not found on the GameObject.");
+            chargeTime = Time.time - chargingStartTime;
+
+            if (chargeTime > maxJumpCharge)
+            {
+                chargeTime = maxJumpCharge;
+            }
+            else if (chargeTime < minJumpCharge)
+            {
+                chargeTime = minJumpCharge;
+            }
+
+            isCharging = false;
+
+            Jump();
+        }  
+    }
+
+    private void CheckCharginTime()
+    {
+        if (isCharging)
+        {
+            if (Time.time - chargingStartTime >= maxJumpCharge)
+            {
+                StopCharge();
+            }
         }
+    }
+
+    private void Jump()
+    {
+        Vector3 boostedForce = Vector3.up * (jumpForce * chargeTime);
+
+        rb.AddForce(boostedForce, ForceMode.Impulse);
     }
 }
