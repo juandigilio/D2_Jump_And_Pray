@@ -6,6 +6,14 @@ using static UnityEngine.Timeline.DirectorControlPlayable;
 public class InputManager : MonoBehaviour
 {
     [SerializeField] private CharacterController characterController;
+    [SerializeField] private Cameraman cameraman;
+
+    [SerializeField] private string rotateCameraAction = "MoveCamera";
+    [SerializeField] private string moveAction = "Move";
+    [SerializeField] private string jumpAction = "Jump";
+
+    [SerializeField] private string inGameActionMap = "InGame";
+    [SerializeField] private string menuActionMap = "Menu";
 
     private PlayerInput playerInput;
 
@@ -25,15 +33,21 @@ public class InputManager : MonoBehaviour
 
         if (playerInput != null)
         {
-            playerInput.SwitchCurrentActionMap("InGame");
+            playerInput.SwitchCurrentActionMap(inGameActionMap);
 
-            playerInput.currentActionMap.FindAction("Move").started += Move;
-            playerInput.currentActionMap.FindAction("Move").performed += Move;
-            playerInput.currentActionMap.FindAction("Move").canceled += Move;
+            playerInput.currentActionMap.FindAction(rotateCameraAction).started += SetCameraRotation;
+            playerInput.currentActionMap.FindAction(rotateCameraAction).performed += SetCameraRotation;
+            playerInput.currentActionMap.FindAction(rotateCameraAction).canceled += SetCameraRotation;
 
-            playerInput.currentActionMap.FindAction("Jump").started += Jump;
-            playerInput.currentActionMap.FindAction("Jump").performed += Jump;
-            playerInput.currentActionMap.FindAction("Jump").canceled += Jump;
+            playerInput.currentActionMap.FindAction(moveAction).started += Move;
+            playerInput.currentActionMap.FindAction(moveAction).performed += Move;
+            playerInput.currentActionMap.FindAction(moveAction).canceled += Move;
+
+            playerInput.currentActionMap.FindAction(jumpAction).started += Jump;
+            playerInput.currentActionMap.FindAction(jumpAction).performed += Jump;
+            playerInput.currentActionMap.FindAction(jumpAction).canceled += Jump;
+
+
         }
     }
 
@@ -47,6 +61,18 @@ public class InputManager : MonoBehaviour
 
     }
 
+    private void SetCameraRotation(InputAction.CallbackContext callbackContext)
+    {
+        if (playerInput.currentControlScheme == "Gamepad")
+        {
+            cameraman.UpdateInputRotation(callbackContext.ReadValue<Vector2>() * PlayerConfig.GetPadSensitivity());
+        }
+        else
+        {
+            cameraman.UpdateInputRotation(callbackContext.ReadValue<Vector2>() * PlayerConfig.GetMouseSensitivity());
+        }
+            
+    }
 
     private void Move(InputAction.CallbackContext callbackContext)
     {
@@ -68,7 +94,7 @@ public class InputManager : MonoBehaviour
 
     }
 
-    public void Jump(InputAction.CallbackContext callbackContext)
+    private void Jump(InputAction.CallbackContext callbackContext)
     {
         if (callbackContext.started)
         {

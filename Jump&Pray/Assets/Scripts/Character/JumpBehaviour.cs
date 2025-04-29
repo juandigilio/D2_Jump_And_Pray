@@ -82,5 +82,7 @@ public class JumpBehaviour : MonoBehaviour
         Vector3 boostedForce = Vector3.up * (jumpForce * chargeTime);
 
         rb.AddForce(boostedForce, ForceMode.Impulse);
+
+        isJumping = true;
     }
 }
