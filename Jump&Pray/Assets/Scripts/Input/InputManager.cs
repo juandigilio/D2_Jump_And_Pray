@@ -46,8 +46,6 @@ public class InputManager : MonoBehaviour
             playerInput.currentActionMap.FindAction(jumpAction).started += Jump;
             playerInput.currentActionMap.FindAction(jumpAction).performed += Jump;
             playerInput.currentActionMap.FindAction(jumpAction).canceled += Jump;
-
-
         }
     }
 
@@ -71,7 +69,19 @@ public class InputManager : MonoBehaviour
         {
             cameraman.UpdateInputRotation(callbackContext.ReadValue<Vector2>() * PlayerConfig.GetMouseSensitivity());
         }
-            
+        //if (callbackContext.started)
+        //{
+        //    if (playerInput.currentControlScheme == "Gamepad")
+        //    {
+        //        cameraman.UpdateInputRotation(callbackContext.ReadValue<Vector2>() * PlayerConfig.GetPadSensitivity());
+        //    }
+        //    else
+        //    {
+        //        cameraman.UpdateInputRotation(callbackContext.ReadValue<Vector2>() * PlayerConfig.GetMouseSensitivity());
+        //    }
+        //}
+
+
     }
 
     private void Move(InputAction.CallbackContext callbackContext)
