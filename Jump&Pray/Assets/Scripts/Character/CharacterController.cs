@@ -15,17 +15,12 @@ public class CharacterController : MonoBehaviour
         {
             Debug.LogError("MovementBehaviour not found on the GameObject.");
         }
+
         jumpBehaviour = GetComponent<JumpBehaviour>();
         if (jumpBehaviour == null)
         {
             Debug.LogError("JumpBehaviour not found on the GameObject.");
         }
-    }
-
-    // Update is called once per frame
-    private void Update()
-    {
-        
     }
 
     public void LoadJumpCharge()

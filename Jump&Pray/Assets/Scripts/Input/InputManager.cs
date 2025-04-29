@@ -8,6 +8,9 @@ public class InputManager : MonoBehaviour
     [SerializeField] private CharacterController characterController;
     [SerializeField] private Cameraman cameraman;
 
+    [SerializeField] private float padSensitivity = 1.0f;
+    [SerializeField] private float mouseSensitivity = 1.0f;
+
     [SerializeField] private string rotateCameraAction = "MoveCamera";
     [SerializeField] private string moveAction = "Move";
     [SerializeField] private string jumpAction = "Jump";
@@ -35,9 +38,9 @@ public class InputManager : MonoBehaviour
         {
             playerInput.SwitchCurrentActionMap(inGameActionMap);
 
-            playerInput.currentActionMap.FindAction(rotateCameraAction).started += SetCameraRotation;
-            playerInput.currentActionMap.FindAction(rotateCameraAction).performed += SetCameraRotation;
-            playerInput.currentActionMap.FindAction(rotateCameraAction).canceled += SetCameraRotation;
+            playerInput.currentActionMap.FindAction(rotateCameraAction).started += SetGamepadCameraRotation;
+            playerInput.currentActionMap.FindAction(rotateCameraAction).performed += SetGamepadCameraRotation;
+            playerInput.currentActionMap.FindAction(rotateCameraAction).canceled += SetGamepadCameraRotation;
 
             playerInput.currentActionMap.FindAction(moveAction).started += Move;
             playerInput.currentActionMap.FindAction(moveAction).performed += Move;
@@ -51,37 +54,29 @@ public class InputManager : MonoBehaviour
 
     private void Update()
     {
-
+        SetMouseCameraRotation();
     }
 
-    private void OnDestroy()
+    private void FixedUpdate()
     {
-
+        CheckPlayerConfig();
     }
 
-    private void SetCameraRotation(InputAction.CallbackContext callbackContext)
+    private void SetGamepadCameraRotation(InputAction.CallbackContext callbackContext)
     {
-        if (playerInput.currentControlScheme == "Gamepad")
+        if (callbackContext.started || callbackContext.performed)
         {
             cameraman.UpdateInputRotation(callbackContext.ReadValue<Vector2>() * PlayerConfig.GetPadSensitivity());
         }
-        else
+        if (callbackContext.canceled)
         {
-            cameraman.UpdateInputRotation(callbackContext.ReadValue<Vector2>() * PlayerConfig.GetMouseSensitivity());
+            cameraman.UpdateInputRotation(Vector2.zero);
         }
-        //if (callbackContext.started)
-        //{
-        //    if (playerInput.currentControlScheme == "Gamepad")
-        //    {
-        //        cameraman.UpdateInputRotation(callbackContext.ReadValue<Vector2>() * PlayerConfig.GetPadSensitivity());
-        //    }
-        //    else
-        //    {
-        //        cameraman.UpdateInputRotation(callbackContext.ReadValue<Vector2>() * PlayerConfig.GetMouseSensitivity());
-        //    }
-        //}
+    }
 
-
+    private void SetMouseCameraRotation()
+    {
+        cameraman.UpdateInputRotation(Mouse.current.delta.ReadValue() * PlayerConfig.GetMouseSensitivity());
     }
 
     private void Move(InputAction.CallbackContext callbackContext)
@@ -108,7 +103,7 @@ public class InputManager : MonoBehaviour
     {
         if (callbackContext.started)
         {
-            characterController.LoadJumpCharge ();
+            characterController.LoadJumpCharge();
         }
 
         if (callbackContext.performed)
@@ -119,6 +114,18 @@ public class InputManager : MonoBehaviour
         if (callbackContext.canceled)
         {
             characterController.ReleaseJumpCharge();
+        }
+    }
+
+    private void CheckPlayerConfig()
+    {
+        if (PlayerConfig.GetMouseSensitivity() != mouseSensitivity)
+        {
+            PlayerConfig.SetMouseSensitivity(mouseSensitivity);
+        }
+        if (PlayerConfig.GetPadSensitivity() != padSensitivity)
+        {
+            PlayerConfig.SetPadSensitivity(padSensitivity);
         }
     }
 }
