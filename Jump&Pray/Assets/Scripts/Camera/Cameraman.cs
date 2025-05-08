@@ -2,10 +2,11 @@ using UnityEngine;
 
 public class Cameraman : MonoBehaviour
 {
-    [SerializeField] private Camera mainCamera;
     [SerializeField] private Transform target;
     [SerializeField] private Vector3 offset;
 
+    private Camera mainCamera;
+    
     private float inputRotation;
     private float cameraRotation;
 
@@ -30,8 +31,6 @@ public class Cameraman : MonoBehaviour
     public void UpdateInputRotation(Vector2 input)
     {
         inputRotation = input.x;
-
-        Debug.Log(inputRotation);
     }
 
     private void NormalizeRotation()
