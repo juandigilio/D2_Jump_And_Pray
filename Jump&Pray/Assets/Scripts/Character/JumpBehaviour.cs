@@ -1,14 +1,17 @@
 using System.Runtime.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
+using static UnityEngine.UI.Image;
 
 
 public class JumpBehaviour : MonoBehaviour
 {
     [SerializeField] private float jumpForce = 5f;
     [SerializeField] private float groundCheckDistance = 0.1f;
-    [SerializeField] private float maxJumpCharge = 1.0f;
-    [SerializeField] private float minJumpCharge = 0.2f;
+    [SerializeField] private float maxChargeTime = 1.0f;
+    [SerializeField] private float minChargeTime = 0.05f;
 
     private Rigidbody rb;
 
@@ -26,13 +29,26 @@ public class JumpBehaviour : MonoBehaviour
 
         if (rb == null)
         {
-            Debug.LogError("Rigidbody not found on the GameObject.");
+            Debug.LogError("Rigidbody not found");
         }
     }
 
     private void Update()
     {
         CheckCharginTime();
+
+        CheckGround();
+    }
+
+    private void CheckCharginTime()
+    {
+        if (isCharging)
+        {
+            if (Time.time - chargingStartTime >= maxChargeTime)
+            {
+                StopCharge();
+            }
+        }
     }
 
     public void StartCharge()
@@ -51,29 +67,18 @@ public class JumpBehaviour : MonoBehaviour
         {
             chargeTime = Time.time - chargingStartTime;
 
-            if (chargeTime > maxJumpCharge)
+            if (chargeTime > maxChargeTime)
             {
-                chargeTime = maxJumpCharge;
+                chargeTime = maxChargeTime;
             }
-            else if (chargeTime < minJumpCharge)
+            else if (chargeTime < minChargeTime)
             {
-                chargeTime = minJumpCharge;
+                chargeTime = minChargeTime;
             }
 
             isCharging = false;
 
             Jump();
-        }  
-    }
-
-    private void CheckCharginTime()
-    {
-        if (isCharging)
-        {
-            if (Time.time - chargingStartTime >= maxJumpCharge)
-            {
-                StopCharge();
-            }
         }
     }
 
@@ -84,5 +89,25 @@ public class JumpBehaviour : MonoBehaviour
         rb.AddForce(boostedForce, ForceMode.Impulse);
 
         isJumping = true;
+    }
+
+    private void CheckGround()
+    {
+        Vector3 origin = transform.position;
+        float distance = groundCheckDistance;
+
+        bool hit = Physics.Raycast(origin, Vector3.down, distance);
+
+        Debug.DrawRay(origin, Vector3.down * distance, hit ? Color.green : Color.red);
+
+        if (hit)
+        {
+            isGrounded = true;
+            isJumping = false;
+        }
+        else
+        {
+            isGrounded = false;
+        }
     }
 }
