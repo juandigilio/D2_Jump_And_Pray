@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 
 public class InputManager : MonoBehaviour
 {
-    [SerializeField] private CharacterController characterController;
+    [SerializeField] private PlayerController characterController;
     [SerializeField] private Cameraman cameraman;
 
     [SerializeField] private float padSensitivity = 1.0f;

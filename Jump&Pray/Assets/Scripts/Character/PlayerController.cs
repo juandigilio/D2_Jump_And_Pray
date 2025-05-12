@@ -1,7 +1,7 @@
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class CharacterController : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     [SerializeField] private MovementBehaviour movementBehaviour;
     [SerializeField] private JumpBehaviour jumpBehaviour;
