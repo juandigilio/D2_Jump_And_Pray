@@ -7,12 +7,12 @@ public class CorridorState : PlayerState
     public override void Enter()
     {
         Debug.Log("Entered Corridor State");
-        stateManager.LockCameraToCorridor();
+        LockCamera();
     }
 
     public override void Exit()
     {
         Debug.Log("Exiting Corridor State");
-        stateManager.UnlockCamera();
+        UnlockCamera();
     }
 }

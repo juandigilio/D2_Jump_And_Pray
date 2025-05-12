@@ -24,12 +24,22 @@ public class StateManager : MonoBehaviour
         TransitionToState(groundedState);
     }
 
+    private void OnEnable()
+    {
+        DoorBehaviour.OnCinematicStarted += LockCamera;
+    }
+
+    private void OnDisable()
+    {
+        DoorBehaviour.OnCinematicStarted -= LockCamera;
+    }
+
     private void Update()
     {
         currentState.Update();
     }
 
-    public void TransitionToState(PlayerState newState)
+    private void TransitionToState(PlayerState newState)
     {
         if (currentState != null)
         {
@@ -40,38 +50,13 @@ public class StateManager : MonoBehaviour
         currentState.Enter();
     }
 
-    public void EnablePlayerUpdate()
+    public Cameraman Cameraman()
     {
-        playerController.enabled = true;
+        return cameraman;
     }
 
-    public void DisablePlayerUpdate()
+    public PlayerController PlayerController()
     {
-        playerController.enabled = false;
-    }
-
-    //public void DisableInput()
-    //{
-    //    Debug.Log("Input Disabled");
-    //}
-
-    //public void EnableInput()
-    //{
-    //    Debug.Log("Input Enabled");
-    //}
-
-    public void LockCamera()
-    {
-        cameraman.enabled = false;
-    }
-
-    public void UnlockCamera()
-    {
-        cameraman.enabled = true;
-    }
-
-    public void LockCameraToCorridor()
-    {
-        cameraman.LockToCorridor();
+        return playerController;
     }
 }

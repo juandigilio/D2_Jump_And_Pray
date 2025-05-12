@@ -7,14 +7,14 @@ public class CinematicState : PlayerState
     public override void Enter()
     {
         Debug.Log("Entered Cinematic State");
-        stateManager.LockCamera();
-        stateManager.DisablePlayerUpdate();
+        LockCamera();
+        DisablePlayerUpdate();
     }
 
     public override void Exit()
     {
         Debug.Log("Exiting Cinematic State");
-        stateManager.UnlockCamera();
-        stateManager.EnablePlayerUpdate();
+        UnlockCamera();
+        EnablePlayerUpdate();
     }
 }

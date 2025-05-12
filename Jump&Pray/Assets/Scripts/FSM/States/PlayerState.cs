@@ -12,4 +12,24 @@ public abstract class PlayerState
     public virtual void Enter() { }
     public virtual void Update() { }
     public virtual void Exit() { }
+
+    public void EnablePlayerUpdate()
+    {
+        stateManager.PlayerController().enabled = true;
+    }
+
+    public void DisablePlayerUpdate()
+    {
+        stateManager.PlayerController().enabled = false;
+    }
+
+    public void LockCamera()
+    {
+        stateManager.Cameraman().enabled = false;
+    }
+
+    public void UnlockCamera()
+    {
+        stateManager.Cameraman().enabled = true;
+    }
 }

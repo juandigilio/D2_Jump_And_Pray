@@ -7,7 +7,7 @@ public class GroundedState : PlayerState
     public override void Enter()
     {
         Debug.Log("Entered Grounded State");
-        stateManager.EnablePlayerUpdate();
+        EnablePlayerUpdate();
     }
 
     public override void Exit()
