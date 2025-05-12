@@ -53,12 +53,9 @@ public class JumpBehaviour : MonoBehaviour
 
     public void StartCharge()
     {
-        if (!isJumping && isGrounded)
-        {
-            chargingStartTime = Time.time;
+        chargingStartTime = Time.time;
 
-            isCharging = true;
-        }
+        isCharging = true;
     }
 
     public void StopCharge()
@@ -84,11 +81,14 @@ public class JumpBehaviour : MonoBehaviour
 
     private void Jump()
     {
-        Vector3 boostedForce = Vector3.up * (jumpForce * chargeTime);
+        if (!isJumping && isGrounded)
+        {
+            Vector3 boostedForce = Vector3.up * (jumpForce * chargeTime);
 
-        rb.AddForce(boostedForce, ForceMode.Impulse);
+            rb.AddForce(boostedForce, ForceMode.Impulse);
 
-        isJumping = true;
+            isJumping = true;
+        }        
     }
 
     private void CheckGround()
