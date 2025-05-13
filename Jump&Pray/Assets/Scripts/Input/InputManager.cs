@@ -9,6 +9,8 @@ public class InputManager : MonoBehaviour
 
     [SerializeField] private float padSensitivity = 1.0f;
     [SerializeField] private float mouseSensitivity = 1.0f;
+    [SerializeField] private float firstPersonMultiplier = 1.0f;
+    [SerializeField] private float thirdPersonSensitivity = 1.0f;
 
     [SerializeField] private string rotateCameraAction = "MoveCamera";
     [SerializeField] private string moveAction = "Move";
@@ -46,7 +48,7 @@ public class InputManager : MonoBehaviour
             playerInput.currentActionMap.FindAction(moveAction).canceled += Move;
 
             playerInput.currentActionMap.FindAction(jumpAction).started += Jump;
-            playerInput.currentActionMap.FindAction(jumpAction).performed += Jump;
+            //playerInput.currentActionMap.FindAction(jumpAction).performed += Jump;
             playerInput.currentActionMap.FindAction(jumpAction).canceled += Jump;
         }
     }
@@ -65,7 +67,7 @@ public class InputManager : MonoBehaviour
     {
         if (callbackContext.started || callbackContext.performed)
         {
-            cameraman.UpdateInputRotation(callbackContext.ReadValue<Vector2>() * PlayerConfig.GetPadSensitivity());
+            cameraman.UpdateInputRotation(callbackContext.ReadValue<Vector2>() * PlayerConfig.gamepadSensitivity);
         }
         if (callbackContext.canceled)
         {
@@ -75,7 +77,7 @@ public class InputManager : MonoBehaviour
 
     private void SetMouseCameraRotation()
     {
-        cameraman.UpdateInputRotation(Mouse.current.delta.ReadValue() * PlayerConfig.GetMouseSensitivity());
+        cameraman.UpdateInputRotation(Mouse.current.delta.ReadValue() * PlayerConfig.mouseSensitivity);
     }
 
     private void Move(InputAction.CallbackContext callbackContext)
@@ -85,12 +87,10 @@ public class InputManager : MonoBehaviour
         {
             characterController.SetDirection(callbackContext.ReadValue<Vector2>());
         }
-
         if (callbackContext.performed)
         {
             characterController.SetDirection(callbackContext.ReadValue<Vector2>());
         }
-
         if (callbackContext.canceled)
         {
             characterController.SetDirection(Vector2.zero);
@@ -104,12 +104,6 @@ public class InputManager : MonoBehaviour
         {
             characterController.LoadJumpCharge();
         }
-
-        if (callbackContext.performed)
-        {
-            //characterController.Jump();
-        }
-
         if (callbackContext.canceled)
         {
             characterController.ReleaseJumpCharge();
@@ -118,13 +112,21 @@ public class InputManager : MonoBehaviour
 
     private void CheckPlayerConfig()
     {
-        if (PlayerConfig.GetMouseSensitivity() != mouseSensitivity)
+        if (PlayerConfig.mouseSensitivity != mouseSensitivity)
         {
-            PlayerConfig.SetMouseSensitivity(mouseSensitivity);
+            PlayerConfig.mouseSensitivity = mouseSensitivity;
         }
-        if (PlayerConfig.GetPadSensitivity() != padSensitivity)
+        if (PlayerConfig.gamepadSensitivity != padSensitivity)
         {
-            PlayerConfig.SetPadSensitivity(padSensitivity);
+            PlayerConfig.gamepadSensitivity = padSensitivity;
+        }
+        if (PlayerConfig.firstPersonMultiplier != firstPersonMultiplier)
+        {
+            PlayerConfig.firstPersonMultiplier = firstPersonMultiplier;
+        }
+        if (PlayerConfig.thirdPersonMultiplier != thirdPersonSensitivity)
+        {
+            PlayerConfig.thirdPersonMultiplier = thirdPersonSensitivity;
         }
     }
 }
