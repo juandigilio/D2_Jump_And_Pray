@@ -6,6 +6,7 @@ public enum CameraMode
     ThirdPerson,
     FirstPerson,
     Corridor,
+    Cinematic
 }
 
 public class Cameraman : MonoBehaviour
@@ -133,12 +134,29 @@ public class Cameraman : MonoBehaviour
         inputRotation = input;
     }
 
+    public void SetFirstPersonCamera()
+    {
+        cameraMode = CameraMode.FirstPerson;
+    }
+
+    public void SetThirdPersonCamera()
+    {
+        cameraMode = CameraMode.ThirdPerson;
+    }
+
     public void SetCorridorCamera(Transform target, Transform end, float distance)
     {
         corridorTarget = target.position;
         corridorEnd = end.position;
         corridorDistance = distance;
         cameraMode = CameraMode.Corridor;
+    }
+
+    public void SetCinematicCamera(Transform cameraPosition, Transform target)
+    {
+        mainCamera.transform.position = cameraPosition.position;
+        mainCamera.transform.LookAt(target.position);
+        cameraMode = CameraMode.Cinematic;
     }
 
     public void SetCameraMode(CameraMode mode)
