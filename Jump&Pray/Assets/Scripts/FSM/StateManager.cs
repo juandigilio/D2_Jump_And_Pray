@@ -26,12 +26,14 @@ public class StateManager : MonoBehaviour
 
     private void OnEnable()
     {
-        DoorBehaviour.OnCinematicStarted += LockCamera;
+        DoorBehaviour.OnCinematicStarted += SetCinematicState;
+        DoorBehaviour.OnCinematicEnded += SetGroundedState;
     }
 
     private void OnDisable()
     {
-        DoorBehaviour.OnCinematicStarted -= LockCamera;
+        DoorBehaviour.OnCinematicStarted -= SetCinematicState;
+        DoorBehaviour.OnCinematicEnded -= SetGroundedState;
     }
 
     private void Update()
@@ -48,6 +50,26 @@ public class StateManager : MonoBehaviour
 
         currentState = newState;
         currentState.Enter();
+    }
+
+    private void SetGroundedState()
+    {
+        TransitionToState(groundedState);
+    }
+
+    private void SetCinematicState()
+    {
+        TransitionToState(cinematicState);
+    }
+
+    private void SetAnimationState()
+    {
+        TransitionToState(animationState);
+    }
+
+    private void SetCorridorState()
+    {
+        TransitionToState(corridorState);
     }
 
     public Cameraman Cameraman()
