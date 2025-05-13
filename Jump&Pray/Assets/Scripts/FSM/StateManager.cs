@@ -13,15 +13,12 @@ public class StateManager : MonoBehaviour
 
     private void Awake()
     {
-        groundedState = new GroundedState(this);
-        cinematicState = new CinematicState(this);
-        animationState = new AnimationState(this);
-        corridorState = new CorridorState(this);
+       
     }
 
     private void OnEnable()
     {
-        GameManager.Instance.RegisterStateManager(this);
+        //GameManager.Instance.RegisterStateManager(this);
 
         EventManager.Instance.OnCinematicStarted += SetCinematicState;
         EventManager.Instance.OnCinematicEnded += SetGroundedState;
@@ -37,8 +34,14 @@ public class StateManager : MonoBehaviour
     {
         playerController = GameManager.Instance.GetPlayerController();
         cameraman = GameManager.Instance.GetCameraman();
+        GameManager.Instance.RegisterStateManager(this);
 
-        TransitionToState(groundedState);
+        groundedState = new GroundedState(this, cameraman);
+        cinematicState = new CinematicState(this, cameraman);
+        animationState = new AnimationState(this, cameraman);
+        corridorState = new CorridorState(this, cameraman);
+
+        SetGroundedState();
     }    
 
     private void Update()

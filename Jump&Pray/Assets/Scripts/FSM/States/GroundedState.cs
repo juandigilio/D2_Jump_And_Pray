@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class GroundedState : PlayerState
 {
-    public GroundedState(StateManager stateManager) : base(stateManager) { }
+    public GroundedState(StateManager stateManager, Cameraman cameraman) : base(stateManager, cameraman) { }
 
     public override void Enter()
     {
-        Debug.Log("Entered Grounded State");
+        cameraman.SetThirdPersonCamera();
         EnablePlayerUpdate();
     }
 

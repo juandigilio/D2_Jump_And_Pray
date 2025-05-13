@@ -18,6 +18,7 @@ public class Cameraman : MonoBehaviour
     [SerializeField] private Vector3 corridorOffset;
     [SerializeField] private float minVerticalAngle = -60f;
     [SerializeField] private float maxVerticalAngle = 60f;
+    [SerializeField] private float corridorDistance;
 
     private Camera mainCamera;
     private CameraMode cameraMode;
@@ -25,21 +26,15 @@ public class Cameraman : MonoBehaviour
     private Vector2 cameraRotation;
     private Vector3 corridorTarget;
     private Vector3 corridorEnd;
-    private float corridorDistance;
 
 
     private void OnEnable()
     {
         GameManager.Instance.RegisterCameraman(this);
-
-        EventManager.Instance.OnCinematicStarted += SetCinematicCamera;
-        EventManager.Instance.OnCinematicEnded += SetThirdPersonCamera;
     }
 
     private void OnDisable()
     {
-        EventManager.Instance.OnCinematicStarted -= SetCinematicCamera;
-        EventManager.Instance.OnCinematicEnded -= SetThirdPersonCamera;
     }
 
     private void Start()
@@ -57,14 +52,17 @@ public class Cameraman : MonoBehaviour
         if (cameraMode == CameraMode.ThirdPerson)
         {
             UpdateThirdPersonCamera();
+            Debug.Log("Third Person Camera");
         }
         else if (cameraMode == CameraMode.FirstPerson)
         {
             UpdateFirstPersonCamera();
+            Debug.Log("First Person Camera");
         }
         else if (cameraMode == CameraMode.Corridor)
         {
             UpdateCorridorCamera();
+            Debug.Log("Corridor Camera");
         }
     }
 
@@ -135,15 +133,29 @@ public class Cameraman : MonoBehaviour
         {
             cameraRotation += inputRotation * PlayerConfig.firstPersonMultiplier;
             cameraRotation.y = Mathf.Clamp(cameraRotation.y, minVerticalAngle, maxVerticalAngle);
-            cameraRotation.x = Mathf.Clamp(cameraRotation.x, -180, 180);
+
+            NormalizeX();
         }
         else if (cameraMode == CameraMode.ThirdPerson)
         {
             cameraRotation.x += inputRotation.x * PlayerConfig.thirdPersonMultiplier;
-            cameraRotation.x = Mathf.Clamp(cameraRotation.x, -180, 180);
+
+            NormalizeX();
         }       
     }
-   
+
+    private void NormalizeX()
+    {
+        if (cameraRotation.x > 360)
+        {
+            cameraRotation.x -= 360;
+        }
+        else if (cameraRotation.x < -360)
+        {
+            cameraRotation.x += 360;
+        }
+    }
+
     public void UpdateInputRotation(Vector2 input)
     {
         inputRotation = input;
@@ -159,11 +171,10 @@ public class Cameraman : MonoBehaviour
         cameraMode = CameraMode.ThirdPerson;
     }
 
-    public void SetCorridorCamera(Transform target, Transform end, float distance)
+    public void SetCorridorCamera(Vector3 target, Vector3 end)
     {
-        corridorTarget = target.position;
-        corridorEnd = end.position;
-        corridorDistance = distance;
+        corridorTarget = target;
+        corridorEnd = end;
         cameraMode = CameraMode.Corridor;
     }
 

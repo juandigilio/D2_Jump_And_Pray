@@ -2,19 +2,17 @@ using UnityEngine;
 
 public class CinematicState : PlayerState
 {
-    public CinematicState(StateManager stateManager) : base(stateManager) { }
+    public CinematicState(StateManager stateManager, Cameraman cameraman) : base(stateManager, cameraman) { }
 
-    public override void Enter()
+
+    public override void Enter(Vector3 cameraPosition, Vector3 target)
     {
-        Debug.Log("Entered Cinematic State");
-        LockCamera();
+        SetCinematicCamera(cameraPosition, target);
         DisablePlayerUpdate();
     }
 
     public override void Exit()
     {
-        Debug.Log("Exiting Cinematic State");
-        UnlockCamera();
         EnablePlayerUpdate();
     }
 }

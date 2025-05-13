@@ -11,29 +11,30 @@ public class DoorBehaviour : MonoBehaviour
     [SerializeField] private float duration = 3f;
     [SerializeField] private float animationPause = 1f;
 
-    private Cameraman cameraman;
     private bool isOpen = false;
 
-
-    private void Start()
+    private void OnEnable()
     {
-        cameraman = GameManager.Instance.GetCameraman();
+        //EventManager.Instance.OnDoorOpen += OpenDoor;
     }
 
+    private void OnDisable()
+    {
+        //EventManager.Instance.OnDoorOpen -= OpenDoor;
+    }
 
-    private void OpenDoor()
+    public void OpenDoor()
     {
         if (!isOpen)
         {
-            Debug.Log("Door opened");    
+            EventManager.Instance.TriggerDoorOpen(cameraPosition.position, target.position);
+
             StartCoroutine(MoveUpRoutine());
         }       
     }
 
     private IEnumerator MoveUpRoutine()
     {
-        EventManager.Instance.TriggerCinematicStarted(cameraPosition.position, target.position);
-
         isOpen = true;
 
         Vector3 initialPosition = door.transform.position;
@@ -47,8 +48,6 @@ public class DoorBehaviour : MonoBehaviour
             elapsedTime += Time.deltaTime;
             yield return null;
         }
-
-        //door.transform.position = targetPosition;
 
         elapsedTime = 0f;
 

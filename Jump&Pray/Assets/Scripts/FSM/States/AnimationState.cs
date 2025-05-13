@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class AnimationState : PlayerState
 {
-    public AnimationState(StateManager stateManager) : base(stateManager) { }
+    public AnimationState(StateManager stateManager, Cameraman cameraman) : base(stateManager, cameraman) { }
 
     public override void Enter()
     {
