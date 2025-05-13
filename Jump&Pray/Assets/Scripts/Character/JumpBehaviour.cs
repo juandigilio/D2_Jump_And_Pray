@@ -1,9 +1,4 @@
-using System.Runtime.CompilerServices;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
-using static UnityEngine.UI.Image;
 
 
 public class JumpBehaviour : MonoBehaviour
@@ -13,7 +8,7 @@ public class JumpBehaviour : MonoBehaviour
     [SerializeField] private float maxChargeTime = 1.0f;
     [SerializeField] private float minChargeTime = 0.05f;
 
-    private Rigidbody rb;
+    private Rigidbody rigidBody;
 
     private bool isJumping = false;
     private bool doubleJump = false;
@@ -25,9 +20,9 @@ public class JumpBehaviour : MonoBehaviour
 
     private void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        rigidBody = GetComponent<Rigidbody>();
 
-        if (rb == null)
+        if (rigidBody == null)
         {
             Debug.LogError("Rigidbody not found");
         }
@@ -85,7 +80,7 @@ public class JumpBehaviour : MonoBehaviour
         {
             Vector3 boostedForce = Vector3.up * (jumpForce * chargeTime);
 
-            rb.AddForce(boostedForce, ForceMode.Impulse);
+            rigidBody.AddForce(boostedForce, ForceMode.Impulse);
 
             isJumping = true;
         }        

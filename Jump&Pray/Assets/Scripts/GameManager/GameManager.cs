@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
     private Cameraman cameraman;
     private PlayerController playerController;
     private InputManager inputManager;
+    private StateManager stateManager;
 
     private void Awake()
     {
@@ -35,6 +36,11 @@ public class GameManager : MonoBehaviour
         this.inputManager = inputManager;
     }
 
+    public void RegisterStateManager(StateManager stateManager)
+    {
+        this.stateManager = stateManager;
+    }
+
     public Cameraman GetCameraman()
     {
         return cameraman;
@@ -48,5 +54,10 @@ public class GameManager : MonoBehaviour
     public InputManager GetInputManager()
     {
         return inputManager;
+    }
+
+    public StateManager GetStateManager()
+    {
+        return stateManager;
     }
 }

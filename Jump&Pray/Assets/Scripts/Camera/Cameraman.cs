@@ -1,3 +1,4 @@
+using System;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -26,6 +27,11 @@ public class Cameraman : MonoBehaviour
     private Vector3 corridorEnd;
     private float corridorDistance;
 
+
+    private void OnEnable()
+    {
+        GameManager.Instance.RegisterCameraman(this);
+    }
 
     private void Start()
     {
@@ -156,7 +162,10 @@ public class Cameraman : MonoBehaviour
     {
         mainCamera.transform.position = cameraPosition.position;
         mainCamera.transform.LookAt(target.position);
+
         cameraMode = CameraMode.Cinematic;
+
+        OnCinematicStarted?.Invoke();
     }
 
     public void SetCameraMode(CameraMode mode)

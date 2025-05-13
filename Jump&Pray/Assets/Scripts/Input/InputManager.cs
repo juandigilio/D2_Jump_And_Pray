@@ -4,9 +4,6 @@ using UnityEngine.InputSystem;
 
 public class InputManager : MonoBehaviour
 {
-    [SerializeField] private PlayerController characterController;
-    [SerializeField] private Cameraman cameraman;
-
     [SerializeField] private float padSensitivity = 1.0f;
     [SerializeField] private float mouseSensitivity = 1.0f;
     [SerializeField] private float firstPersonMultiplier = 1.0f;
@@ -20,6 +17,8 @@ public class InputManager : MonoBehaviour
     [SerializeField] private string menuActionMap = "Menu";
 
     private PlayerInput playerInput;
+    private PlayerController playerController;
+    private Cameraman cameraman;
 
     private void Awake()
     {
@@ -29,6 +28,11 @@ public class InputManager : MonoBehaviour
         {
             Debug.LogError("PlayerInput component not found on the GameObject.");
         }
+    }
+
+    private void OnEnable()
+    {
+        GameManager.Instance.RegisterInputManager(this);
     }
 
     private void Start()
@@ -48,9 +52,11 @@ public class InputManager : MonoBehaviour
             playerInput.currentActionMap.FindAction(moveAction).canceled += Move;
 
             playerInput.currentActionMap.FindAction(jumpAction).started += Jump;
-            //playerInput.currentActionMap.FindAction(jumpAction).performed += Jump;
             playerInput.currentActionMap.FindAction(jumpAction).canceled += Jump;
         }
+
+        cameraman = GameManager.Instance.GetCameraman();
+        playerController = GameManager.Instance.GetPlayerController();
     }
 
     private void Update()
@@ -85,15 +91,15 @@ public class InputManager : MonoBehaviour
 
         if (callbackContext.started)
         {
-            characterController.SetDirection(callbackContext.ReadValue<Vector2>());
+            playerController.SetDirection(callbackContext.ReadValue<Vector2>());
         }
         if (callbackContext.performed)
         {
-            characterController.SetDirection(callbackContext.ReadValue<Vector2>());
+            playerController.SetDirection(callbackContext.ReadValue<Vector2>());
         }
         if (callbackContext.canceled)
         {
-            characterController.SetDirection(Vector2.zero);
+            playerController.SetDirection(Vector2.zero);
         }
 
     }
@@ -102,11 +108,11 @@ public class InputManager : MonoBehaviour
     {
         if (callbackContext.started)
         {
-            characterController.LoadJumpCharge();
+            playerController.LoadJumpCharge();
         }
         if (callbackContext.canceled)
         {
-            characterController.ReleaseJumpCharge();
+            playerController.ReleaseJumpCharge();
         }
     }
 

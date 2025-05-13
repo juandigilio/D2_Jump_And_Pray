@@ -12,14 +12,14 @@ public class MovementBehaviour : MonoBehaviour
     private Vector3 forward;
     private Vector3 right;
 
-    private Rigidbody rb;
+    private Rigidbody rigidBody;
 
 
     private void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        rigidBody = GetComponent<Rigidbody>();
 
-        if (rb == null)
+        if (rigidBody == null)
         {
             Debug.LogError("Rigidbody not found on the GameObject.");
         }
@@ -56,16 +56,16 @@ public class MovementBehaviour : MonoBehaviour
 
     private void AddForce()
     {
-        rb.AddForce(movementDirection, ForceMode.VelocityChange);
+        rigidBody.AddForce(movementDirection, ForceMode.VelocityChange);
 
-        horizontalVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.z);
+        horizontalVelocity = new Vector2(rigidBody.linearVelocity.x, rigidBody.linearVelocity.z);
 
         if (horizontalVelocity.magnitude > maxSpeed)
         {
             horizontalVelocity = horizontalVelocity.normalized * maxSpeed;
         }
 
-        rb.linearVelocity = new Vector3(horizontalVelocity.x, rb.linearVelocity.y, horizontalVelocity.y);
+        rigidBody.linearVelocity = new Vector3(horizontalVelocity.x, rigidBody.linearVelocity.y, horizontalVelocity.y);
     }
 
     private void CalculateMovementDirection()

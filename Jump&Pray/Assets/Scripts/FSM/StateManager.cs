@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class StateManager : MonoBehaviour
 {
-    [SerializeField] private Cameraman cameraman;
-    [SerializeField] private PlayerController playerController;
+    private Cameraman cameraman;
+    private PlayerController playerController;
 
     private PlayerState currentState;
     public PlayerState groundedState;
@@ -19,13 +19,10 @@ public class StateManager : MonoBehaviour
         corridorState = new CorridorState(this);
     }
 
-    private void Start()
-    {
-        TransitionToState(groundedState);
-    }
-
     private void OnEnable()
     {
+        GameManager.Instance.RegisterStateManager(this);
+
         DoorBehaviour.OnCinematicStarted += SetCinematicState;
         DoorBehaviour.OnCinematicEnded += SetGroundedState;
     }
@@ -35,6 +32,14 @@ public class StateManager : MonoBehaviour
         DoorBehaviour.OnCinematicStarted -= SetCinematicState;
         DoorBehaviour.OnCinematicEnded -= SetGroundedState;
     }
+
+    private void Start()
+    {
+        playerController = GameManager.Instance.GetPlayerController();
+        cameraman = GameManager.Instance.GetCameraman();
+
+        TransitionToState(groundedState);
+    }    
 
     private void Update()
     {

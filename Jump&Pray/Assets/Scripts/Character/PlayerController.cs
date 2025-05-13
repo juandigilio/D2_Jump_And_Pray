@@ -8,6 +8,11 @@ public class PlayerController : MonoBehaviour
 
     Vector2 inputDirection;
 
+    private void OnEnable()
+    {
+        GameManager.Instance.RegisterPlayer(this);
+    }
+
     private void Start()
     {
         movementBehaviour = GetComponent<MovementBehaviour>();
