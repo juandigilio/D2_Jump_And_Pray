@@ -31,6 +31,15 @@ public class Cameraman : MonoBehaviour
     private void OnEnable()
     {
         GameManager.Instance.RegisterCameraman(this);
+
+        EventManager.Instance.OnCinematicStarted += SetCinematicCamera;
+        EventManager.Instance.OnCinematicEnded += SetThirdPersonCamera;
+    }
+
+    private void OnDisable()
+    {
+        EventManager.Instance.OnCinematicStarted -= SetCinematicCamera;
+        EventManager.Instance.OnCinematicEnded -= SetThirdPersonCamera;
     }
 
     private void Start()
@@ -158,14 +167,12 @@ public class Cameraman : MonoBehaviour
         cameraMode = CameraMode.Corridor;
     }
 
-    public void SetCinematicCamera(Transform cameraPosition, Transform target)
+    public void SetCinematicCamera(Vector3 cameraPosition, Vector3 target)
     {
-        mainCamera.transform.position = cameraPosition.position;
-        mainCamera.transform.LookAt(target.position);
+        mainCamera.transform.position = cameraPosition;
+        mainCamera.transform.LookAt(target);
 
         cameraMode = CameraMode.Cinematic;
-
-        OnCinematicStarted?.Invoke();
     }
 
     public void SetCameraMode(CameraMode mode)

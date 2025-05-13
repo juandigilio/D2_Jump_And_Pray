@@ -23,14 +23,14 @@ public class StateManager : MonoBehaviour
     {
         GameManager.Instance.RegisterStateManager(this);
 
-        DoorBehaviour.OnCinematicStarted += SetCinematicState;
-        DoorBehaviour.OnCinematicEnded += SetGroundedState;
+        EventManager.Instance.OnCinematicStarted += SetCinematicState;
+        EventManager.Instance.OnCinematicEnded += SetGroundedState;
     }
 
     private void OnDisable()
     {
-        DoorBehaviour.OnCinematicStarted -= SetCinematicState;
-        DoorBehaviour.OnCinematicEnded -= SetGroundedState;
+        EventManager.Instance.OnCinematicStarted -= SetCinematicState;
+        EventManager.Instance.OnCinematicEnded -= SetGroundedState;
     }
 
     private void Start()
@@ -62,7 +62,7 @@ public class StateManager : MonoBehaviour
         TransitionToState(groundedState);
     }
 
-    private void SetCinematicState()
+    private void SetCinematicState(Vector3 cameraPosition, Vector3 target)
     {
         TransitionToState(cinematicState);
     }
