@@ -4,14 +4,20 @@ using UnityEngine;
 public class LevelManager : MonoBehaviour
 {
     [SerializeField] private DoorBehaviour door;
+    [SerializeField] private Coin[] coinsPull;
+
+    private PlayerController playerController;
 
     private bool isDoorOpened = false;
-    private int totalCoins = 4;
-    private int collectedCoins = 0;
 
     private void Start()
     {
-        
+        playerController = GameManager.Instance.GetPlayerController();
+
+        if (!playerController)
+        {
+            Debug.LogError("PlayerController not found in GameManager.");
+        }
     }
 
     private void FixedUpdate()
@@ -21,11 +27,23 @@ public class LevelManager : MonoBehaviour
 
     private void CheckCoins()
     {
-        if (collectedCoins >= totalCoins && !isDoorOpened)
+        if (!isDoorOpened)
         {
-            isDoorOpened = true;
+            bool allCoinsCollected = true;
 
-            door.OpenDoor();
-        }
+            foreach (Coin coin in coinsPull)
+            {
+                if (coin.gameObject.activeSelf)
+                {
+                    allCoinsCollected = false;
+                    break;
+                }
+            }
+            if (allCoinsCollected)
+            {
+                isDoorOpened = true;
+                door.Open();
+            }
+        }  
     }
 }
