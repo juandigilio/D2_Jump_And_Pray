@@ -24,6 +24,7 @@ public class Cameraman : MonoBehaviour
     private CameraMode cameraMode;
     private Vector2 inputRotation;
     private Vector2 cameraRotation;
+    private Vector3 cinematicTarget;
     private Vector3 corridorTarget;
     private Vector3 corridorEnd;
 
@@ -64,6 +65,11 @@ public class Cameraman : MonoBehaviour
             UpdateCorridorCamera();
             Debug.Log("Corridor Camera");
         }
+        else if (cameraMode == CameraMode.Cinematic)
+        {
+            UpdateCinematicCamera();
+            Debug.Log("Cinematic Camera");
+        }
     }
 
     private void UpdateThirdPersonCamera()
@@ -93,6 +99,11 @@ public class Cameraman : MonoBehaviour
 
         mainCamera.transform.position = Vector3.Lerp(mainCamera.transform.position, targetPosition, Time.deltaTime * 5f);
         mainCamera.transform.LookAt(corridorTarget);
+    }
+
+    private void UpdateCinematicCamera()
+    {
+        mainCamera.transform.LookAt(cinematicTarget);
     }
 
     private Vector3 CalculateThirdPersonPosition()
@@ -180,8 +191,10 @@ public class Cameraman : MonoBehaviour
 
     public void SetCinematicCamera(Vector3 cameraPosition, Vector3 target)
     {
+        cinematicTarget = target;
+
         mainCamera.transform.position = cameraPosition;
-        mainCamera.transform.LookAt(target);
+        mainCamera.transform.LookAt(cinematicTarget);
 
         cameraMode = CameraMode.Cinematic;
     }

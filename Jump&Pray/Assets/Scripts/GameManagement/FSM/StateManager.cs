@@ -18,16 +18,20 @@ public class StateManager : MonoBehaviour
 
     private void OnEnable()
     {
-        //GameManager.Instance.RegisterStateManager(this);
+        EventManager.Instance.OnAnimationStarted += SetAnimationState;
+        EventManager.Instance.OnAnimationFinished += SetGroundedState;
 
         EventManager.Instance.OnCinematicStarted += SetCinematicState;
-        EventManager.Instance.OnCinematicEnded += SetGroundedState;
+        EventManager.Instance.OnCinematicFinished += SetGroundedState;
     }
 
     private void OnDisable()
     {
+        EventManager.Instance.OnAnimationStarted -= SetAnimationState;
+        EventManager.Instance.OnAnimationFinished -= SetGroundedState;
+
         EventManager.Instance.OnCinematicStarted -= SetCinematicState;
-        EventManager.Instance.OnCinematicEnded -= SetGroundedState;
+        EventManager.Instance.OnCinematicFinished -= SetGroundedState;
     }
 
     private void Start()

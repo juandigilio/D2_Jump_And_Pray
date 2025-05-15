@@ -6,9 +6,11 @@ public class EventManager : MonoBehaviour
 {
     public static EventManager Instance { get; private set; }
 
-    //public event Action OnDoorOpen;
+    public event Action OnAnimationStarted;
+    public event Action OnAnimationFinished;
+
     public event Action<Vector3, Vector3> OnCinematicStarted;
-    public event Action OnCinematicEnded;
+    public event Action OnCinematicFinished;
 
 
     private void Awake()
@@ -23,14 +25,24 @@ public class EventManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    public void TriggerCinematicFinished()
+    public void TriggerAnimationStarted()
     {
-        OnCinematicEnded?.Invoke();
+        OnAnimationStarted?.Invoke();
     }
 
-    public void TriggerDoorOpen(Vector3 position, Vector3 target)
+    public void TriggerAnimationFinished()
     {
-        //OnDoorOpen?.Invoke();
-        OnCinematicStarted?.Invoke(position, target);
+        OnAnimationFinished?.Invoke();
     }
+
+    public void TriggerCinematicStarted(Vector3 cameraPosition, Vector3 target)
+    {
+        OnCinematicStarted?.Invoke(cameraPosition, target);
+    }
+
+    public void TriggerCinematicFinished()
+    {
+        OnCinematicFinished?.Invoke();
+    }
+
 }
