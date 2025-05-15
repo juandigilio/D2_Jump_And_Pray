@@ -9,6 +9,7 @@ public class LevelConection : MonoBehaviour
     [SerializeField] private Transform activatedTarget;
     [SerializeField] private Transform nextLevelTarget;
     [SerializeField] private Transform cameraPosition;
+    [SerializeField] private Collider exitZone;
     [SerializeField] private float duration = 3f;
     [SerializeField] private float animationPause = 1f;
 
@@ -20,6 +21,7 @@ public class LevelConection : MonoBehaviour
     {
         if (isActivated && !hasMoved)
         {
+            EventManager.Instance.TriggerLoadNextLevel();
             StartCoroutine(MoveUpRoutine(nextLevelTarget));
         }       
     }
@@ -66,6 +68,7 @@ public class LevelConection : MonoBehaviour
         if (isActivated)
         {
             EventManager.Instance.TriggerAnimationFinished();
+            EventManager.Instance.TriggerUnloadLastLevel();
         }
         else
         {

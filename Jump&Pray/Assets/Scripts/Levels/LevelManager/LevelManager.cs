@@ -1,14 +1,13 @@
-using System.Xml.Schema;
 using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
-    [SerializeField] private DoorBehaviour door;
+    [SerializeField] private LevelConection levelConection;
     [SerializeField] private Coin[] coinsPull;
 
     private PlayerController playerController;
 
-    private bool isDoorOpened = false;
+    private bool isPlatformActivated = false;
 
     private void Start()
     {
@@ -27,7 +26,7 @@ public class LevelManager : MonoBehaviour
 
     private void CheckCoins()
     {
-        if (!isDoorOpened)
+        if (!isPlatformActivated)
         {
             bool allCoinsCollected = true;
 
@@ -41,8 +40,8 @@ public class LevelManager : MonoBehaviour
             }
             if (allCoinsCollected)
             {
-                isDoorOpened = true;
-                door.Open();
+                isPlatformActivated = true;
+                levelConection.ActivatePlatform();
             }
         }  
     }
