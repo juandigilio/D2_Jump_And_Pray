@@ -2,9 +2,8 @@ using UnityEngine;
 
 public class Coin : MonoBehaviour, ICollectable
 {
-    private float rotationSpeed = 100f;
-
     private Vector3 rotationAxis = new Vector3(0, 0, 1);
+    private float rotationSpeed = 100f;
 
 
     private void FixedUpdate()

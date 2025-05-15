@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -10,7 +9,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnEnable()
     {
-        GameManager.Instance.RegisterPlayer(this);
+        //GameManager.Instance.RegisterPlayer(this);
     }
 
     private void Start()
@@ -26,6 +25,8 @@ public class PlayerController : MonoBehaviour
         {
             Debug.LogError("JumpBehaviour not found on the GameObject.");
         }
+
+        GameManager.Instance.RegisterPlayer(this);
     }
 
     public void LoadJumpCharge()
