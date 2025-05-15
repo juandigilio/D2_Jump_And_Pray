@@ -23,7 +23,7 @@ public class DoorBehaviour : MonoBehaviour
         //EventManager.Instance.OnDoorOpen -= OpenDoor;
     }
 
-    public void OpenDoor()
+    public void Open()
     {
         if (!isOpen)
         {
