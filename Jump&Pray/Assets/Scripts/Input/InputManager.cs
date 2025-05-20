@@ -135,4 +135,14 @@ public class InputManager : MonoBehaviour
             PlayerConfig.thirdPersonMultiplier = thirdPersonSensitivity;
         }
     }
+
+    public void SetInGameActionMap()
+    {
+        playerInput.SwitchCurrentActionMap(inGameActionMap);
+    }
+
+    public void SetMenuActionMap()
+    {
+        playerInput.SwitchCurrentActionMap(menuActionMap);
+    }
 }
