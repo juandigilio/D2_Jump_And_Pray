@@ -145,4 +145,26 @@ public class InputManager : MonoBehaviour
     {
         playerInput.SwitchCurrentActionMap(menuActionMap);
     }
+
+    public void SetActionMap(ActionMapType type)
+    {
+        switch (type)
+        {
+            case ActionMapType.Options:
+            {
+                SetMenuActionMap();
+                break;
+            }
+            case ActionMapType.InGame:
+            {
+                SetInGameActionMap();
+                break;
+            }             
+            default:
+            {
+                SetInGameActionMap();
+                break;
+            }                
+        }
+    }
 }
