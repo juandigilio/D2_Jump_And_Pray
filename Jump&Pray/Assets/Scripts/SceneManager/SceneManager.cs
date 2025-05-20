@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 public class SceneManager
 {
     private static HashSet<string> loadedScenes = new HashSet<string>();
+    private static CustomScene gameLoaderScene;
     private static CustomScene mainScene;
-    private static CustomScene mainMenu;
+    private static CustomScene mainMenuScene;
+    private static CustomScene optionsScene;
     private static List<CustomScene> scenesPool = new List<CustomScene>();
     private static CustomScene winingScene;
 
@@ -31,6 +33,8 @@ public class SceneManager
         {
             Debug.LogWarning("Scene " + scene + " is already loaded.");
         }
+
+        SetInputActionMap(scene);
     }
 
     private static async Task UnloadSceneAsync(CustomScene scene)
@@ -62,14 +66,39 @@ public class SceneManager
         await LoadSceneAsync(mainScene);
     }
 
-    private static void UnloadAll()
+    private static async Task UnloadAll()
     {
+        await UnloadSceneAsync(gameLoaderScene);
+        await UnloadSceneAsync(optionsScene);
+
         foreach (CustomScene scene in scenesPool)
         {
-            _ = UnloadSceneAsync(scene);
+            await UnloadSceneAsync(scene);
+        }
+        
+        await UnloadSceneAsync(winingScene);
+    }
+
+    private static void SetInputActionMap(CustomScene scene)
+    {
+        InputManager inputManager = GameManager.Instance.GetInputManager();
+
+        inputManager.SetActionMap(scene.actionMapType);
+    }
+
+    public static void SetScenes(CustomScene gameLoader, CustomScene main, CustomScene menu, CustomScene options, List<CustomScene> sceneDictionary, CustomScene win)
+    {
+        gameLoaderScene = gameLoader;
+        mainScene = main;
+        mainMenuScene = menu;
+        optionsScene = options;
+
+        foreach (CustomScene scene in sceneDictionary)
+        {
+            scenesPool.Add(scene);
         }
 
-        _ = UnloadSceneAsync(winingScene);
+        winingScene = win;
     }
 
     public static void LoadNextSceneAsync()
@@ -90,34 +119,47 @@ public class SceneManager
         }
     }
 
-    public static void SetScenes(CustomScene main, CustomScene menu, List<CustomScene> sceneDictionary, CustomScene win)
-    {
-        mainScene = main;
-        mainMenu = menu;
-
-        foreach (CustomScene scene in sceneDictionary)
-        {
-            scenesPool.Add(scene);
-        }
-
-        winingScene = win;
-    }
-
     public static async Task LoadGame()
     {
         await LoadMainScene();
         LoadMenuScene();
+
+        _ = UnloadSceneAsync(gameLoaderScene);
     }
 
     public static void LoadMenuScene()
     {
-        UnloadAll();
+        _ = UnloadAll();
 
-        _ = LoadSceneAsync(mainMenu);
+        _ = LoadSceneAsync(mainMenuScene);
+    }
+
+    public static void LoadTutorialScene()
+    {
+        Debug.Log("Loading tutorial scene...");
+
+        index = 0;
+
+        _ = LoadSceneAsync(scenesPool[index]);
+    }
+
+    public static void UnloadMainMenuScene()
+    {
+        _ = UnloadSceneAsync(mainMenuScene);
     }
 
     public static void LoadWiningScene()
     {
         _ = LoadSceneAsync(winingScene);
+    }
+
+    public static void LoadOptionsScene()
+    {
+        _ = LoadSceneAsync(optionsScene);
+    }
+
+    public static void UnloadOptionsScene()
+    {
+        _ = UnloadSceneAsync(optionsScene);
     }
 }

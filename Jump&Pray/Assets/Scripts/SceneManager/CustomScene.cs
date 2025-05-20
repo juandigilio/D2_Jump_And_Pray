@@ -1,5 +1,9 @@
+
+public enum ActionMapType { InGame, Options }
+
+[System.Serializable]
 public struct CustomScene
 {
     public string sceneName;
-    public string actionName;
+    public ActionMapType actionMapType;
 }
