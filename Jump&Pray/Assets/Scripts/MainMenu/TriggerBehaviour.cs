@@ -1,12 +1,12 @@
 using UnityEngine;
-using static MenuManager;
+
 
 public class TriggerBehaviour : MonoBehaviour
 {
     [SerializeField] private MenuManager menuManager;
 
 
-    public enum TriggerType { Play, Options, Exit }
+    public enum TriggerType { Play, Unload, Options, Exit }
     public TriggerType type;
 
     public void OnTriggerEnter(Collider other)
@@ -18,6 +18,11 @@ public class TriggerBehaviour : MonoBehaviour
             case TriggerType.Play:
             {
                 menuManager.LoadGame();
+                break;
+            }
+            case TriggerType.Unload:
+            {
+                menuManager.Unload();
                 break;
             }
             case TriggerType.Options:

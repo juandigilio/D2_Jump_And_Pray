@@ -7,7 +7,6 @@ public class MenuManager : MonoBehaviour
     void Start()
     {
         inputManager = GameManager.Instance.GetInputManager();
-        //inputManager.SetMenuActionMap();
     }
 
 
@@ -18,12 +17,17 @@ public class MenuManager : MonoBehaviour
 
     public void LoadGame()
     {
-        //GameManager.Instance.LoadNextScene();
+        SceneManager.LoadTutorialScene();
     }
 
     public void LoadOptions()
     {
         //GameManager.Instance.LoadOptionsMenu();
+    }
+
+    public void Unload()
+    {
+        SceneManager.UnloadMainMenuScene();
     }
 
     public void QuitGame()
