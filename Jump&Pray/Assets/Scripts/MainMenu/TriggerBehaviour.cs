@@ -11,7 +11,7 @@ public class TriggerBehaviour : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
-        if (!other.CompareTag("Player")) return;
+        Debug.Log("Colliding");
 
         switch (type)
         {

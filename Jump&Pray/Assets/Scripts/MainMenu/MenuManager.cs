@@ -7,7 +7,7 @@ public class MenuManager : MonoBehaviour
     void Start()
     {
         inputManager = GameManager.Instance.GetInputManager();
-        inputManager.SetMenuActionMap();
+        //inputManager.SetMenuActionMap();
     }
 
 
@@ -28,7 +28,11 @@ public class MenuManager : MonoBehaviour
 
     public void QuitGame()
     {
-        Application.Quit();
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+    Application.Quit();
+#endif
         Debug.Log("Game is quitting...");
     }
 }
