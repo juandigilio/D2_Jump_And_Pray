@@ -22,8 +22,6 @@ public class TriggerBehaviour : MonoBehaviour
         {
             fitstTime = false;
 
-            Debug.Log("Colliding: " + type);
-
             switch (type)
             {
                 case TriggerType.Play:

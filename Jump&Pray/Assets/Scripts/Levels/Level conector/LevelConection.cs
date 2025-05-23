@@ -9,7 +9,8 @@ public class LevelConection : MonoBehaviour
     [SerializeField] private Transform nextLevelTarget;
     [SerializeField] private Transform cameraPosition;
     [SerializeField] private Collider exitZone;
-    [SerializeField] private float duration = 3f;
+    [SerializeField] private float moeUpDuration = 3f;
+    [SerializeField] private float nextLevelDuration = 6f;
     [SerializeField] private float animationPause = 1f;
 
     private bool isActivated = false;
@@ -20,14 +21,12 @@ public class LevelConection : MonoBehaviour
     {
         if (isActivated && !hasMoved)
         {
-            EventManager.Instance.TriggerLoadNextLevel();
             StartCoroutine(MoveRoutine(nextLevelTarget));
         }       
     }
 
     public void ActivatePlatform()
     {
-        Debug.Log("Activating platform");
         if (!isActivated)
         {
             StartCoroutine(MoveRoutine(activatedTarget));
@@ -36,14 +35,20 @@ public class LevelConection : MonoBehaviour
 
     private IEnumerator MoveRoutine(Transform target)
     {
-        Debug.Log("Moving platform to: " + target.position);
+        float duration;
+
         if (isActivated)
         {
-            EventManager.Instance.TriggerAnimationStarted();
             hasMoved = true;
+            duration = nextLevelDuration;
+
+            EventManager.Instance.TriggerAnimationStarted();
+            SceneManager.LoadNextSceneAsync();
         }
         else
         {
+            duration = moeUpDuration;
+
             EventManager.Instance.TriggerCinematicStarted(cameraPosition.position, platform);
         }      
 
@@ -69,7 +74,7 @@ public class LevelConection : MonoBehaviour
         if (isActivated)
         {
             EventManager.Instance.TriggerAnimationFinished();
-            EventManager.Instance.TriggerUnloadLastLevel();
+            //EventManager.Instance.TriggerUnloadLastLevel();
         }
         else
         {
@@ -77,30 +82,4 @@ public class LevelConection : MonoBehaviour
             isActivated = true;
         }
     }
-
-    //private IEnumerator GoToNextLevelCoroutine()
-    //{
-    //    EventManager.Instance.TriggerAnimationStarted();
-
-    //    Vector3 initialPosition = platform.position;
-
-    //    float elapsedTime = 0f;
-
-    //    while (elapsedTime < duration)
-    //    {
-    //        platform.position = Vector3.Lerp(initialPosition, nextLevelTarget.position, elapsedTime / duration);
-    //        elapsedTime += Time.deltaTime;
-    //        yield return null;
-    //    }
-
-    //    elapsedTime = 0f;
-
-    //    while (elapsedTime < animationPause)
-    //    {
-    //        elapsedTime += Time.deltaTime;
-    //        yield return null;
-    //    }
-
-    //    EventManager.Instance.TriggerAnimationFinished();
-    //}
 }
