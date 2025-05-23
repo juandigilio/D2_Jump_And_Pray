@@ -28,11 +28,11 @@ Transform:
   m_GameObject: {fileID: 887274895871440459}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.5565, y: -4.22, z: -17.44}
-  m_LocalScale: {x: 2.5850575, y: 0.6295209, z: 2.5850575}
+  m_LocalPosition: {x: -0.012213447, y: -0.804, z: 0.017}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4383133827630762549}
+  m_Father: {fileID: 3305312788317647189}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &6952789915462786173
 MeshFilter:
@@ -49,7 +49,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 887274895871440459}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -468,7 +468,6 @@ Transform:
   - {fileID: 6052894029416325792}
   - {fileID: 367857482928510170}
   - {fileID: 1125153561273092586}
-  - {fileID: 8573642870202721626}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6977481044178455449
@@ -488,7 +487,8 @@ MonoBehaviour:
   nextLevelTarget: {fileID: 1125153561273092586}
   cameraPosition: {fileID: 6052894029416325792}
   exitZone: {fileID: 739808574705735419}
-  duration: 3
+  moeUpDuration: 3
+  nextLevelDuration: 6
   animationPause: 1
 --- !u!1001 &7405718552725903336
 PrefabInstance:
@@ -556,7 +556,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 5411270384614237885, guid: 2cfd87436f82f694cb1ed07e801a4415, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8573642870202721626}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 7195035819186706, guid: 2cfd87436f82f694cb1ed07e801a4415, type: 3}
       insertIndex: -1
