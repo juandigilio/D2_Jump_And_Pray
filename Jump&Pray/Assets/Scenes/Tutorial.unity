@@ -4709,7 +4709,23 @@ PrefabInstance:
       propertyPath: m_Convex
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1349703096157313044, guid: ca7ce10b195afbf449e88344a7a14ba9, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1349703096157313044, guid: ca7ce10b195afbf449e88344a7a14ba9, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1349703096157313044, guid: ca7ce10b195afbf449e88344a7a14ba9, type: 3}
+      propertyPath: m_ProvidesContacts
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2221714660856426371, guid: ca7ce10b195afbf449e88344a7a14ba9, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3957934423020129598, guid: ca7ce10b195afbf449e88344a7a14ba9, type: 3}
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
@@ -4783,19 +4799,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8573642870202721626, guid: ca7ce10b195afbf449e88344a7a14ba9, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.752546
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8573642870202721626, guid: ca7ce10b195afbf449e88344a7a14ba9, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.42203954
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8573642870202721626, guid: ca7ce10b195afbf449e88344a7a14ba9, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.99501354
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8573642870202721626, guid: ca7ce10b195afbf449e88344a7a14ba9, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.771
       objectReference: {fileID: 0}
     - target: {fileID: 8573642870202721626, guid: ca7ce10b195afbf449e88344a7a14ba9, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -17.45
+      value: 0.06
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4804,6 +4824,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 887274895871440459, guid: ca7ce10b195afbf449e88344a7a14ba9, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4560829017883988355}
+    - targetCorrespondingSourceObject: {fileID: 887274895871440459, guid: ca7ce10b195afbf449e88344a7a14ba9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4560829017883988356}
   m_SourcePrefab: {fileID: 100100000, guid: ca7ce10b195afbf449e88344a7a14ba9, type: 3}
 --- !u!114 &4560829017883988353 stripped
 MonoBehaviour:
@@ -4834,6 +4857,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelConection: {fileID: 4560829017883988353}
+--- !u!114 &4560829017883988356
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4560829017883988354}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6218747d170712b4dae626837cea7a3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

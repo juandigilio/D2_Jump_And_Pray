@@ -41,6 +41,7 @@ public class SceneManager
     {
         if (IsSceneLoaded(scene))
         {
+            Debug.Log("Unloading scene: " + scene.sceneName);
             AsyncOperation asyncUnload = UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(scene.sceneName);
 
             while (!asyncUnload.isDone)
@@ -115,6 +116,8 @@ public class SceneManager
     {
         if (index > 0)
         {
+            Debug.Log("Unloading scene: " + scenesPool[index - 1].sceneName);
+            Debug.Log("Index: " + index);
             _ = UnloadSceneAsync(scenesPool[index - 1]);
         }
     }

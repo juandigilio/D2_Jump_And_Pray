@@ -18,19 +18,16 @@ public abstract class PlayerState
 
     public void EnablePlayerUpdate()
     {
-        GameManager.Instance.GetPlayerController().enabled = true;
-        GameManager.Instance.GetInputManager().enabled = true;
+        //GameManager.Instance.GetPlayerController().enabled = true;
+        //GameManager.Instance.GetInputManager().enabled = true;
         GameManager.Instance.GetPlayerInput().enabled = true;
     }
 
     public void DisablePlayerUpdate()
     {
-        Debug.Log("Disabling player update");
-        GameManager.Instance.GetPlayerController().enabled = false;
-        GameManager.Instance.GetInputManager().enabled = false;
+        //GameManager.Instance.GetPlayerController().enabled = false;
+        //GameManager.Instance.GetInputManager().enabled = false;
         GameManager.Instance.GetPlayerInput().enabled = false;
-
-        Debug.Log(GameManager.Instance.GetInputManager().enabled);
     }
 
     public void SetCinematicCamera(Vector3 cameraPosition, GameObject target)
