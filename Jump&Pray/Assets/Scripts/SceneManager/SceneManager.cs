@@ -52,7 +52,7 @@ public class SceneManager
         }
         else
         {
-            Debug.LogWarning("Scene " + scene + " is not loaded.");
+            //Debug.LogWarning("Scene " + scene + " is not loaded.");
         }
     }
 

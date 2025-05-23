@@ -1,11 +1,10 @@
-using System;
 using UnityEngine;
 using System.Collections;
-using Unity.VisualScripting.Antlr3.Runtime;
+
 
 public class LevelConection : MonoBehaviour
 {
-    [SerializeField] private Transform platform;
+    [SerializeField] private GameObject platform;
     [SerializeField] private Transform activatedTarget;
     [SerializeField] private Transform nextLevelTarget;
     [SerializeField] private Transform cameraPosition;
@@ -22,20 +21,22 @@ public class LevelConection : MonoBehaviour
         if (isActivated && !hasMoved)
         {
             EventManager.Instance.TriggerLoadNextLevel();
-            StartCoroutine(MoveUpRoutine(nextLevelTarget));
+            StartCoroutine(MoveRoutine(nextLevelTarget));
         }       
     }
 
     public void ActivatePlatform()
     {
+        Debug.Log("Activating platform");
         if (!isActivated)
         {
-            StartCoroutine(MoveUpRoutine(activatedTarget));
+            StartCoroutine(MoveRoutine(activatedTarget));
         }
     }
 
-    private IEnumerator MoveUpRoutine(Transform target)
+    private IEnumerator MoveRoutine(Transform target)
     {
+        Debug.Log("Moving platform to: " + target.position);
         if (isActivated)
         {
             EventManager.Instance.TriggerAnimationStarted();
@@ -43,16 +44,16 @@ public class LevelConection : MonoBehaviour
         }
         else
         {
-            EventManager.Instance.TriggerCinematicStarted(cameraPosition.position, platform.position);
+            EventManager.Instance.TriggerCinematicStarted(cameraPosition.position, platform);
         }      
 
-        Vector3 initialPosition = platform.position;
+        Vector3 initialPosition = platform.transform.position;
 
         float elapsedTime = 0f;
 
         while (elapsedTime < duration)
         {
-            platform.position = Vector3.Lerp(initialPosition, target.position, elapsedTime / duration);
+            platform.transform.position = Vector3.Lerp(initialPosition, target.position, elapsedTime / duration);
             elapsedTime += Time.deltaTime;
             yield return null;
         }

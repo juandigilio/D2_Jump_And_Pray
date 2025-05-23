@@ -3,38 +3,50 @@ using UnityEngine;
 
 public class TriggerBehaviour : MonoBehaviour
 {
-    [SerializeField] private MenuManager menuManager;
-
-
     public enum TriggerType { Play, Unload, Options, Exit }
     public TriggerType type;
 
+    [SerializeField] private MenuManager menuManager;
+
+
+    private bool fitstTime;
+
+    public void Awake()
+    {
+        fitstTime = true;
+    }
+
     public void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Colliding");
-
-        switch (type)
+        if (fitstTime)
         {
-            case TriggerType.Play:
+            fitstTime = false;
+
+            Debug.Log("Colliding: " + type);
+
+            switch (type)
             {
-                menuManager.LoadGame();
-                break;
+                case TriggerType.Play:
+                {
+                    menuManager.LoadGame();
+                    break;
+                }
+                case TriggerType.Unload:
+                {
+                    menuManager.Unload();
+                    break;
+                }
+                case TriggerType.Options:
+                {
+                    menuManager.LoadOptions();
+                    break;
+                }
+                case TriggerType.Exit:
+                {
+                    menuManager.QuitGame();
+                    break;
+                }
             }
-            case TriggerType.Unload:
-            {
-                menuManager.Unload();
-                break;
-            }
-            case TriggerType.Options:
-            {
-                menuManager.LoadOptions();
-                break;
-            }
-            case TriggerType.Exit:
-            {
-                menuManager.QuitGame();
-                break;
-            }
-        }
+        } 
     }
 }
