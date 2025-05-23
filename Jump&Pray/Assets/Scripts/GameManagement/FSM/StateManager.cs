@@ -64,14 +64,25 @@ public class StateManager : MonoBehaviour
         currentState.Enter();
     }
 
+    private void TransitionToState(PlayerState newState, Vector3 cameraPosition, GameObject target)
+    {
+        if (currentState != null)
+        {
+            currentState.Exit();
+        }
+
+        currentState = newState;
+        currentState.Enter(cameraPosition, target);
+    }
+
     private void SetGroundedState()
     {
         TransitionToState(groundedState);
     }
 
-    private void SetCinematicState(Vector3 cameraPosition, Vector3 target)
+    private void SetCinematicState(Vector3 cameraPosition, GameObject target)
     {
-        TransitionToState(cinematicState);
+        TransitionToState(cinematicState, cameraPosition, target);
     }
 
     private void SetAnimationState()

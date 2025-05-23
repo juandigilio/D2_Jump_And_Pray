@@ -9,7 +9,7 @@ public class EventManager : MonoBehaviour
     public event Action OnAnimationStarted;
     public event Action OnAnimationFinished;
 
-    public event Action<Vector3, Vector3> OnCinematicStarted;
+    public event Action<Vector3, GameObject> OnCinematicStarted;
     public event Action OnCinematicFinished;
 
     public event Action OnLoadNextLevel;
@@ -38,7 +38,7 @@ public class EventManager : MonoBehaviour
         OnAnimationFinished?.Invoke();
     }
 
-    public void TriggerCinematicStarted(Vector3 cameraPosition, Vector3 target)
+    public void TriggerCinematicStarted(Vector3 cameraPosition, GameObject target)
     {
         OnCinematicStarted?.Invoke(cameraPosition, target);
     }

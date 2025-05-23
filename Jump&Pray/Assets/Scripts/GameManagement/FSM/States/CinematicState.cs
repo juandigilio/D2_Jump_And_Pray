@@ -5,7 +5,7 @@ public class CinematicState : PlayerState
     public CinematicState(StateManager stateManager, Cameraman cameraman) : base(stateManager, cameraman) { }
 
 
-    public override void Enter(Vector3 cameraPosition, Vector3 target)
+    public override void Enter(Vector3 cameraPosition, GameObject target)
     {
         SetCinematicCamera(cameraPosition, target);
         DisablePlayerUpdate();

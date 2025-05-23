@@ -12,7 +12,7 @@ public abstract class PlayerState
     }
 
     public virtual void Enter() { }
-    public virtual void Enter(Vector3 cameraPosition, Vector3 target) { }
+    public virtual void Enter(Vector3 cameraPosition, GameObject target) { }
     public virtual void Update() { }
     public virtual void Exit() { }
 
@@ -26,7 +26,7 @@ public abstract class PlayerState
         stateManager.PlayerController().enabled = false;
     }
 
-    public void SetCinematicCamera(Vector3 cameraPosition, Vector3 target)
+    public void SetCinematicCamera(Vector3 cameraPosition, GameObject target)
     {
         cameraman.SetCinematicCamera(cameraPosition, target);
     }

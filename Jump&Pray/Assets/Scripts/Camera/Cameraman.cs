@@ -24,8 +24,8 @@ public class Cameraman : MonoBehaviour
     private CameraMode cameraMode;
     private Vector2 inputRotation;
     private Vector2 cameraRotation;
-    private Vector3 cinematicTarget;
-    private Vector3 corridorTarget;
+    private GameObject cinematicTarget;
+    private GameObject corridorTarget;
     private Vector3 corridorEnd;
 
 
@@ -86,11 +86,11 @@ public class Cameraman : MonoBehaviour
 
     private void UpdateCorridorCamera()
     {
-        Vector3 direction = (corridorTarget - mainCamera.transform.position).normalized;
-        Vector3 targetPosition = corridorTarget - direction * corridorDistance;
+        Vector3 direction = (corridorTarget.transform.position - mainCamera.transform.position).normalized;
+        Vector3 targetPosition = corridorTarget.transform.position - direction * corridorDistance;
 
-        float distanceToEnd = Vector3.Distance(corridorTarget, corridorEnd);
-        float distanceToCamera = Vector3.Distance(corridorTarget, targetPosition);
+        float distanceToEnd = Vector3.Distance(corridorTarget.transform.position, corridorEnd);
+        float distanceToCamera = Vector3.Distance(corridorTarget.transform.position, targetPosition);
 
         if (distanceToCamera > distanceToEnd)
         {
@@ -98,12 +98,12 @@ public class Cameraman : MonoBehaviour
         }
 
         mainCamera.transform.position = Vector3.Lerp(mainCamera.transform.position, targetPosition, Time.deltaTime * 5f);
-        mainCamera.transform.LookAt(corridorTarget);
+        mainCamera.transform.LookAt(corridorTarget.transform.position);
     }
 
     private void UpdateCinematicCamera()
     {
-        mainCamera.transform.LookAt(cinematicTarget);
+        mainCamera.transform.LookAt(cinematicTarget.transform.position);
     }
 
     private Vector3 CalculateThirdPersonPosition()
@@ -182,19 +182,19 @@ public class Cameraman : MonoBehaviour
         cameraMode = CameraMode.ThirdPerson;
     }
 
-    public void SetCorridorCamera(Vector3 target, Vector3 end)
+    public void SetCorridorCamera(GameObject target, Vector3 end)
     {
         corridorTarget = target;
         corridorEnd = end;
         cameraMode = CameraMode.Corridor;
     }
 
-    public void SetCinematicCamera(Vector3 cameraPosition, Vector3 target)
+    public void SetCinematicCamera(Vector3 cameraPosition, GameObject target)
     {
         cinematicTarget = target;
 
         mainCamera.transform.position = cameraPosition;
-        mainCamera.transform.LookAt(cinematicTarget);
+        mainCamera.transform.LookAt(cinematicTarget.transform.position);
 
         cameraMode = CameraMode.Cinematic;
     }
@@ -203,4 +203,9 @@ public class Cameraman : MonoBehaviour
     {
         cameraMode = mode;
     }
+
+    //public void SetCinematicTarget(Vector3 target)
+    //{
+    //    cinematicTarget = target;
+    //}
 }
