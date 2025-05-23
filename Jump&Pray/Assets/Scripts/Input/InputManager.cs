@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -33,6 +32,7 @@ public class InputManager : MonoBehaviour
     private void OnEnable()
     {
         GameManager.Instance.RegisterInputManager(this);
+        GameManager.Instance.RegisterPlayerInput(playerInput);
     }
 
     private void Start()
@@ -88,7 +88,6 @@ public class InputManager : MonoBehaviour
 
     private void Move(InputAction.CallbackContext callbackContext)
     {
-
         if (callbackContext.started)
         {
             playerController.SetDirection(callbackContext.ReadValue<Vector2>());
@@ -101,7 +100,6 @@ public class InputManager : MonoBehaviour
         {
             playerController.SetDirection(Vector2.zero);
         }
-
     }
 
     private void Jump(InputAction.CallbackContext callbackContext)
@@ -151,20 +149,20 @@ public class InputManager : MonoBehaviour
         switch (type)
         {
             case ActionMapType.Options:
-            {
-                SetMenuActionMap();
-                break;
-            }
+                {
+                    SetMenuActionMap();
+                    break;
+                }
             case ActionMapType.InGame:
-            {
-                SetInGameActionMap();
-                break;
-            }             
+                {
+                    SetInGameActionMap();
+                    break;
+                }
             default:
-            {
-                SetInGameActionMap();
-                break;
-            }                
+                {
+                    SetInGameActionMap();
+                    break;
+                }
         }
     }
 }

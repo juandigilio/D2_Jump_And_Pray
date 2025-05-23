@@ -12,6 +12,6 @@ public class GroundedState : PlayerState
 
     public override void Exit()
     {
-        Debug.Log("Exiting Grounded State");
+        //Debug.Log("Exiting Grounded State");
     }
 }

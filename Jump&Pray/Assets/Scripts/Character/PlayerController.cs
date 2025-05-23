@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Windows;
 
 public class PlayerController : MonoBehaviour
 {
@@ -10,6 +11,12 @@ public class PlayerController : MonoBehaviour
     private void OnEnable()
     {
         //GameManager.Instance.RegisterPlayer(this);
+    }
+
+    private void OnDisable()
+    {
+        inputDirection = Vector3.zero;
+        movementBehaviour.SetInputDirection(inputDirection);
     }
 
     private void Start()

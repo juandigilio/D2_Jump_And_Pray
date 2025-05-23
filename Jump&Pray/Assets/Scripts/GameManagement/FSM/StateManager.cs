@@ -3,7 +3,7 @@ using UnityEngine;
 public class StateManager : MonoBehaviour
 {
     private Cameraman cameraman;
-    private PlayerController playerController;
+    //private PlayerController playerController;
 
     private PlayerState currentState;
     public PlayerState groundedState;
@@ -36,7 +36,7 @@ public class StateManager : MonoBehaviour
 
     private void Start()
     {
-        playerController = GameManager.Instance.GetPlayerController();
+        //playerController = GameManager.Instance.GetPlayerController();
         cameraman = GameManager.Instance.GetCameraman();
         GameManager.Instance.RegisterStateManager(this);
 
@@ -98,10 +98,5 @@ public class StateManager : MonoBehaviour
     public Cameraman Cameraman()
     {
         return cameraman;
-    }
-
-    public PlayerController PlayerController()
-    {
-        return playerController;
     }
 }

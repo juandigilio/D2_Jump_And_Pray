@@ -12,8 +12,8 @@ public class EventManager : MonoBehaviour
     public event Action<Vector3, GameObject> OnCinematicStarted;
     public event Action OnCinematicFinished;
 
-    public event Action OnLoadNextLevel;
-    public event Action OnUnloadLastLevel;
+    //public event Action OnLoadNextLevel;
+    //public event Action OnUnloadLastLevel;
 
 
     private void Awake()
@@ -48,13 +48,13 @@ public class EventManager : MonoBehaviour
         OnCinematicFinished?.Invoke();
     }
 
-    public void TriggerLoadNextLevel()
-    {
-        OnLoadNextLevel?.Invoke();
-    }
+    //public void TriggerLoadNextLevel()
+    //{
+    //    OnLoadNextLevel?.Invoke();
+    //}
 
-    public void TriggerUnloadLastLevel()
-    {
-        OnUnloadLastLevel?.Invoke();
-    }
+    //public void TriggerUnloadLastLevel()
+    //{
+    //    OnUnloadLastLevel?.Invoke();
+    //}
 }

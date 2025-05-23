@@ -136,8 +136,6 @@ public class SceneManager
 
     public static void LoadTutorialScene()
     {
-        Debug.Log("Loading tutorial scene...");
-
         index = 0;
 
         _ = LoadSceneAsync(scenesPool[index]);

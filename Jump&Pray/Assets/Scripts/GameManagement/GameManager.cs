@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour
 {
@@ -7,6 +8,7 @@ public class GameManager : MonoBehaviour
     private Cameraman cameraman;
     private PlayerController playerController;
     private InputManager inputManager;
+    private PlayerInput playerInput;
     private StateManager stateManager;
 
     private void Awake()
@@ -41,6 +43,11 @@ public class GameManager : MonoBehaviour
         this.stateManager = stateManager;
     }
 
+    public void RegisterPlayerInput(PlayerInput playerInput)
+    {
+        this.playerInput = playerInput;
+    }
+
     public Cameraman GetCameraman()
     {
         return cameraman;
@@ -59,5 +66,10 @@ public class GameManager : MonoBehaviour
     public StateManager GetStateManager()
     {
         return stateManager;
+    }
+
+    public PlayerInput GetPlayerInput()
+    {
+        return playerInput;
     }
 }

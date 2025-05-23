@@ -12,7 +12,7 @@ public class AnimationState : PlayerState
 
     public override void Exit()
     {
-        Debug.Log("Exiting Animation State");
+        //Debug.Log("Exiting Animation State");
         EnablePlayerUpdate();
     }
 }
