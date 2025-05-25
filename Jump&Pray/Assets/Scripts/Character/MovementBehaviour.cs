@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class MovementBehaviour : MonoBehaviour
@@ -11,6 +12,7 @@ public class MovementBehaviour : MonoBehaviour
     private Vector2 horizontalVelocity;
     private Vector3 forward;
     private Vector3 right;
+    private bool isGrounded = true;
 
     private Rigidbody rigidBody;
 
@@ -80,5 +82,10 @@ public class MovementBehaviour : MonoBehaviour
 
         movementDirection = (forward * movementInput.y) + (right * movementInput.x);
         movementDirection *= forceMultiplier;
+    }
+
+    public void SetGroundedCondition(bool isGrounded)
+    {
+        this.isGrounded = isGrounded;
     }
 }

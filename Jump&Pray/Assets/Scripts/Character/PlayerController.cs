@@ -5,13 +5,11 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] private MovementBehaviour movementBehaviour;
     [SerializeField] private JumpBehaviour jumpBehaviour;
+    [SerializeField] private float groundCheckDistance = 0.1f;
 
-    Vector2 inputDirection;
+    private Vector2 inputDirection;
+    private bool isGrounded;
 
-    private void OnEnable()
-    {
-        //GameManager.Instance.RegisterPlayer(this);
-    }
 
     private void OnDisable()
     {
@@ -36,6 +34,33 @@ public class PlayerController : MonoBehaviour
         GameManager.Instance.RegisterPlayer(this);
     }
 
+    private void Update()
+    {
+        CheckGround();
+    }
+
+    private void CheckGround()
+    {
+        Vector3 origin = transform.position;
+        float distance = groundCheckDistance;
+
+        bool hit = Physics.Raycast(origin, Vector3.down, distance);
+
+        Debug.DrawRay(origin, Vector3.down * distance, hit ? Color.green : Color.red);
+
+        if (hit)
+        {
+            isGrounded = true;
+        }
+        else
+        {
+            isGrounded = false;
+        }
+
+        jumpBehaviour.SetGroundedCondition(isGrounded);
+        movementBehaviour.SetGroundedCondition(isGrounded);
+    }
+
     public void LoadJumpCharge()
     {
         jumpBehaviour.StartCharge();
@@ -50,5 +75,10 @@ public class PlayerController : MonoBehaviour
     {
         inputDirection = input;
         movementBehaviour.SetInputDirection(inputDirection);
+    }
+
+    public bool IsGrounded()
+    {
+        return isGrounded;
     }
 }

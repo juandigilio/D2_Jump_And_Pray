@@ -4,7 +4,7 @@ using UnityEngine;
 public class JumpBehaviour : MonoBehaviour
 {
     [SerializeField] private float jumpForce = 5f;
-    [SerializeField] private float groundCheckDistance = 0.1f;
+
     [SerializeField] private float maxChargeTime = 1.0f;
     [SerializeField] private float minChargeTime = 0.05f;
 
@@ -31,8 +31,6 @@ public class JumpBehaviour : MonoBehaviour
     private void Update()
     {
         CheckCharginTime();
-
-        CheckGround();
     }
 
     private void CheckCharginTime()
@@ -43,6 +41,18 @@ public class JumpBehaviour : MonoBehaviour
             {
                 StopCharge();
             }
+        }
+    }
+
+    private void Jump()
+    {
+        if (!isJumping && isGrounded)
+        {
+            Vector3 boostedForce = Vector3.up * (jumpForce * chargeTime);
+
+            rigidBody.AddForce(boostedForce, ForceMode.Impulse);
+
+            isJumping = true;
         }
     }
 
@@ -74,35 +84,14 @@ public class JumpBehaviour : MonoBehaviour
         }
     }
 
-    private void Jump()
+    public void SetGroundedCondition(bool isGrounded)
     {
-        if (!isJumping && isGrounded)
+        this.isGrounded = isGrounded;
+
+        if (isGrounded)
         {
-            Vector3 boostedForce = Vector3.up * (jumpForce * chargeTime);
-
-            rigidBody.AddForce(boostedForce, ForceMode.Impulse);
-
-            isJumping = true;
-        }        
-    }
-
-    private void CheckGround()
-    {
-        Vector3 origin = transform.position;
-        float distance = groundCheckDistance;
-
-        bool hit = Physics.Raycast(origin, Vector3.down, distance);
-
-        Debug.DrawRay(origin, Vector3.down * distance, hit ? Color.green : Color.red);
-
-        if (hit)
-        {
-            isGrounded = true;
             isJumping = false;
-        }
-        else
-        {
-            isGrounded = false;
+            doubleJump = false;
         }
     }
 }

@@ -53,22 +53,22 @@ public class Cameraman : MonoBehaviour
         if (cameraMode == CameraMode.ThirdPerson)
         {
             UpdateThirdPersonCamera();
-            Debug.Log("Third Person Camera");
+            //Debug.Log("Third Person Camera");
         }
         else if (cameraMode == CameraMode.FirstPerson)
         {
             UpdateFirstPersonCamera();
-            Debug.Log("First Person Camera");
+            //Debug.Log("First Person Camera");
         }
         else if (cameraMode == CameraMode.Corridor)
         {
             UpdateCorridorCamera();
-            Debug.Log("Corridor Camera");
+            //Debug.Log("Corridor Camera");
         }
         else if (cameraMode == CameraMode.Cinematic)
         {
             UpdateCinematicCamera();
-            Debug.Log("Cinematic Camera");
+            //Debug.Log("Cinematic Camera");
         }
     }
 
