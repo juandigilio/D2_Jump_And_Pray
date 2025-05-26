@@ -3,13 +3,11 @@ using UnityEngine;
 public class FollowPlatform : MonoBehaviour
 {
     private PlayerController playerController;
-    //private Rigidbody rigidbody;
-    private CapsuleCollider collider;
+    private CapsuleCollider playerCollider;
     private Vector3 groundPosition;
     private Vector3 lastGroundPosition;
     private int groundID;
     private int lastGroundID;
-    private float height;
     private float width;
     private Quaternion currentRotation;
     private Quaternion lastRotation;
@@ -29,21 +27,36 @@ public class FollowPlatform : MonoBehaviour
             Debug.LogError("PlayerController not found");
         }
 
-        collider = gameObject.GetComponent<CapsuleCollider>();
+        playerCollider = gameObject.GetComponent<CapsuleCollider>();
         GetObjectSize();
     }
 
     void Update()
     {
         UpdateGizmoOrigin();
-
      
         CheckGround();
     }
 
+    private void OnDrawGizmos()
+    {
+        if (isGroundedGizmo)
+        {
+            Gizmos.color = Color.cyan;
+        }
+        else
+        {
+            Gizmos.color = Color.red;
+        }
+
+        Gizmos.DrawLine(gizmoOrigin, gizmoOrigin + gizmoDirection * gizmoLength);
+        Gizmos.DrawWireSphere(gizmoOrigin, gizmoRadius);
+        Gizmos.DrawWireSphere(gizmoOrigin + gizmoDirection * gizmoLength, gizmoRadius);
+    }
+
     private void UpdateGizmoOrigin()
     {
-        gizmoOrigin = collider.bounds.center + transform.up * (collider.bounds.extents.y);
+        gizmoOrigin = playerCollider.bounds.center + transform.up * (playerCollider.bounds.extents.y);
     }
 
     private void CheckGround()
@@ -54,19 +67,22 @@ public class FollowPlatform : MonoBehaviour
         {
             GameObject groundedObject = hit.collider.gameObject;
 
-            groundID = groundedObject.GetInstanceID();
-            groundPosition = groundedObject.transform.position;
-            currentRotation = groundedObject.transform.rotation;
-
-            isGroundedGizmo = true;
-
-            if (groundID == lastGroundID)
+            if (groundedObject.tag != "Smasher")
             {
-                UpdateGroundMovement();
-                UpdateGroundRotation(groundedObject);
-            }
+                groundID = groundedObject.GetInstanceID();
+                groundPosition = groundedObject.transform.position;
+                currentRotation = groundedObject.transform.rotation;
 
-            StoreLastGroundData();
+                isGroundedGizmo = true;
+
+                if (groundID == lastGroundID)
+                {
+                    UpdateGroundMovement();
+                    UpdateGroundRotation(groundedObject);
+                }
+
+                StoreLastGroundData();
+            }        
         }
         else
         {
@@ -111,35 +127,16 @@ public class FollowPlatform : MonoBehaviour
 
     private void GetObjectSize()
     {
-        if (collider != null)
+        if (playerCollider != null)
         {
-            width = collider.bounds.size.x;
-            height = collider.bounds.size.y;
+            width = playerCollider.bounds.size.x;
             gizmoDirection = -transform.up;
             gizmoRadius = width / 2;
-            gizmoLength = (collider.bounds.size.y - gizmoRadius) * 1.05f;
+            gizmoLength = (playerCollider.bounds.size.y - gizmoRadius) * 1.05f;
         }
         else
         {
             Debug.LogError("El GameObject no tiene un BoxCollider.");
         }
-    }
-
-    private void OnDrawGizmos()
-    {
-        if (isGroundedGizmo)
-        {
-            Gizmos.color = Color.cyan;
-            Debug.Log("Gizmo is grounded");
-        }
-        else
-        {
-            Debug.Log("Gizmo is not grounded");
-            Gizmos.color = Color.red;
-        }
-
-        Gizmos.DrawLine(gizmoOrigin, gizmoOrigin + gizmoDirection * gizmoLength);
-        Gizmos.DrawWireSphere(gizmoOrigin, gizmoRadius);
-        Gizmos.DrawWireSphere(gizmoOrigin + gizmoDirection * gizmoLength, gizmoRadius);
     }
 }
