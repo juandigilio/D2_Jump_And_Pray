@@ -2021,6 +2021,7 @@ GameObject:
   - component: {fileID: 588450884}
   - component: {fileID: 588450883}
   - component: {fileID: 588450882}
+  - component: {fileID: 588450885}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -2159,8 +2160,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba2c5496ca16303449f43c349f1e9a00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpForce: 25
-  maxChargeTime: 0.2
+  jumpForce: 60
+  maxChargeTime: 0.1
   minChargeTime: 0.05
 --- !u!114 &588450883
 MonoBehaviour:
@@ -2192,6 +2193,19 @@ MonoBehaviour:
   movementBehaviour: {fileID: 588450883}
   jumpBehaviour: {fileID: 588450882}
   groundCheckDistance: 1.07
+--- !u!114 &588450885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 588450874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6218747d170712b4dae626837cea7a3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gizmoLength: 0
 --- !u!1001 &588755813
 PrefabInstance:
   m_ObjectHideFlags: 0
