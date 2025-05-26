@@ -11,6 +11,7 @@ public class InputManager : MonoBehaviour
     [SerializeField] private string rotateCameraAction = "MoveCamera";
     [SerializeField] private string moveAction = "Move";
     [SerializeField] private string jumpAction = "Jump";
+    [SerializeField] private string rollAction = "Roll";
 
     [SerializeField] private string inGameActionMap = "InGame";
     [SerializeField] private string menuActionMap = "Menu";
@@ -53,6 +54,8 @@ public class InputManager : MonoBehaviour
 
             playerInput.currentActionMap.FindAction(jumpAction).started += Jump;
             playerInput.currentActionMap.FindAction(jumpAction).canceled += Jump;
+
+            playerInput.currentActionMap.FindAction(rollAction).started += Roll;
         }
 
         cameraman = GameManager.Instance.GetCameraman();
@@ -111,6 +114,14 @@ public class InputManager : MonoBehaviour
         if (callbackContext.canceled)
         {
             playerController.ReleaseJumpCharge();
+        }
+    }
+
+    private void Roll(InputAction.CallbackContext callbackContext)
+    {
+        if (callbackContext.started)
+        {
+            playerController.Roll();
         }
     }
 

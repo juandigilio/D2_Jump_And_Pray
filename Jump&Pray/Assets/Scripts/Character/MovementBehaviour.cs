@@ -6,6 +6,7 @@ public class MovementBehaviour : MonoBehaviour
     [SerializeField] private float forceMultiplier = 1f;
     [SerializeField] private float maxSpeed = 5f;
     [SerializeField] private float rotationSpeed = 5f;
+    [SerializeField] private float rollForce = 3f;
 
     private Vector2 movementInput;
     private Vector3 movementDirection;
@@ -13,6 +14,7 @@ public class MovementBehaviour : MonoBehaviour
     private Vector3 forward;
     private Vector3 right;
     private bool isGrounded = true;
+    private bool isRolling = false;
 
     private Rigidbody rigidBody;
 
@@ -34,16 +36,6 @@ public class MovementBehaviour : MonoBehaviour
         AddForce();
     }
 
-    public void SetInputDirection(Vector2 input)
-    {
-        movementInput = input;
-
-        if (movementInput.magnitude > 1)
-        {
-            movementInput.Normalize();
-        }
-    }
-
     private void LookForward()
     {
         Vector3 displacement = movementInput.x * right + movementInput.y * forward;
@@ -58,11 +50,16 @@ public class MovementBehaviour : MonoBehaviour
 
     private void AddForce()
     {
-        rigidBody.AddForce(movementDirection, ForceMode.VelocityChange);
+        rigidBody.AddForce(movementDirection * forceMultiplier, ForceMode.VelocityChange);
 
+        NormalizeVelocity();
+    }
+
+    private void NormalizeVelocity()
+    {
         horizontalVelocity = new Vector2(rigidBody.linearVelocity.x, rigidBody.linearVelocity.z);
 
-        if (horizontalVelocity.magnitude > maxSpeed)
+        if (horizontalVelocity.magnitude > maxSpeed && !isRolling)
         {
             horizontalVelocity = horizontalVelocity.normalized * maxSpeed;
         }
@@ -82,6 +79,25 @@ public class MovementBehaviour : MonoBehaviour
 
         movementDirection = (forward * movementInput.y) + (right * movementInput.x);
         movementDirection *= forceMultiplier;
+    }
+
+    public void Roll()
+    {
+        if (!isRolling && isGrounded)
+        {
+            rigidBody.AddForce(movementDirection * rollForce, ForceMode.Impulse);
+            isRolling = true;
+        }       
+    }
+
+    public void SetInputDirection(Vector2 input)
+    {
+        movementInput = input;
+
+        if (movementInput.magnitude > 1)
+        {
+            movementInput.Normalize();
+        }
     }
 
     public void SetGroundedCondition(bool isGrounded)

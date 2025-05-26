@@ -13,6 +13,9 @@ public class EventManager : MonoBehaviour
     public event Action OnCinematicFinished;
 
     public event Action OnPlayerJumped;
+    public event Action OnPlayerDied;
+    public event Action OnPlayerLanded;
+    public event Action OnPlayerRolled;
 
 
     private void Awake()
@@ -50,5 +53,20 @@ public class EventManager : MonoBehaviour
     public void TriggerPlayerJump()
     {
         OnPlayerJumped?.Invoke();
+    }
+
+    public void TriggerPlayerDeath()
+    {
+        OnPlayerDied?.Invoke();
+    }
+
+    public void TriggerPlayerLanded()
+    {
+        OnPlayerLanded?.Invoke();
+    }
+
+    public void TriggerPlayerRolled()
+    {
+        OnPlayerRolled?.Invoke();
     }
 }

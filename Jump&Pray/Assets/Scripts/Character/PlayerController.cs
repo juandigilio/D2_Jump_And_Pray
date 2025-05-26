@@ -55,9 +55,18 @@ public class PlayerController : MonoBehaviour
 
         Debug.DrawRay(origin, Vector3.down * distance, hit ? Color.green : Color.red);
 
+        UpdateGroundedCondition(hit);      
+    }
+
+    private void UpdateGroundedCondition(bool hit)
+    {
         if (hit)
         {
-            isGrounded = true;
+            if (!isGrounded)
+            {
+                EventManager.Instance.TriggerPlayerLanded();
+                isGrounded = true;
+            }        
         }
         else
         {
@@ -82,6 +91,11 @@ public class PlayerController : MonoBehaviour
     {
         inputDirection = input;
         movementBehaviour.SetInputDirection(inputDirection);
+    }
+
+    public void Roll()
+    {
+        movementBehaviour.Roll();
     }
 
     public bool IsGrounded()
