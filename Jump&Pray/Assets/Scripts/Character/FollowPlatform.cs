@@ -2,7 +2,9 @@ using UnityEngine;
 
 public class FollowPlatform : MonoBehaviour
 {
-    private PlayerController playerController;
+    [SerializeField] private float gizmoLength;
+    [SerializeField] private PlayerController playerController;
+
     private CapsuleCollider playerCollider;
     private Vector3 groundPosition;
     private Vector3 lastGroundPosition;
@@ -12,7 +14,7 @@ public class FollowPlatform : MonoBehaviour
     private Quaternion currentRotation;
     private Quaternion lastRotation;
 
-    [SerializeField] private float gizmoLength;
+    
     private Vector3 gizmoOrigin;
     private Vector3 gizmoDirection;
     private float gizmoRadius;
@@ -21,10 +23,11 @@ public class FollowPlatform : MonoBehaviour
 
     void Start()
     {
-        playerController = GetComponent<PlayerController>();
+        //playerController = GetComponent<PlayerController>();
+
         if (playerController == null)
         {
-            Debug.LogError("PlayerController not found");
+            Debug.LogError("PlayerController not found", this);
         }
 
         playerCollider = gameObject.GetComponent<CapsuleCollider>();
