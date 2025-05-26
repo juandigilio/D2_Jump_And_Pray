@@ -82,7 +82,6 @@ public class SmasherPlatform : MonoBehaviour
 
         yield return null; 
 
-        //isSmashing = false;
         playerDetected = false;
     }
 

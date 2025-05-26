@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private JumpBehaviour jumpBehaviour;
     [SerializeField] private float groundCheckDistance = 0.1f;
 
+    private Rigidbody rigidBody;
     private Vector2 inputDirection;
     private bool isGrounded;
 
@@ -19,6 +20,12 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
+        rigidBody = GetComponent<Rigidbody>();
+        if (rigidBody == null)
+        {
+            Debug.LogError("Rigidbody not found on the GameObject.");
+        }
+
         movementBehaviour = GetComponent<MovementBehaviour>();
         if (movementBehaviour == null)
         {
@@ -80,5 +87,10 @@ public class PlayerController : MonoBehaviour
     public bool IsGrounded()
     {
         return isGrounded;
+    }
+
+    public Vector3 GetVelocity()
+    {
+        return rigidBody.linearVelocity;
     }
 }

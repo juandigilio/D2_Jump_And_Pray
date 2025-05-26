@@ -48,6 +48,8 @@ public class JumpBehaviour : MonoBehaviour
     {
         if (!isJumping && isGrounded)
         {
+            EventManager.Instance.TriggerPlayerJump();
+
             Vector3 boostedForce = Vector3.up * (jumpForce * chargeTime);
 
             rigidBody.AddForce(boostedForce, ForceMode.Impulse);
