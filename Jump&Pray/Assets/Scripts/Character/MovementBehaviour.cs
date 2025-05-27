@@ -5,6 +5,7 @@ public class MovementBehaviour : MonoBehaviour
 {
     [SerializeField] private float forceMultiplier = 1f;
     [SerializeField] private float maxSpeed = 5f;
+    [SerializeField] private float rollingMaxSpeed = 8f;
     [SerializeField] private float rotationSpeed = 5f;
     [SerializeField] private float rollForce = 3f;
 
@@ -18,6 +19,16 @@ public class MovementBehaviour : MonoBehaviour
 
     private Rigidbody rigidBody;
 
+
+    private void OnEnable()
+    {
+        EventManager.Instance.OnRollFinished += RollFinished;
+    }
+
+    private void OnDisable()
+    {
+        EventManager.Instance.OnRollFinished -= RollFinished;
+    }
 
     private void Start()
     {
@@ -50,7 +61,7 @@ public class MovementBehaviour : MonoBehaviour
 
     private void AddForce()
     {
-        rigidBody.AddForce(movementDirection * forceMultiplier, ForceMode.VelocityChange);
+        rigidBody.AddForce(movementDirection, ForceMode.VelocityChange);
 
         NormalizeVelocity();
     }
@@ -59,10 +70,21 @@ public class MovementBehaviour : MonoBehaviour
     {
         horizontalVelocity = new Vector2(rigidBody.linearVelocity.x, rigidBody.linearVelocity.z);
 
-        if (horizontalVelocity.magnitude > maxSpeed && !isRolling)
+        if (isRolling)
         {
-            horizontalVelocity = horizontalVelocity.normalized * maxSpeed;
+            if (horizontalVelocity.magnitude > rollingMaxSpeed)
+            {
+                horizontalVelocity = horizontalVelocity.normalized * rollingMaxSpeed;
+            }
         }
+        else
+        {
+            if (horizontalVelocity.magnitude > maxSpeed)
+            {
+                horizontalVelocity = horizontalVelocity.normalized * maxSpeed;
+            }
+        }
+       
 
         rigidBody.linearVelocity = new Vector3(horizontalVelocity.x, rigidBody.linearVelocity.y, horizontalVelocity.y);
     }
@@ -81,12 +103,24 @@ public class MovementBehaviour : MonoBehaviour
         movementDirection *= forceMultiplier;
     }
 
+    private void RollFinished()
+    {
+        isRolling = false;
+    }
+
     public void Roll()
     {
         if (!isRolling && isGrounded)
         {
-            rigidBody.AddForce(movementDirection * rollForce, ForceMode.Impulse);
+            EventManager.Instance.TriggerPlayerRolled();
+
+            rigidBody.AddForce(movementDirection, ForceMode.Impulse);
+
+            NormalizeVelocity();
+
             isRolling = true;
+
+            Debug.Log("Rolling");
         }       
     }
 
@@ -103,5 +137,10 @@ public class MovementBehaviour : MonoBehaviour
     public void SetGroundedCondition(bool isGrounded)
     {
         this.isGrounded = isGrounded;
+    }
+
+    public void SetRollCondition(bool isRolling)
+    {
+        this.isRolling = isRolling;
     }
 }

@@ -16,6 +16,7 @@ public class EventManager : MonoBehaviour
     public event Action OnPlayerDied;
     public event Action OnPlayerLanded;
     public event Action OnPlayerRolled;
+    public event Action OnRollFinished;
 
 
     private void Awake()
@@ -68,5 +69,10 @@ public class EventManager : MonoBehaviour
     public void TriggerPlayerRolled()
     {
         OnPlayerRolled?.Invoke();
+    }
+
+    public void TriggerRollFinished()
+    {
+        OnRollFinished?.Invoke();
     }
 }

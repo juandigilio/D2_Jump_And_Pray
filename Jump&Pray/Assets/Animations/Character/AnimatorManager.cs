@@ -59,4 +59,9 @@ public class AnimatorManager : MonoBehaviour
     {
         animator.SetTrigger("rolled");
     }
+
+    public void RollFinished()
+    {
+        EventManager.Instance.TriggerRollFinished();
+    }
 }

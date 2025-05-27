@@ -121,6 +121,7 @@ public class InputManager : MonoBehaviour
     {
         if (callbackContext.started)
         {
+            Debug.Log("Roll action started");
             playerController.Roll();
         }
     }

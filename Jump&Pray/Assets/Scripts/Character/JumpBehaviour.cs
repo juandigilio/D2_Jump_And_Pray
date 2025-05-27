@@ -16,6 +16,7 @@ public class JumpBehaviour : MonoBehaviour
     private bool isCharging = false;
     private float chargingStartTime;
     private float chargeTime;
+    private bool isRolling = false;
 
 
     private void Start()
@@ -91,6 +92,17 @@ public class JumpBehaviour : MonoBehaviour
         this.isGrounded = isGrounded;
 
         if (isGrounded)
+        {
+            isJumping = false;
+            doubleJump = false;
+        }
+    }
+
+    public void SetRollCondition(bool isRolling)
+    {
+        this.isRolling = isRolling;
+
+        if (isRolling)
         {
             isJumping = false;
             doubleJump = false;
