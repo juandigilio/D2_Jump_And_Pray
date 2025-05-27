@@ -18,6 +18,8 @@ public class EventManager : MonoBehaviour
     public event Action OnPlayerRolled;
     public event Action OnRollFinished;
 
+    public event Action<Vector3> OnMenuLoaded;
+
 
     private void Awake()
     {
@@ -74,5 +76,10 @@ public class EventManager : MonoBehaviour
     public void TriggerRollFinished()
     {
         OnRollFinished?.Invoke();
+    }
+
+    public void TriggerMenuLoaded(Vector3 startPos)
+    {
+        OnMenuLoaded?.Invoke(startPos);
     }
 }

@@ -2,11 +2,12 @@ using UnityEngine;
 
 public class MenuManager : MonoBehaviour
 {
-    private InputManager inputManager;
+    [SerializeField] private Transform menuStartPosition;
+
 
     void Start()
     {
-        inputManager = GameManager.Instance.GetInputManager();
+        EventManager.Instance.TriggerMenuLoaded(menuStartPosition.position);
     }
 
 

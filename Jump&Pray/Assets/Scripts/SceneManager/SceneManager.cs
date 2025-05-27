@@ -13,6 +13,7 @@ public class SceneManager
     private static List<CustomScene> scenesPool = new List<CustomScene>();
     private static CustomScene winingScene;
 
+    private static Vector3 menuStartPosition;
     private static int index = 0;
 
 
@@ -162,5 +163,10 @@ public class SceneManager
     public static void UnloadOptionsScene()
     {
         _ = UnloadSceneAsync(optionsScene);
+    }
+
+    public static void SetMenuStartPosition(Vector3 position)
+    {
+        menuStartPosition = position;
     }
 }

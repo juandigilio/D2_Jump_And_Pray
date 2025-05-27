@@ -2217,7 +2217,7 @@ Transform:
   m_GameObject: {fileID: 588450874}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 12.8, y: 30.3, z: 13.02}
+  m_LocalPosition: {x: 17.73, y: 30.3, z: 7.64}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2253,6 +2253,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   forceMultiplier: 1
   maxSpeed: 5
+  rollingMaxSpeed: 8
   rotationSpeed: 8
   rollForce: 1
 --- !u!114 &588450884
@@ -5065,6 +5066,7 @@ MonoBehaviour:
   moveAction: Move
   jumpAction: Jump
   rollAction: Roll
+  exitAction: Pause
   inGameActionMap: InGame
   menuActionMap: Menu
 --- !u!114 &1419394354

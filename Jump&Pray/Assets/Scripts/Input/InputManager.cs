@@ -13,6 +13,8 @@ public class InputManager : MonoBehaviour
     [SerializeField] private string jumpAction = "Jump";
     [SerializeField] private string rollAction = "Roll";
 
+    [SerializeField] private string exitAction = "Pause";
+
     [SerializeField] private string inGameActionMap = "InGame";
     [SerializeField] private string menuActionMap = "Menu";
 
@@ -55,7 +57,9 @@ public class InputManager : MonoBehaviour
             playerInput.currentActionMap.FindAction(jumpAction).started += Jump;
             playerInput.currentActionMap.FindAction(jumpAction).canceled += Jump;
 
-            playerInput.currentActionMap.FindAction(rollAction).started += Roll;
+            playerInput.currentActionMap.FindAction(rollAction).canceled += Roll;
+
+            playerInput.currentActionMap.FindAction(exitAction).started += GoToMainMenu;
         }
 
         cameraman = GameManager.Instance.GetCameraman();
@@ -148,7 +152,16 @@ public class InputManager : MonoBehaviour
 
     public void SetInGameActionMap()
     {
-        playerInput.SwitchCurrentActionMap(inGameActionMap);
+        if (playerInput.inputIsActive)
+        {
+            playerInput.SwitchCurrentActionMap(inGameActionMap);
+        }
+        else
+        {
+            playerInput.ActivateInput();
+            playerInput.SwitchCurrentActionMap(inGameActionMap);
+            playerInput.DeactivateInput();
+        }
     }
 
     public void SetMenuActionMap()
@@ -175,6 +188,14 @@ public class InputManager : MonoBehaviour
                     SetInGameActionMap();
                     break;
                 }
+        }
+    }
+
+    private void GoToMainMenu(InputAction.CallbackContext callbackContext)
+    {
+        if (callbackContext.started)
+        {
+            SceneManager.LoadMenuScene();
         }
     }
 }

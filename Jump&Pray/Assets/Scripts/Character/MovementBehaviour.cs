@@ -103,6 +103,17 @@ public class MovementBehaviour : MonoBehaviour
         movementDirection *= forceMultiplier;
     }
 
+    private void StopInertia()
+    {
+        if (movementInput == Vector2.zero)
+        {
+
+            //horizontalVelocity = Vector3.Lerp(horizontalVelocity, Vector3.zero, decelerationSpeed * Time.deltaTime);
+            //velocity.x = horizontalVelocity.x;
+            //velocity.z = horizontalVelocity.z;
+        }
+    }
+
     private void RollFinished()
     {
         isRolling = false;

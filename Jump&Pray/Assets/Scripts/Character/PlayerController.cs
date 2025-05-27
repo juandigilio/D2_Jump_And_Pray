@@ -11,6 +11,11 @@ public class PlayerController : MonoBehaviour
     private Vector2 inputDirection;
     private bool isGrounded;
 
+    
+    private void OnEnable()
+    {
+        EventManager.Instance.OnMenuLoaded += MoveToMainMenu;
+    }
 
     private void OnDisable()
     {
@@ -75,6 +80,11 @@ public class PlayerController : MonoBehaviour
 
         jumpBehaviour.SetGroundedCondition(isGrounded);
         movementBehaviour.SetGroundedCondition(isGrounded);
+    }
+
+    private void MoveToMainMenu(Vector3 startPos)
+    {
+        rigidBody.position = startPos;
     }
 
     public void LoadJumpCharge()
