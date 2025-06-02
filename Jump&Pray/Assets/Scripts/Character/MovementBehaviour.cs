@@ -85,7 +85,6 @@ public class MovementBehaviour : MonoBehaviour
             }
         }
        
-
         rigidBody.linearVelocity = new Vector3(horizontalVelocity.x, rigidBody.linearVelocity.y, horizontalVelocity.y);
     }
 
@@ -105,9 +104,8 @@ public class MovementBehaviour : MonoBehaviour
 
     private void StopInertia()
     {
-        if (movementInput == Vector2.zero)
+        if (movementInput == Vector2.zero && isGrounded)
         {
-
             //horizontalVelocity = Vector3.Lerp(horizontalVelocity, Vector3.zero, decelerationSpeed * Time.deltaTime);
             //velocity.x = horizontalVelocity.x;
             //velocity.z = horizontalVelocity.z;
