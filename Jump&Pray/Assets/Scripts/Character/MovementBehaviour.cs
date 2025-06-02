@@ -1,4 +1,5 @@
 using System;
+//using System.Diagnostics;
 using UnityEngine;
 
 public class MovementBehaviour : MonoBehaviour
@@ -119,6 +120,7 @@ public class MovementBehaviour : MonoBehaviour
 
     public void Roll()
     {
+        Debug.Log("Rolling called");
         if (!isRolling && isGrounded)
         {
             EventManager.Instance.TriggerPlayerRolled();

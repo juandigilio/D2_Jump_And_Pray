@@ -57,7 +57,7 @@ public class InputManager : MonoBehaviour
             playerInput.currentActionMap.FindAction(jumpAction).started += Jump;
             playerInput.currentActionMap.FindAction(jumpAction).canceled += Jump;
 
-            playerInput.currentActionMap.FindAction(rollAction).canceled += Roll;
+            playerInput.currentActionMap.FindAction(rollAction).started += Roll;
 
             playerInput.currentActionMap.FindAction(exitAction).started += GoToMainMenu;
         }
