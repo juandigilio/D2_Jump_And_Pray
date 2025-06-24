@@ -132,7 +132,9 @@ public class MovementBehaviour : MonoBehaviour
             isRolling = true;
 
             Debug.Log("Rolling");
-        }       
+        }
+        
+        Debug.Log("Rolling condition: " + isRolling);
     }
 
     public void SetInputDirection(Vector2 input)

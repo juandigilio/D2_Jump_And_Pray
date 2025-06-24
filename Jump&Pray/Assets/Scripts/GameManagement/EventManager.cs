@@ -20,6 +20,9 @@ public class EventManager : MonoBehaviour
 
     public event Action<Vector3> OnMenuLoaded;
 
+    public event Action OnShowOptionsMenu;
+    public event Action OnHideOptionsMenu;
+
 
     private void Awake()
     {
@@ -81,5 +84,15 @@ public class EventManager : MonoBehaviour
     public void TriggerMenuLoaded(Vector3 startPos)
     {
         OnMenuLoaded?.Invoke(startPos);
+    }
+
+    public void TriggerShowOptionsMenu()
+    {
+        OnShowOptionsMenu?.Invoke();
+    }
+
+    public void TriggerHideOptionsMenu()
+    {
+        OnHideOptionsMenu?.Invoke();
     }
 }

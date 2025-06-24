@@ -74,7 +74,6 @@ public class LevelConection : MonoBehaviour
         if (isActivated)
         {
             EventManager.Instance.TriggerAnimationFinished();
-            //EventManager.Instance.TriggerUnloadLastLevel();
         }
         else
         {

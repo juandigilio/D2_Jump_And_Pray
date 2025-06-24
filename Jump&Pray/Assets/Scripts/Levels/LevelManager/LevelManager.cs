@@ -4,7 +4,6 @@ public class LevelManager : MonoBehaviour
 {
     [SerializeField] private LevelConection levelConection;
     [SerializeField] private Coin[] coinsPull;
-    //[SerializeField] private Transform startPosition;
 
     private PlayerController playerController;
 
@@ -18,8 +17,6 @@ public class LevelManager : MonoBehaviour
         {
             Debug.LogError("PlayerController not found in GameManager.");
         }
-
-        //EventManager.Instance.TriggerMenuLoaded(startPosition.position);
     }
 
     private void FixedUpdate()

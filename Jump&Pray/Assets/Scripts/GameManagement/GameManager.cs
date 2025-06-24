@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     private InputManager inputManager;
     private PlayerInput playerInput;
     private StateManager stateManager;
+    private OptionsManager optionsManager;
 
     private void Awake()
     {
@@ -48,6 +49,11 @@ public class GameManager : MonoBehaviour
         this.playerInput = playerInput;
     }
 
+    public void RegisterOptionsManager(OptionsManager optionsManager)
+    {
+        this.optionsManager = optionsManager;
+    }
+
     public Cameraman GetCameraman()
     {
         return cameraman;
@@ -71,5 +77,10 @@ public class GameManager : MonoBehaviour
     public PlayerInput GetPlayerInput()
     {
         return playerInput;
+    }
+
+    public OptionsManager GetOptionsManager()
+    {
+        return optionsManager;
     }
 }
