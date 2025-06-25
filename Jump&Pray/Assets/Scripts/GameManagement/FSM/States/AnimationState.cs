@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class AnimationState : PlayerState
+public class AnimationState : BaseState
 {
     public AnimationState(StateManager stateManager, Cameraman cameraman) : base(stateManager, cameraman) { }
 
@@ -12,7 +12,6 @@ public class AnimationState : PlayerState
 
     public override void Exit()
     {
-        //Debug.Log("Exiting Animation State");
         EnablePlayerUpdate();
     }
 }

@@ -14,6 +14,7 @@ public class InputManager : MonoBehaviour
     [SerializeField] private string rollAction = "Roll";
 
     [SerializeField] private string pauseAction = "Pause";
+    [SerializeField] private string quitAction = "Quit";
 
     [SerializeField] private string inGameActionMap = "InGame";
     [SerializeField] private string menuActionMap = "Menu";
@@ -61,6 +62,10 @@ public class InputManager : MonoBehaviour
             playerInput.currentActionMap.FindAction(rollAction).started += Roll;
 
             playerInput.currentActionMap.FindAction(pauseAction).started += ShowOptions;
+
+            playerInput.SwitchCurrentActionMap(menuActionMap);
+
+            playerInput.currentActionMap.FindAction(pauseAction).started += SetGamepadCameraRotation;
         }
 
         cameraman = GameManager.Instance.GetCameraman();

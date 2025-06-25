@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class GroundedState : PlayerState
+public class GroundedState : BaseState
 {
     public GroundedState(StateManager stateManager, Cameraman cameraman) : base(stateManager, cameraman) { }
 
@@ -8,6 +8,11 @@ public class GroundedState : PlayerState
     {
         cameraman.SetThirdPersonCamera();
         EnablePlayerUpdate();
+    }
+
+    public override void LateUpdate()
+    {
+        cameraman.UpdateCamera();
     }
 
     public override void Exit()

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class CorridorState : PlayerState
+public class CorridorState : BaseState
 {
     public CorridorState(StateManager stateManager, Cameraman cameraman) : base(stateManager, cameraman) { }
 

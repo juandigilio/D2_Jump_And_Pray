@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class CinematicState : PlayerState
+public class CinematicState : BaseState
 {
     public CinematicState(StateManager stateManager, Cameraman cameraman) : base(stateManager, cameraman) { }
 

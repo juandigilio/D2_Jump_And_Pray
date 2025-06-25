@@ -43,12 +43,8 @@ public class Cameraman : MonoBehaviour
         InitCamera();
     }
 
-    private void LateUpdate()
-    {
-        UpdateCamera();
-    }
 
-    private void UpdateCamera()
+    public void UpdateCamera()
     {
         if (cameraMode == CameraMode.ThirdPerson)
         {
@@ -203,9 +199,4 @@ public class Cameraman : MonoBehaviour
     {
         cameraMode = mode;
     }
-
-    //public void SetCinematicTarget(Vector3 target)
-    //{
-    //    cinematicTarget = target;
-    //}
 }

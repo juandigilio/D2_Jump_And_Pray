@@ -3,13 +3,13 @@ using UnityEngine;
 public class StateManager : MonoBehaviour
 {
     private Cameraman cameraman;
-    //private PlayerController playerController;
 
-    private PlayerState currentState;
-    public PlayerState groundedState;
-    public PlayerState cinematicState;
-    public PlayerState animationState;
-    public PlayerState corridorState;
+    private BaseState currentState;
+    public BaseState groundedState;
+    public BaseState cinematicState;
+    public BaseState animationState;
+    public BaseState corridorState;
+    public BaseState pausedState;
 
     private void Awake()
     {
@@ -23,6 +23,9 @@ public class StateManager : MonoBehaviour
 
         EventManager.Instance.OnCinematicStarted += SetCinematicState;
         EventManager.Instance.OnCinematicFinished += SetGroundedState;
+
+        //EventManager.Instance.OnShowOptionsMenu += SetPausedState;
+        //EventManager.Instance.OnHideOptionsMenu += SetGroundedState;
     }
 
     private void OnDisable()
@@ -32,11 +35,13 @@ public class StateManager : MonoBehaviour
 
         EventManager.Instance.OnCinematicStarted -= SetCinematicState;
         EventManager.Instance.OnCinematicFinished -= SetGroundedState;
+
+        //EventManager.Instance.OnShowOptionsMenu -= SetPausedState;
+        //EventManager.Instance.OnHideOptionsMenu -= SetGroundedState;
     }
 
     private void Start()
     {
-        //playerController = GameManager.Instance.GetPlayerController();
         cameraman = GameManager.Instance.GetCameraman();
         GameManager.Instance.RegisterStateManager(this);
 
@@ -44,6 +49,7 @@ public class StateManager : MonoBehaviour
         cinematicState = new CinematicState(this, cameraman);
         animationState = new AnimationState(this, cameraman);
         corridorState = new CorridorState(this, cameraman);
+        pausedState = new PausedState(this, cameraman);
 
         SetGroundedState();
     }    
@@ -53,7 +59,17 @@ public class StateManager : MonoBehaviour
         currentState.Update();
     }
 
-    private void TransitionToState(PlayerState newState)
+    private void FixedUpdate()
+    {
+        currentState.FixedUpdate();
+    }
+
+    private void LateUpdate()
+    {
+        currentState.LateUpdate();
+    }
+
+    private void TransitionToState(BaseState newState)
     {
         if (currentState != null)
         {
@@ -64,7 +80,7 @@ public class StateManager : MonoBehaviour
         currentState.Enter();
     }
 
-    private void TransitionToState(PlayerState newState, Vector3 cameraPosition, GameObject target)
+    private void TransitionToState(BaseState newState, Vector3 cameraPosition, GameObject target)
     {
         if (currentState != null)
         {
@@ -93,6 +109,11 @@ public class StateManager : MonoBehaviour
     private void SetCorridorState()
     {
         TransitionToState(corridorState);
+    }
+
+    private void SetPausedState()
+    {
+        TransitionToState(pausedState);
     }
 
     public Cameraman Cameraman()
