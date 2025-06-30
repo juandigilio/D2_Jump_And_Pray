@@ -24,8 +24,8 @@ public class StateManager : MonoBehaviour
         EventManager.Instance.OnCinematicStarted += SetCinematicState;
         EventManager.Instance.OnCinematicFinished += SetGroundedState;
 
-        //EventManager.Instance.OnShowOptionsMenu += SetPausedState;
-        //EventManager.Instance.OnHideOptionsMenu += SetGroundedState;
+        EventManager.Instance.OnShowOptionsMenu += SetPausedState;
+        EventManager.Instance.OnHideOptionsMenu += SetGroundedState;
     }
 
     private void OnDisable()
@@ -36,8 +36,8 @@ public class StateManager : MonoBehaviour
         EventManager.Instance.OnCinematicStarted -= SetCinematicState;
         EventManager.Instance.OnCinematicFinished -= SetGroundedState;
 
-        //EventManager.Instance.OnShowOptionsMenu -= SetPausedState;
-        //EventManager.Instance.OnHideOptionsMenu -= SetGroundedState;
+        EventManager.Instance.OnShowOptionsMenu -= SetPausedState;
+        EventManager.Instance.OnHideOptionsMenu -= SetGroundedState;
     }
 
     private void Start()

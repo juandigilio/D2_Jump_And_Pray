@@ -7,8 +7,9 @@ public class MovementBehaviour : MonoBehaviour
     [SerializeField] private float forceMultiplier = 1f;
     [SerializeField] private float maxSpeed = 5f;
     [SerializeField] private float rollingMaxSpeed = 8f;
-    [SerializeField] private float rotationSpeed = 5f;
+    [SerializeField] private float rotationSpeed = 9f;
     [SerializeField] private float rollForce = 3f;
+    [SerializeField] private float decelerationSpeed = 8f;
 
     private Vector2 movementInput;
     private Vector3 movementDirection;
@@ -45,6 +46,7 @@ public class MovementBehaviour : MonoBehaviour
     {
         CalculateMovementDirection();
         LookForward();
+        StopInertia();
         AddForce();
     }
 
@@ -105,11 +107,29 @@ public class MovementBehaviour : MonoBehaviour
 
     private void StopInertia()
     {
-        if (movementInput == Vector2.zero && isGrounded)
+        if (movementInput == Vector2.zero)
         {
-            //horizontalVelocity = Vector3.Lerp(horizontalVelocity, Vector3.zero, decelerationSpeed * Time.deltaTime);
-            //velocity.x = horizontalVelocity.x;
-            //velocity.z = horizontalVelocity.z;
+            Vector3 velocity = rigidBody.linearVelocity;
+
+            Vector3 horizontalVelocity = new Vector3(velocity.x, 0f, velocity.z);
+
+            if (horizontalVelocity.magnitude > 0.1f)
+            {
+                float deceleration = isGrounded ? decelerationSpeed : decelerationSpeed * 0.25f;
+
+                Vector3 decelerationVector = -horizontalVelocity.normalized * deceleration * Time.fixedDeltaTime;
+
+                if (decelerationVector.magnitude > horizontalVelocity.magnitude)
+                {
+                    horizontalVelocity = Vector3.zero;
+                }
+                else
+                {
+                    horizontalVelocity += decelerationVector;
+                }
+
+                rigidBody.linearVelocity = new Vector3(horizontalVelocity.x, velocity.y, horizontalVelocity.z);
+            }
         }
     }
 

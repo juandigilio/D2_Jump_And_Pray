@@ -65,7 +65,7 @@ public class InputManager : MonoBehaviour
 
             playerInput.SwitchCurrentActionMap(menuActionMap);
 
-            playerInput.currentActionMap.FindAction(pauseAction).started += SetGamepadCameraRotation;
+            playerInput.currentActionMap.FindAction(pauseAction).started += ShowOptions;
         }
 
         cameraman = GameManager.Instance.GetCameraman();

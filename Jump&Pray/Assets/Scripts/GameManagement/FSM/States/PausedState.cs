@@ -8,10 +8,12 @@ public class PausedState : BaseState
     {
         Debug.Log("Entered paused State");
         SetPausedInput();
+        Time.timeScale = 0.001f;
     }
 
     public override void Exit()
     {
         SetInGameInput();
+        Time.timeScale = 1.0f;
     }
 }

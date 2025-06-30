@@ -1590,7 +1590,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2c9368c89348fd4eaf8ac216737a8b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 1
+  type: 2
   menuManager: {fileID: 1653731784}
 --- !u!65 &655582893
 BoxCollider:

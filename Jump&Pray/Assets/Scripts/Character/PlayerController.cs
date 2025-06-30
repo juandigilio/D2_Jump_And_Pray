@@ -21,6 +21,8 @@ public class PlayerController : MonoBehaviour
     {
         inputDirection = Vector3.zero;
         movementBehaviour.SetInputDirection(inputDirection);
+
+        EventManager.Instance.OnMenuLoaded -= MoveToMainMenu;
     }
 
     private void Start()
@@ -29,18 +31,6 @@ public class PlayerController : MonoBehaviour
         if (rigidBody == null)
         {
             Debug.LogError("Rigidbody not found on the GameObject.");
-        }
-
-        movementBehaviour = GetComponent<MovementBehaviour>();
-        if (movementBehaviour == null)
-        {
-            Debug.LogError("MovementBehaviour not found on the GameObject.");
-        }
-
-        jumpBehaviour = GetComponent<JumpBehaviour>();
-        if (jumpBehaviour == null)
-        {
-            Debug.LogError("JumpBehaviour not found on the GameObject.");
         }
 
         GameManager.Instance.RegisterPlayer(this);

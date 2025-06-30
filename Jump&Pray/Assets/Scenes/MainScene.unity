@@ -2322,6 +2322,7 @@ MonoBehaviour:
   rollingMaxSpeed: 8
   rotationSpeed: 8
   rollForce: 1
+  decelerationSpeed: 12
 --- !u!114 &588450884
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5133,6 +5134,7 @@ MonoBehaviour:
   jumpAction: Jump
   rollAction: Roll
   pauseAction: Pause
+  quitAction: Quit
   inGameActionMap: InGame
   menuActionMap: Menu
 --- !u!114 &1419394354
