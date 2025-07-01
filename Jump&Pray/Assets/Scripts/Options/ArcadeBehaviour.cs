@@ -92,6 +92,7 @@ public class ArcadeBehaviour : MonoBehaviour
         machine.transform.position = endPosition;
 
         isDropping = false;
+        Time.timeScale = 0f;
     }
 
     private IEnumerator QuitArcadeMachine()

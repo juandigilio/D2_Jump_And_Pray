@@ -949,7 +949,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   machine: {fileID: 3028140169920277052}
-  dropDuration: 1
+  dropDuration: 0.5
   dropHeight: 2
   moveSpeed: 2
   forwardOffset: 1.63

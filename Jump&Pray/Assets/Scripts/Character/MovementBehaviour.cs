@@ -107,7 +107,7 @@ public class MovementBehaviour : MonoBehaviour
 
     private void StopInertia()
     {
-        if (movementInput == Vector2.zero)
+        if (movementInput == Vector2.zero && !isRolling)
         {
             Vector3 velocity = rigidBody.linearVelocity;
 
@@ -140,7 +140,6 @@ public class MovementBehaviour : MonoBehaviour
 
     public void Roll()
     {
-        Debug.Log("Rolling called");
         if (!isRolling && isGrounded)
         {
             EventManager.Instance.TriggerPlayerRolled();
