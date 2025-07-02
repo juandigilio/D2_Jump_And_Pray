@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
     private Vector2 inputDirection;
     private bool isGrounded;
 
-    
+
     private void OnEnable()
     {
         EventManager.Instance.OnMenuLoaded += MoveToMainMenu;
@@ -50,7 +50,7 @@ public class PlayerController : MonoBehaviour
 
         Debug.DrawRay(origin, Vector3.down * distance, hit ? Color.green : Color.red);
 
-        UpdateGroundedCondition(hit);      
+        UpdateGroundedCondition(hit);
     }
 
     private void UpdateGroundedCondition(bool hit)
@@ -61,7 +61,7 @@ public class PlayerController : MonoBehaviour
             {
                 EventManager.Instance.TriggerPlayerLanded();
                 isGrounded = true;
-            }        
+            }
         }
         else
         {
@@ -106,5 +106,10 @@ public class PlayerController : MonoBehaviour
     public Vector3 GetVelocity()
     {
         return rigidBody.linearVelocity;
+    }
+
+    public Rigidbody GetRigidbody()
+    {
+        return rigidBody;
     }
 }

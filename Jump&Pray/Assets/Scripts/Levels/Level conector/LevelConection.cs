@@ -77,8 +77,8 @@ public class LevelConection : MonoBehaviour
         }
         else
         {
-            EventManager.Instance.TriggerCinematicFinished();
             isActivated = true;
+            EventManager.Instance.TriggerCinematicFinished();
         }
     }
 }

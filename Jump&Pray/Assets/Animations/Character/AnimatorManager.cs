@@ -13,6 +13,7 @@ public class AnimatorManager : MonoBehaviour
         EventManager.Instance.OnPlayerDied += AnimateDeath;
         EventManager.Instance.OnPlayerLanded += AnimateLand;
         EventManager.Instance.OnPlayerRolled += AnimateRoll;
+        EventManager.Instance.OnCinematicFallStarted +=
     }
 
     private void OnDisable()
@@ -58,6 +59,11 @@ public class AnimatorManager : MonoBehaviour
     private void AnimateRoll()
     {
         animator.SetTrigger("rolled");
+    }
+
+    private void AnimateCinematicFall()
+    {
+        animator.SetTrigger("cinematicFallStarted");
     }
 
     public void RollFinished()

@@ -10,8 +10,14 @@ public class AnimationState : BaseState
         DisablePlayerUpdate();
     }
 
+    public override void LateUpdate()
+    {
+        cameraman.UpdateCamera();
+    }
+
     public override void Exit()
     {
+        Debug.Log("Exit Animation State");
         EnablePlayerUpdate();
     }
 }

@@ -42,10 +42,8 @@ public class ArcadeBehaviour : MonoBehaviour
 
     private void StartDroppingArcade()
     {
-        Debug.Log("Entered");
         if (!isDropping)
         {
-            Debug.Log("Entered x 2");
             StartCoroutine(DropArcadeMachine());
         }
     }

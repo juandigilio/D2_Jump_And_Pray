@@ -12,6 +12,9 @@ public class EventManager : MonoBehaviour
     public event Action<Vector3, GameObject> OnCinematicStarted;
     public event Action OnCinematicFinished;
 
+    public event Action OnCinematicFallStarted;
+    public event Action OnCinematicFallFinished;
+
     public event Action OnPlayerJumped;
     public event Action OnPlayerDied;
     public event Action OnPlayerLanded;
@@ -54,6 +57,17 @@ public class EventManager : MonoBehaviour
     public void TriggerCinematicFinished()
     {
         OnCinematicFinished?.Invoke();
+    }
+
+    public void TriggerCinematicFallStarted()
+    {
+        OnCinematicFallStarted?.Invoke();
+        OnAnimationStarted?.Invoke();
+    }
+
+    public void TriggerCinematicFallFinished()
+    {
+        OnCinematicFallFinished?.Invoke();
     }
 
     public void TriggerPlayerJump()
