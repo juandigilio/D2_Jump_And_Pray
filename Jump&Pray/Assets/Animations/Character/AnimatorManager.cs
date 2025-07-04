@@ -13,7 +13,7 @@ public class AnimatorManager : MonoBehaviour
         EventManager.Instance.OnPlayerDied += AnimateDeath;
         EventManager.Instance.OnPlayerLanded += AnimateLand;
         EventManager.Instance.OnPlayerRolled += AnimateRoll;
-        EventManager.Instance.OnCinematicFallStarted +=
+        EventManager.Instance.OnCinematicFallStarted += AnimateCinematicFall;
     }
 
     private void OnDisable()
@@ -22,6 +22,7 @@ public class AnimatorManager : MonoBehaviour
         EventManager.Instance.OnPlayerDied -= AnimateDeath;
         EventManager.Instance.OnPlayerLanded -= AnimateLand;
         EventManager.Instance.OnPlayerRolled -= AnimateRoll;
+        EventManager.Instance.OnCinematicFallStarted -= AnimateCinematicFall;
     }
 
     private void Update()
@@ -54,6 +55,7 @@ public class AnimatorManager : MonoBehaviour
     private void AnimateLand()
     {
         animator.SetTrigger("landed");
+        Debug.Log("Player landed, triggering animation.");
     }
 
     private void AnimateRoll()

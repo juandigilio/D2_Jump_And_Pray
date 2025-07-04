@@ -5,7 +5,9 @@ using UnityEngine;
 public class MovementBehaviour : MonoBehaviour
 {
     [SerializeField] private float forceMultiplier = 1f;
+    [SerializeField] private float onAirForceMultiplier = 0.5f;
     [SerializeField] private float maxSpeed = 5f;
+    [SerializeField] private float gravityMultiplier = 10f;
     [SerializeField] private float rollingMaxSpeed = 8f;
     [SerializeField] private float rotationSpeed = 9f;
     [SerializeField] private float rollForce = 3f;
@@ -47,7 +49,7 @@ public class MovementBehaviour : MonoBehaviour
         CalculateMovementDirection();
         LookForward();
         StopInertia();
-        AddForce();
+        AddForces();
     }
 
     private void LookForward()
@@ -62,9 +64,14 @@ public class MovementBehaviour : MonoBehaviour
         }
     }
 
-    private void AddForce()
+    private void AddForces()
     {
         rigidBody.AddForce(movementDirection, ForceMode.VelocityChange);
+
+        if (isGrounded)
+        {
+            rigidBody.AddForce(Vector3.down * gravityMultiplier, ForceMode.VelocityChange);
+        }
 
         NormalizeVelocity();
     }
@@ -102,7 +109,15 @@ public class MovementBehaviour : MonoBehaviour
         right.Normalize();
 
         movementDirection = (forward * movementInput.y) + (right * movementInput.x);
-        movementDirection *= forceMultiplier;
+
+        if (isGrounded)
+        {
+            movementDirection *= forceMultiplier;
+        }
+        else
+        {
+            movementDirection *= onAirForceMultiplier;
+        }
     }
 
     private void StopInertia()

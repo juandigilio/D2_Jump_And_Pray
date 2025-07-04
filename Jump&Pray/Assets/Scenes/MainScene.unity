@@ -1147,6 +1147,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 1efb42ab618a7654b8172d6a99332368, type: 2}
+    - target: {fileID: 5866666021909216657, guid: 345631e001ac8cd4aa22758d32675bc1, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1154,6 +1158,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 345631e001ac8cd4aa22758d32675bc1, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2090505173}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 345631e001ac8cd4aa22758d32675bc1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2090505174}
   m_SourcePrefab: {fileID: 100100000, guid: 345631e001ac8cd4aa22758d32675bc1, type: 3}
 --- !u!1001 &346273676
 PrefabInstance:
@@ -2318,7 +2325,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   forceMultiplier: 1
+  onAirForceMultiplier: 0.25
   maxSpeed: 5
+  gravityMultiplier: 0
   rollingMaxSpeed: 8
   rotationSpeed: 8
   rollForce: 1
@@ -2337,7 +2346,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementBehaviour: {fileID: 588450883}
   jumpBehaviour: {fileID: 588450882}
-  groundCheckDistance: 1.07
+  groundCheckDistance: 1.09
 --- !u!114 &588450885
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6929,6 +6938,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 2090505172}
   playerController: {fileID: 588450884}
+--- !u!114 &2090505174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2090505170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f331942df4d9f514fb48fb2a08ec19e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2098256152
 PrefabInstance:
   m_ObjectHideFlags: 0

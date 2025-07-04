@@ -46,7 +46,7 @@ public class PlayerController : MonoBehaviour
         Vector3 origin = transform.position;
         float distance = groundCheckDistance;
 
-        bool hit = Physics.Raycast(origin, Vector3.down, distance);
+        bool hit = Physics.Raycast(origin, Vector3.down, distance, ~0, QueryTriggerInteraction.Ignore);
 
         Debug.DrawRay(origin, Vector3.down * distance, hit ? Color.green : Color.red);
 
@@ -101,6 +101,11 @@ public class PlayerController : MonoBehaviour
     public bool IsGrounded()
     {
         return isGrounded;
+    }
+
+    public void AnimationFinished()
+    {
+        EventManager.Instance.TriggerAnimationFinished();
     }
 
     public Vector3 GetVelocity()

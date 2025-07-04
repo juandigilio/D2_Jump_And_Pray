@@ -6,7 +6,6 @@ public class AnimationState : BaseState
 
     public override void Enter()
     {
-        Debug.Log("Entered Animation State");
         DisablePlayerUpdate();
     }
 
@@ -17,7 +16,6 @@ public class AnimationState : BaseState
 
     public override void Exit()
     {
-        Debug.Log("Exit Animation State");
         EnablePlayerUpdate();
     }
 }

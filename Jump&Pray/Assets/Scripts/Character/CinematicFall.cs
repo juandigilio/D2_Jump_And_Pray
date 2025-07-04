@@ -65,6 +65,5 @@ public class CinematicFall : MonoBehaviour
     public void StopCinematicFall()
     {
         isCinematicFalling = false;
-        //EventManager.Instance.TriggerCinematicFallFinished();
     }
 }
