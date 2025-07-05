@@ -10,20 +10,9 @@ public class MenuManager : MonoBehaviour
         EventManager.Instance.TriggerMenuLoaded(menuStartPosition.position);
     }
 
-
-    void Update()
-    {
-        
-    }
-
     public void LoadGame()
     {
         SceneManager.LoadTutorialScene();
-    }
-
-    public void LoadOptions()
-    {
-        //GameManager.Instance.LoadOptionsMenu();
     }
 
     public void Unload()

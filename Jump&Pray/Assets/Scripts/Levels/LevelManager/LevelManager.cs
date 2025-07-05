@@ -4,6 +4,9 @@ public class LevelManager : MonoBehaviour
 {
     [SerializeField] private LevelConection levelConection;
     [SerializeField] private Coin[] coinsPull;
+    [SerializeField] private Transform startPoint;
+    [SerializeField] private Transform deathPoint;
+    [SerializeField] private CinematicFall cinematicFall;
 
     private PlayerController playerController;
 
@@ -22,6 +25,7 @@ public class LevelManager : MonoBehaviour
     private void FixedUpdate()
     {
         CheckCoins();
+        CheckPlayerStatus();
     }
 
     private void CheckCoins()
@@ -43,6 +47,16 @@ public class LevelManager : MonoBehaviour
                 isPlatformActivated = true;
                 levelConection.ActivatePlatform();
             }
-        }  
+        }
+    }
+
+    private void CheckPlayerStatus()
+    {
+        if (playerController.GetRigidbody().position.y < deathPoint.position.y)
+        {
+            playerController.SubtractLife();
+            playerController.ResetPosition(startPoint.position);
+            cinematicFall.StartCinematicFall();
+        }
     }
 }

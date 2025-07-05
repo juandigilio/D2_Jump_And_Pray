@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class TriggerBehaviour : MonoBehaviour
 {
-    public enum TriggerType { Play, Unload, Options, Exit }
+    public enum TriggerType { Play, Unload, Exit }
     public TriggerType type;
 
     [SerializeField] private MenuManager menuManager;
@@ -32,11 +32,6 @@ public class TriggerBehaviour : MonoBehaviour
                 case TriggerType.Unload:
                 {
                     menuManager.Unload();
-                    break;
-                }
-                case TriggerType.Options:
-                {
-                    menuManager.LoadOptions();
                     break;
                 }
                 case TriggerType.Exit:

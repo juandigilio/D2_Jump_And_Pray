@@ -3,8 +3,8 @@ using UnityEngine;
 public class CinematicFall : MonoBehaviour
 {
     [SerializeField] private Transform target;
-    [SerializeField] private float controlStrength = 5f;
-    [SerializeField] private float maxHorizontalSpeed = 10f;
+    [SerializeField] private float controlStrength = 3f;
+    [SerializeField] private float maxHorizontalSpeed = 1f;
 
     private Rigidbody rb;
     private bool isCinematicFalling = false;
@@ -55,7 +55,7 @@ public class CinematicFall : MonoBehaviour
         }
     }
 
-    private void StartCinematicFall()
+    public void StartCinematicFall()
     {
         isCinematicFalling = true;
         rb.linearVelocity = new Vector3(0, rb.linearVelocity.y, 0);

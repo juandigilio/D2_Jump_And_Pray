@@ -49,7 +49,6 @@ public class Cameraman : MonoBehaviour
         if (cameraMode == CameraMode.ThirdPerson)
         {
             UpdateThirdPersonCamera();
-            Debug.Log("Third Person Camera Update");
         }
         else if (cameraMode == CameraMode.FirstPerson)
         {
@@ -191,6 +190,7 @@ public class Cameraman : MonoBehaviour
         mainCamera.transform.LookAt(cinematicTarget.transform.position);
 
         cameraMode = CameraMode.Cinematic;
+        Debug.Log("Cinematic Camera Started");
     }
 
     public void SetCameraMode(CameraMode mode)

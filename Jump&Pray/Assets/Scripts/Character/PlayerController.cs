@@ -10,11 +10,12 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rigidBody;
     private Vector2 inputDirection;
     private bool isGrounded;
+    private int availableLifes;
 
 
     private void OnEnable()
     {
-        EventManager.Instance.OnMenuLoaded += MoveToMainMenu;
+        EventManager.Instance.OnMenuLoaded += ResetPosition;
     }
 
     private void OnDisable()
@@ -22,7 +23,7 @@ public class PlayerController : MonoBehaviour
         inputDirection = Vector3.zero;
         movementBehaviour.SetInputDirection(inputDirection);
 
-        EventManager.Instance.OnMenuLoaded -= MoveToMainMenu;
+        EventManager.Instance.OnMenuLoaded -= ResetPosition;
     }
 
     private void Start()
@@ -34,6 +35,8 @@ public class PlayerController : MonoBehaviour
         }
 
         GameManager.Instance.RegisterPlayer(this);
+
+        availableLifes = 3;
     }
 
     private void Update()
@@ -72,9 +75,10 @@ public class PlayerController : MonoBehaviour
         movementBehaviour.SetGroundedCondition(isGrounded);
     }
 
-    private void MoveToMainMenu(Vector3 startPos)
+    public void ResetPosition(Vector3 startPos)
     {
         rigidBody.position = startPos;
+        //rigidBody.linearVelocity = Vector3.zero;
     }
 
     public void LoadJumpCharge()
@@ -101,6 +105,16 @@ public class PlayerController : MonoBehaviour
     public bool IsGrounded()
     {
         return isGrounded;
+    }
+
+    public void SubtractLife()
+    {
+        availableLifes--;
+
+        if (availableLifes <= 0)
+        {
+            //EventManager.Instance.TriggerGameOver();
+        }
     }
 
     public void AnimationFinished()

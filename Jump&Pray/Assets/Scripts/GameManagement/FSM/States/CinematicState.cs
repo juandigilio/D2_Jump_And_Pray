@@ -11,6 +11,11 @@ public class CinematicState : BaseState
         DisablePlayerUpdate();
     }
 
+    public override void Update()
+    {
+        cameraman.UpdateCamera();
+    }
+
     public override void Exit()
     {
         EnablePlayerUpdate();
