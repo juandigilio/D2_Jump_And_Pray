@@ -40,7 +40,7 @@ public class RollingCrusher : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!hasLanded && ((1 << other.gameObject.layer) & groundLayer) != 0)
+        if (!hasLanded && other.CompareTag("Activator"))
         {
             hasLanded = true;
             rb.isKinematic = true;

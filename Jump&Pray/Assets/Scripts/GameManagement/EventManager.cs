@@ -21,6 +21,9 @@ public class EventManager : MonoBehaviour
     public event Action OnPlayerRolled;
     public event Action OnRollFinished;
 
+    public event Action OnPlayerWon;
+    public event Action OnPlayerLost;
+
     public event Action<Vector3> OnMenuLoaded;
 
     public event Action OnShowOptionsMenu;
@@ -108,5 +111,16 @@ public class EventManager : MonoBehaviour
     public void TriggerHideOptionsMenu()
     {
         OnHideOptionsMenu?.Invoke();
+    }
+
+    public void TriggerPlayerWon()
+    {
+        OnPlayerWon?.Invoke();
+        OnAnimationStarted?.Invoke();
+    }
+
+    public void TriggerPlayerLost()
+    {
+        OnPlayerLost?.Invoke();
     }
 }

@@ -107,8 +107,9 @@ public class MovementBehaviour : MonoBehaviour
         right.y = 0;
         right.Normalize();
 
-        movementDirection = (forward * movementInput.y) + (right * movementInput.x);
-
+        //movementDirection = (forward * movementInput.y) + (right * movementInput.x);
+        //Vector3 normal = Vector3.up;
+        //movementDirection = Vector3.ProjectOnPlane(movementDirection, normal);
         if (isGrounded)
         {
             movementDirection *= forceMultiplier;
