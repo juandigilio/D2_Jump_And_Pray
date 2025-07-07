@@ -6,7 +6,6 @@ public class PausedState : BaseState
 
     public override void Enter()
     {
-        Debug.Log("Entered paused State");
         SetPausedInput();
     }
 

@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     private PlayerInput playerInput;
     private StateManager stateManager;
     private OptionsManager optionsManager;
+    private CheatsManager cheatsManager;
 
     private void Awake()
     {
@@ -54,6 +55,11 @@ public class GameManager : MonoBehaviour
         this.optionsManager = optionsManager;
     }
 
+    public void RegisterCheatsManager(CheatsManager cheatsManager)
+    {
+        this.cheatsManager = cheatsManager;
+    }
+
     public Cameraman GetCameraman()
     {
         return cameraman;
@@ -82,5 +88,10 @@ public class GameManager : MonoBehaviour
     public OptionsManager GetOptionsManager()
     {
         return optionsManager;
+    }
+
+    public CheatsManager GetCheatsManager()
+    {
+        return cheatsManager;
     }
 }

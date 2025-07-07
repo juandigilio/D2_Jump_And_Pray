@@ -6,7 +6,6 @@ public class ArcadeBehaviour : MonoBehaviour
     [SerializeField] private GameObject machine;
     [SerializeField] private float dropDuration = 1f;
     [SerializeField] private float dropHeight = 2f;
-    [SerializeField] private float moveSpeed = 2f;
     [SerializeField] private float forwardOffset = 1f;
     [SerializeField] private float UpOffset = 1f;
     [SerializeField] private float RightOffset = 1f;

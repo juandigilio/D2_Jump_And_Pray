@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Windows;
 
 public class PlayerController : MonoBehaviour
 {
@@ -78,7 +77,6 @@ public class PlayerController : MonoBehaviour
     public void ResetPosition(Vector3 startPos)
     {
         rigidBody.position = startPos;
-        //rigidBody.linearVelocity = Vector3.zero;
     }
 
     public void LoadJumpCharge()
@@ -117,6 +115,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void AddLife()
+    {
+        availableLifes++;
+    }
+
     public void AnimationFinished()
     {
         EventManager.Instance.TriggerAnimationFinished();
@@ -130,5 +133,10 @@ public class PlayerController : MonoBehaviour
     public Rigidbody GetRigidbody()
     {
         return rigidBody;
+    }
+
+    public Transform GetTransform()
+    {
+        return transform;
     }
 }

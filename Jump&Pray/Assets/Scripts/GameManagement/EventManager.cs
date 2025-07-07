@@ -75,7 +75,7 @@ public class EventManager : MonoBehaviour
         OnPlayerJumped?.Invoke();
     }
 
-    public void TriggerPlayerDeath()
+    public void TriggerPlayerDied()
     {
         OnPlayerDied?.Invoke();
     }

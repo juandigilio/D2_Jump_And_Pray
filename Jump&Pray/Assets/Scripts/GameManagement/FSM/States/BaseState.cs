@@ -13,6 +13,7 @@ public abstract class BaseState
 
     public virtual void Enter() { }
     public virtual void Enter(Vector3 cameraPosition, GameObject target) { }
+    public virtual void Enter(Vector3 start, Vector3 end) { }
     public virtual void Update() { }
     public virtual void FixedUpdate() { }
     public virtual void LateUpdate() { }

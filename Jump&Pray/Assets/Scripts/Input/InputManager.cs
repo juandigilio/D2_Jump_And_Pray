@@ -14,7 +14,11 @@ public class InputManager : MonoBehaviour
     [SerializeField] private string rollAction = "Roll";
 
     [SerializeField] private string pauseAction = "Pause";
-    [SerializeField] private string quitAction = "Quit";
+    //[SerializeField] private string quitAction = "Quit";
+
+    [SerializeField] private string nextLevelAction = "NextLevel";
+    //[SerializeField] private string godModeAction = "GodMode";
+    //[SerializeField] private string superSpeedAction = "SuperSpeed";
 
     [SerializeField] private string inGameActionMap = "InGame";
     [SerializeField] private string menuActionMap = "Menu";
@@ -23,6 +27,7 @@ public class InputManager : MonoBehaviour
     private PlayerController playerController;
     private Cameraman cameraman;
     private OptionsManager optionsManager;
+    private CheatsManager cheatsManager;
 
     private void Awake()
     {
@@ -42,31 +47,15 @@ public class InputManager : MonoBehaviour
 
     private void Start()
     {
-        playerInput.ActivateInput();
+        cheatsManager = GameManager.Instance.GetCheatsManager();
 
-        if (playerInput != null)
+        if (cheatsManager == null)
         {
-            playerInput.SwitchCurrentActionMap(inGameActionMap);
-
-            playerInput.currentActionMap.FindAction(rotateCameraAction).started += SetGamepadCameraRotation;
-            playerInput.currentActionMap.FindAction(rotateCameraAction).performed += SetGamepadCameraRotation;
-            playerInput.currentActionMap.FindAction(rotateCameraAction).canceled += SetGamepadCameraRotation;
-
-            playerInput.currentActionMap.FindAction(moveAction).started += Move;
-            playerInput.currentActionMap.FindAction(moveAction).performed += Move;
-            playerInput.currentActionMap.FindAction(moveAction).canceled += Move;
-
-            playerInput.currentActionMap.FindAction(jumpAction).started += Jump;
-            playerInput.currentActionMap.FindAction(jumpAction).canceled += Jump;
-
-            playerInput.currentActionMap.FindAction(rollAction).started += Roll;
-
-            playerInput.currentActionMap.FindAction(pauseAction).started += ShowOptions;
-
-            playerInput.SwitchCurrentActionMap(menuActionMap);
-
-            playerInput.currentActionMap.FindAction(pauseAction).started += ShowOptions;
+            Debug.LogError("CheatsManager not found in GameManager.");
         }
+
+
+        LoadActions();
 
         cameraman = GameManager.Instance.GetCameraman();
         playerController = GameManager.Instance.GetPlayerController();
@@ -132,7 +121,6 @@ public class InputManager : MonoBehaviour
     {
         if (callbackContext.started)
         {
-            Debug.Log("Roll action started");
             playerController.Roll();
         }
     }
@@ -197,6 +185,47 @@ public class InputManager : MonoBehaviour
         if (callbackContext.started)
         {
             optionsManager.ShowOptions();
+        }
+    }
+
+    private void GoToNextLevel(InputAction.CallbackContext callbackContext)
+    {
+        if (callbackContext.started)
+        {
+            cheatsManager.GoToNextLevel();
+        }       
+    }
+
+    private void LoadActions()
+    {
+        playerInput.ActivateInput();
+
+        if (playerInput != null)
+        {
+            playerInput.SwitchCurrentActionMap(inGameActionMap);
+
+            playerInput.currentActionMap.FindAction(rotateCameraAction).started += SetGamepadCameraRotation;
+            playerInput.currentActionMap.FindAction(rotateCameraAction).performed += SetGamepadCameraRotation;
+            playerInput.currentActionMap.FindAction(rotateCameraAction).canceled += SetGamepadCameraRotation;
+
+            playerInput.currentActionMap.FindAction(moveAction).started += Move;
+            playerInput.currentActionMap.FindAction(moveAction).performed += Move;
+            playerInput.currentActionMap.FindAction(moveAction).canceled += Move;
+
+            playerInput.currentActionMap.FindAction(jumpAction).started += Jump;
+            playerInput.currentActionMap.FindAction(jumpAction).canceled += Jump;
+
+            playerInput.currentActionMap.FindAction(rollAction).started += Roll;
+
+            playerInput.currentActionMap.FindAction(pauseAction).started += ShowOptions;
+
+            playerInput.currentActionMap.FindAction(nextLevelAction).started += GoToNextLevel;
+
+            //playerInput.currentActionMap.FindAction(quitAction).started += GameManager.Instance.QuitGame;
+
+            playerInput.SwitchCurrentActionMap(menuActionMap);
+
+            playerInput.currentActionMap.FindAction(pauseAction).started += ShowOptions;
         }
     }
 }

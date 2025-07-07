@@ -20,6 +20,8 @@ public class LevelManager : MonoBehaviour
         {
             Debug.LogError("PlayerController not found in GameManager.");
         }
+
+        EventManager.Instance.OnPlayerDied += ResetPlayer;
     }
 
     private void FixedUpdate()
@@ -54,9 +56,14 @@ public class LevelManager : MonoBehaviour
     {
         if (playerController.GetRigidbody().position.y < deathPoint.position.y)
         {
-            playerController.SubtractLife();
-            playerController.ResetPosition(startPoint.position);
-            cinematicFall.StartCinematicFall();
+            ResetPlayer();
         }
+    }
+
+    private void ResetPlayer()
+    {
+        playerController.SubtractLife();
+        playerController.ResetPosition(startPoint.position);
+        cinematicFall.StartCinematicFall();
     }
 }

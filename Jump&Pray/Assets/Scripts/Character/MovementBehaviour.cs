@@ -10,7 +10,6 @@ public class MovementBehaviour : MonoBehaviour
     [SerializeField] private float gravityMultiplier = 10f;
     [SerializeField] private float rollingMaxSpeed = 8f;
     [SerializeField] private float rotationSpeed = 9f;
-    [SerializeField] private float rollForce = 3f;
     [SerializeField] private float decelerationSpeed = 8f;
 
     private Vector2 movementInput;
@@ -164,11 +163,7 @@ public class MovementBehaviour : MonoBehaviour
             NormalizeVelocity();
 
             isRolling = true;
-
-            Debug.Log("Rolling");
         }
-        
-        Debug.Log("Rolling condition: " + isRolling);
     }
 
     public void SetInputDirection(Vector2 input)

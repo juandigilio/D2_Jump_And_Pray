@@ -11,7 +11,6 @@ public class JumpBehaviour : MonoBehaviour
     private Rigidbody rigidBody;
 
     private bool isJumping = false;
-    private bool doubleJump = false;
     private bool isGrounded = false;
     private bool isCharging = false;
     private float chargingStartTime;
@@ -94,7 +93,6 @@ public class JumpBehaviour : MonoBehaviour
         if (isGrounded)
         {
             isJumping = false;
-            doubleJump = false;
         }
     }
 
@@ -105,7 +103,6 @@ public class JumpBehaviour : MonoBehaviour
         if (isRolling)
         {
             isJumping = false;
-            doubleJump = false;
         }
     }
 }

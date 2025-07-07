@@ -165,6 +165,8 @@ MonoBehaviour:
     actionMapType: 0
   - sceneName: Lvl_1
     actionMapType: 0
+  - sceneName: Lvl_2
+    actionMapType: 0
   winingScene:
     sceneName: 
     actionMapType: 0

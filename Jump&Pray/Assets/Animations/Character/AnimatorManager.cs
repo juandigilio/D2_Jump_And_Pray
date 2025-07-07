@@ -55,7 +55,6 @@ public class AnimatorManager : MonoBehaviour
     private void AnimateLand()
     {
         animator.SetTrigger("landed");
-        Debug.Log("Player landed, triggering animation.");
     }
 
     private void AnimateRoll()

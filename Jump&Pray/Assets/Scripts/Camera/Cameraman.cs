@@ -1,4 +1,3 @@
-using System;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -12,20 +11,20 @@ public enum CameraMode
 
 public class Cameraman : MonoBehaviour
 {
-    [SerializeField] private Transform target;
     [SerializeField] private Vector3 thirdPersonOffset;
     [SerializeField] private Vector3 firstPersonOffset;
     [SerializeField] private Vector3 corridorOffset;
     [SerializeField] private float minVerticalAngle = -60f;
     [SerializeField] private float maxVerticalAngle = 60f;
-    [SerializeField] private float corridorDistance;
+    [SerializeField] private float corridorDistance = 1;
 
     private Camera mainCamera;
+    private Transform target;
     private CameraMode cameraMode;
     private Vector2 inputRotation;
     private Vector2 cameraRotation;
     private GameObject cinematicTarget;
-    private GameObject corridorTarget;
+    private Vector3 corridorStart;
     private Vector3 corridorEnd;
 
 
@@ -42,7 +41,6 @@ public class Cameraman : MonoBehaviour
     {
         InitCamera();
     }
-
 
     public void UpdateCamera()
     {
@@ -79,19 +77,22 @@ public class Cameraman : MonoBehaviour
 
     private void UpdateCorridorCamera()
     {
-        Vector3 direction = (corridorTarget.transform.position - mainCamera.transform.position).normalized;
-        Vector3 targetPosition = corridorTarget.transform.position - direction * corridorDistance;
+        Vector3 rielStart = corridorStart;
+        Vector3 rielEnd = corridorEnd;
+        Vector3 player = target.position;
 
-        float distanceToEnd = Vector3.Distance(corridorTarget.transform.position, corridorEnd);
-        float distanceToCamera = Vector3.Distance(corridorTarget.transform.position, targetPosition);
+        Vector3 rielDir = (rielEnd - rielStart).normalized;
+        Vector3 toPlayer = player - rielStart;
+        float projected = Vector3.Dot(toPlayer, rielDir);
+        float totalDist = Vector3.Distance(rielStart, rielEnd);
 
-        if (distanceToCamera > distanceToEnd)
-        {
-            targetPosition = corridorEnd;
-        }
+        float clampedProj = Mathf.Clamp(projected - corridorDistance, 0f, totalDist);
+        Vector3 camPosition = rielStart + rielDir * clampedProj;
 
-        mainCamera.transform.position = Vector3.Lerp(mainCamera.transform.position, targetPosition, Time.deltaTime * 5f);
-        mainCamera.transform.LookAt(corridorTarget.transform.position);
+        mainCamera.transform.position = Vector3.Lerp(mainCamera.transform.position, camPosition, Time.deltaTime * 5f);
+
+        Quaternion targetRotation = Quaternion.LookRotation(player - mainCamera.transform.position);
+        mainCamera.transform.rotation = Quaternion.Slerp(mainCamera.transform.rotation, targetRotation, Time.deltaTime * 5f);
     }
 
     private void UpdateCinematicCamera()
@@ -120,6 +121,7 @@ public class Cameraman : MonoBehaviour
     private void InitCamera()
     {
         mainCamera = Camera.main;
+        target = GameManager.Instance.GetPlayerController().GetTransform();
 
         if (mainCamera == null)
         {
@@ -175,9 +177,9 @@ public class Cameraman : MonoBehaviour
         cameraMode = CameraMode.ThirdPerson;
     }
 
-    public void SetCorridorCamera(GameObject target, Vector3 end)
+    public void SetCorridorCamera(Vector3 start, Vector3 end)
     {
-        corridorTarget = target;
+        corridorStart = start;
         corridorEnd = end;
         cameraMode = CameraMode.Corridor;
     }

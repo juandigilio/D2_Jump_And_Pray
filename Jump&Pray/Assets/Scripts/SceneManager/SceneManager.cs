@@ -13,7 +13,7 @@ public class SceneManager
     private static List<CustomScene> scenesPool = new List<CustomScene>();
     private static CustomScene winingScene;
 
-    private static Vector3 menuStartPosition;
+    //private static Vector3 menuStartPosition;
     private static int index = 0;
 
 
@@ -30,10 +30,6 @@ public class SceneManager
 
             loadedScenes.Add(scene.sceneName);
         }
-        else
-        {
-            //Debug.LogWarning("Scene " + scene + " is already loaded.");
-        }
 
         SetInputActionMap(scene);
     }
@@ -42,7 +38,6 @@ public class SceneManager
     {
         if (IsSceneLoaded(scene))
         {
-            //Debug.Log("Unloading scene: " + scene.sceneName);
             AsyncOperation asyncUnload = UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(scene.sceneName);
 
             while (!asyncUnload.isDone)
@@ -51,10 +46,6 @@ public class SceneManager
             }
 
             loadedScenes.Remove(scene.sceneName);
-        }
-        else
-        {
-            //Debug.LogWarning("Scene " + scene + " is not loaded.");
         }
     }
 
@@ -117,8 +108,6 @@ public class SceneManager
     {
         if (index > 0)
         {
-            //Debug.Log("Unloading scene: " + scenesPool[index - 1].sceneName);
-            //Debug.Log("Index: " + index);
             _ = UnloadSceneAsync(scenesPool[index - 1]);
         }
     }
@@ -165,8 +154,13 @@ public class SceneManager
         _ = UnloadSceneAsync(optionsScene);
     }
 
-    public static void SetMenuStartPosition(Vector3 position)
+    public static bool IsMainMenuSceneLoaded()
     {
-        menuStartPosition = position;
+        return IsSceneLoaded(mainMenuScene);
     }
+
+    //public static void SetMenuStartPosition(Vector3 position)
+    //{
+    //    menuStartPosition = position;
+    //}
 }
