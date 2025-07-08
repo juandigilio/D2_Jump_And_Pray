@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Smasher
   - Activator
+  - Target
   layers:
   - Default
   - TransparentFX

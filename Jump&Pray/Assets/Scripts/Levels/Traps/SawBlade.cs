@@ -39,6 +39,7 @@ public class SawBlade : MonoBehaviour
         {
             if (Time.time - lastDamageTime >= damageCooldown)
             {
+                EventManager.Instance.TriggerPlayerKicked();
                 playerController.SubtractLife();
                 lastDamageTime = Time.time;
                 Debug.Log("Player hit by saw blade!");

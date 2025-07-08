@@ -4,6 +4,7 @@ using System.Collections;
 
 public class LevelConection : MonoBehaviour
 {
+    [SerializeField] private LevelManager levelManager;
     [SerializeField] private GameObject platform;
     [SerializeField] private Transform activatedTarget;
     [SerializeField] private Transform nextLevelTarget;
@@ -53,6 +54,8 @@ public class LevelConection : MonoBehaviour
             {
                 SceneManager.LoadNextSceneAsync();
             }
+
+            levelManager.TurnOffLevel();
         }
         else
         {

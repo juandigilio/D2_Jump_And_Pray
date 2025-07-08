@@ -2363,8 +2363,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6218747d170712b4dae626837cea7a3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gizmoLength: 0
-  playerController: {fileID: 588450884}
+  gizmoLength: 1.1
 --- !u!114 &588450886
 MonoBehaviour:
   m_ObjectHideFlags: 0

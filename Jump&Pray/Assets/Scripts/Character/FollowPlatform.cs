@@ -135,7 +135,7 @@ public class FollowPlatform : MonoBehaviour
             width = playerCollider.bounds.size.x;
             gizmoDirection = -transform.up;
             gizmoRadius = width / 2;
-            gizmoLength = (playerCollider.bounds.size.y - gizmoRadius) * 1.05f;
+            gizmoLength = (playerCollider.bounds.size.y - gizmoRadius) * 1.11f;
         }
         else
         {

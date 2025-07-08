@@ -780,6 +780,7 @@ MonoBehaviour:
   startPoint: {fileID: 312471722}
   deathPoint: {fileID: 1873729492}
   cinematicFall: {fileID: 985505675}
+  rollingCrusher: {fileID: 0}
   isTutorial: 1
 --- !u!4 &391846013
 Transform:
@@ -5223,6 +5224,10 @@ PrefabInstance:
       propertyPath: platform
       value: 
       objectReference: {fileID: 568787101}
+    - target: {fileID: 6977481044178455449, guid: ca7ce10b195afbf449e88344a7a14ba9, type: 3}
+      propertyPath: levelManager
+      value: 
+      objectReference: {fileID: 391846012}
     - target: {fileID: 7826074474293517889, guid: ca7ce10b195afbf449e88344a7a14ba9, type: 3}
       propertyPath: m_IsTrigger
       value: 1
@@ -5245,7 +5250,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8573642870202721626, guid: ca7ce10b195afbf449e88344a7a14ba9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.341
+      value: -0.08
       objectReference: {fileID: 0}
     - target: {fileID: 8573642870202721626, guid: ca7ce10b195afbf449e88344a7a14ba9, type: 3}
       propertyPath: m_LocalPosition.y
@@ -5253,7 +5258,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8573642870202721626, guid: ca7ce10b195afbf449e88344a7a14ba9, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.06
+      value: -0.52
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

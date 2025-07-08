@@ -2858,6 +2858,10 @@ PrefabInstance:
       propertyPath: platform
       value: 
       objectReference: {fileID: 1954334096}
+    - target: {fileID: 6977481044178455449, guid: ca7ce10b195afbf449e88344a7a14ba9, type: 3}
+      propertyPath: levelManager
+      value: 
+      objectReference: {fileID: 815332185}
     - target: {fileID: 7826074474293517889, guid: ca7ce10b195afbf449e88344a7a14ba9, type: 3}
       propertyPath: m_IsTrigger
       value: 1

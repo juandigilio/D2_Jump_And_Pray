@@ -26,7 +26,7 @@ public class RotatingTrap : MonoBehaviour
 
     private void Rotate()
     {
-        transform.Rotate(Vector3.up * rotationSpeed * Time.deltaTime);
+        transform.Rotate(Vector3.up * -rotationSpeed * Time.deltaTime);
     }
 
     private void OnCollisionEnter(Collision other)
@@ -35,6 +35,7 @@ public class RotatingTrap : MonoBehaviour
         {
             if (Time.time - lastDamageTime >= damageCooldown)
             {
+                EventManager.Instance.TriggerPlayerKicked();
                 playerController.SubtractLife();
                 lastDamageTime = Time.time;
                 Debug.Log("Player hit by saw blade!");

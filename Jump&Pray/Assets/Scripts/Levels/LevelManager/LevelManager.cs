@@ -7,12 +7,14 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private Transform startPoint;
     [SerializeField] private Transform deathPoint;
     [SerializeField] private CinematicFall cinematicFall;
+    [SerializeField] private RollingCrusher rollingCrusher;
     [SerializeField] private bool isTutorial = false;
 
     private PlayerController playerController;
 
     private bool isPlatformActivated = false;
     private bool isGameOver = false;
+    private bool isCurrentLevel = false;
 
     private void Start()
     {
@@ -25,8 +27,8 @@ public class LevelManager : MonoBehaviour
         }
 
         isGameOver = false;
+        isCurrentLevel = true;
 
-        EventManager.Instance.OnPlayerDied += ResetPlayer;
         EventManager.Instance.OnPlayerLost += GoToGameOver;
         EventManager.Instance.OnResetGame += ResetGame;
     }
@@ -76,6 +78,10 @@ public class LevelManager : MonoBehaviour
         {
             if (playerController.ResetPlayer(startPoint.position))
             {
+                if (rollingCrusher)
+                {
+                    rollingCrusher.Reset();
+                }
                 cinematicFall.StartCinematicFall();
             }
             else
@@ -93,6 +99,11 @@ public class LevelManager : MonoBehaviour
 
     private void GoToGameOver()
     {
-        SceneManager.LoadGameOverScene();
+        SceneManager.LoadMenuScene();
+    }
+
+    public void TurnOffLevel()
+    {
+        isCurrentLevel = false;
     }
 }

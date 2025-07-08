@@ -45,7 +45,7 @@ public class PlayerController : MonoBehaviour
 
         GameManager.Instance.RegisterPlayer(this);
 
-        availableLifes = 30;
+        availableLifes = 1;
     }
 
     private void Update()
@@ -149,15 +149,9 @@ public class PlayerController : MonoBehaviour
 
         if (availableLifes <= 0)
         {
-            if (isGrounded)
-            {
+            availableLifes = 3;
+            EventManager.Instance.TriggerPlayerLost();
 
-            }
-            else
-            {
-                EventManager.Instance.TriggerPlayerLost();
-            }
-            
             return false;
         }
         else

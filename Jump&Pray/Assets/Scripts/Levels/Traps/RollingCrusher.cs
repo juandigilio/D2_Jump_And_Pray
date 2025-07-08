@@ -11,6 +11,7 @@ public class RollingCrusher : MonoBehaviour
     private MeshCollider meshCollider;
     private Vector3 initialPosition;
     private bool hasLanded = false;
+    private bool hasSmashed = false;
 
     void Start()
     {
@@ -32,7 +33,7 @@ public class RollingCrusher : MonoBehaviour
 
     void Update()
     {
-        if (hasLanded)
+        if (hasLanded && !hasSmashed)
         {
             RotateAndMove();
         }
@@ -52,8 +53,12 @@ public class RollingCrusher : MonoBehaviour
         {
             if (other.CompareTag("Player"))
             {
-                Reset();
-                EventManager.Instance.TriggerPlayerDied();
+                hasSmashed = true;
+                EventManager.Instance.TriggerPlayerSmashed();
+            }
+            else if (other.CompareTag("Target"))
+            {
+                hasSmashed = true;
             }
         }
     }
@@ -71,11 +76,12 @@ public class RollingCrusher : MonoBehaviour
         rb.isKinematic = false;
     }
 
-    private void Reset()
+    public void Reset()
     {
         transform.position = initialPosition;
         rb.isKinematic = true;
         hasLanded = false;
         meshCollider.isTrigger = false;
+        hasSmashed = false;
     }
 }

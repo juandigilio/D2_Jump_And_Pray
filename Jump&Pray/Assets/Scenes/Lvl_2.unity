@@ -585,7 +585,7 @@ GameObject:
   - component: {fileID: 176339984}
   m_Layer: 0
   m_Name: RollerTarget
-  m_TagString: Untagged
+  m_TagString: Target
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -599,7 +599,7 @@ Transform:
   m_GameObject: {fileID: 176339982}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -165.67, y: -4.440529, z: -125.081764}
+  m_LocalPosition: {x: -164.124, y: -4.440529, z: -125.081764}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1411,6 +1411,10 @@ PrefabInstance:
       propertyPath: isLastLevel
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6977481044178455449, guid: ca7ce10b195afbf449e88344a7a14ba9, type: 3}
+      propertyPath: levelManager
+      value: 
+      objectReference: {fileID: 815332185}
     - target: {fileID: 7826074474293517889, guid: ca7ce10b195afbf449e88344a7a14ba9, type: 3}
       propertyPath: m_IsTrigger
       value: 1
@@ -3193,6 +3197,7 @@ MonoBehaviour:
   startPoint: {fileID: 1389720019}
   deathPoint: {fileID: 170519918}
   cinematicFall: {fileID: 815332187}
+  rollingCrusher: {fileID: 727865143}
   isTutorial: 0
 --- !u!4 &815332186
 Transform:
@@ -5137,7 +5142,7 @@ Transform:
   m_GameObject: {fileID: 1389720018}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -188.06, y: 81.80999, z: -38.500004}
+  m_LocalPosition: {x: -27.94, y: 84.25999, z: -41.39}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6973,7 +6978,7 @@ Transform:
   m_GameObject: {fileID: 1730131573}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -188.06, y: 12.09, z: -38.5}
+  m_LocalPosition: {x: -27.940004, y: 14.54, z: -41.39}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
