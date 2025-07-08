@@ -15,6 +15,8 @@ public class AnimatorManager : MonoBehaviour
         EventManager.Instance.OnPlayerRolled += AnimateRoll;
         EventManager.Instance.OnCinematicFallStarted += AnimateCinematicFall;
         EventManager.Instance.OnPlayerWon += AnimateWinningDance;
+        EventManager.Instance.OnPlayerStandDied += AnimateStandDeath;
+        EventManager.Instance.OnPlayerSmashed += AnimateSmash;
     }
 
     private void OnDisable()
@@ -25,6 +27,8 @@ public class AnimatorManager : MonoBehaviour
         EventManager.Instance.OnPlayerRolled -= AnimateRoll;
         EventManager.Instance.OnCinematicFallStarted -= AnimateCinematicFall;
         EventManager.Instance.OnPlayerWon -= AnimateWinningDance;
+        EventManager.Instance.OnPlayerStandDied -= AnimateStandDeath;
+        EventManager.Instance.OnPlayerSmashed -= AnimateSmash;
     }
 
     private void Update()
@@ -74,8 +78,13 @@ public class AnimatorManager : MonoBehaviour
         animator.SetTrigger("animateWinningDance");
     }
 
-    public void RollFinished()
+    private void AnimateStandDeath()
     {
-        EventManager.Instance.TriggerRollFinished();
+        animator.SetTrigger("standDied");
+    }
+
+    public void AnimateSmash()
+    {
+        animator.SetTrigger("wasSmashed");
     }
 }

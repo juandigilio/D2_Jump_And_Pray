@@ -16,10 +16,16 @@ public class EventManager : MonoBehaviour
     public event Action OnCinematicFallFinished;
 
     public event Action OnPlayerJumped;
+    public event Action OnPlayerKicked;
     public event Action OnPlayerDied;
+    public event Action OnPlayerStandDied;
+    public event Action OnPlayerSmashed;
     public event Action OnPlayerLanded;
     public event Action OnPlayerRolled;
     public event Action OnRollFinished;
+
+    public event Action OnResetPlayer;
+    public event Action OnResetGame;
 
     public event Action OnPlayerWon;
     public event Action OnPlayerLost;
@@ -78,9 +84,24 @@ public class EventManager : MonoBehaviour
         OnPlayerJumped?.Invoke();
     }
 
+    public void TriggerPlayerKicked()
+    {
+        OnPlayerKicked?.Invoke();
+    }
+
     public void TriggerPlayerDied()
     {
         OnPlayerDied?.Invoke();
+    }
+
+    public void TriggerPlayerStandDied()
+    {
+        OnPlayerStandDied?.Invoke();
+    }
+
+    public void TriggerPlayerSmashed()
+    {
+        OnPlayerSmashed?.Invoke();
     }
 
     public void TriggerPlayerLanded()
@@ -111,6 +132,16 @@ public class EventManager : MonoBehaviour
     public void TriggerHideOptionsMenu()
     {
         OnHideOptionsMenu?.Invoke();
+    }
+
+    public void TriggerResetPlayer()
+    {
+        OnResetPlayer?.Invoke();
+    }
+
+    public void TriggerResetGame()
+    {
+        OnResetGame?.Invoke();
     }
 
     public void TriggerPlayerWon()
