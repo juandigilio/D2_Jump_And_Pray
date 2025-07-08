@@ -1161,6 +1161,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 2090505174}
   m_SourcePrefab: {fileID: 100100000, guid: 345631e001ac8cd4aa22758d32675bc1, type: 3}
+--- !u!137 &336055344 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 4315648579854482848, guid: 345631e001ac8cd4aa22758d32675bc1, type: 3}
+  m_PrefabInstance: {fileID: 336055343}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &346273676
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2170,6 +2175,7 @@ GameObject:
   - component: {fileID: 588450883}
   - component: {fileID: 588450882}
   - component: {fileID: 588450885}
+  - component: {fileID: 588450886}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -2308,7 +2314,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba2c5496ca16303449f43c349f1e9a00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpForce: 60
+  jumpForce: 70
   maxChargeTime: 0.1
   minChargeTime: 0.05
 --- !u!114 &588450883
@@ -2324,7 +2330,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   forceMultiplier: 1
-  onAirForceMultiplier: 0.25
+  onAirForceMultiplier: 0.35
   maxSpeed: 5
   gravityMultiplier: 0
   rollingMaxSpeed: 8
@@ -2359,6 +2365,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gizmoLength: 0
   playerController: {fileID: 588450884}
+--- !u!114 &588450886
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 588450874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2cf84dc422126044a93415917948e9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  renderersToBlink:
+  - {fileID: 336055344}
+  knockbackForce: 5
+  knockbackUpward: 1
+  invulnerabilityTime: 1
+  blinkSpeed: 0.1
 --- !u!1001 &588755813
 PrefabInstance:
   m_ObjectHideFlags: 0

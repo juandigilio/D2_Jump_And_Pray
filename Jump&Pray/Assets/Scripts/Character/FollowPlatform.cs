@@ -3,8 +3,8 @@ using UnityEngine;
 public class FollowPlatform : MonoBehaviour
 {
     [SerializeField] private float gizmoLength;
-    [SerializeField] private PlayerController playerController;
 
+    private PlayerController playerController;
     private CapsuleCollider playerCollider;
     private Vector3 groundPosition;
     private Vector3 lastGroundPosition;
@@ -23,7 +23,7 @@ public class FollowPlatform : MonoBehaviour
 
     void Start()
     {
-        //playerController = GetComponent<PlayerController>();
+        playerController = GameManager.Instance.GetPlayerController();
 
         if (playerController == null)
         {

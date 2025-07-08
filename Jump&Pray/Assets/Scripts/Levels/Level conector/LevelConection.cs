@@ -12,6 +12,7 @@ public class LevelConection : MonoBehaviour
     [SerializeField] private float moeUpDuration = 3f;
     [SerializeField] private float nextLevelDuration = 6f;
     [SerializeField] private float animationPause = 1f;
+    [SerializeField] private bool isLastLevel = false;
 
     private bool isActivated = false;
     private bool hasMoved = false;
@@ -43,7 +44,15 @@ public class LevelConection : MonoBehaviour
             duration = nextLevelDuration;
 
             EventManager.Instance.TriggerAnimationStarted();
-            SceneManager.LoadNextSceneAsync();
+
+            if (isLastLevel)
+            {
+                SceneManager.LoadWiningScene();
+            }
+            else
+            {
+                SceneManager.LoadNextSceneAsync();
+            }
         }
         else
         {

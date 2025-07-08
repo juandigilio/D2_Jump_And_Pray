@@ -9,11 +9,10 @@ public class SceneManager
     private static CustomScene gameLoaderScene;
     private static CustomScene mainScene;
     private static CustomScene mainMenuScene;
-    private static CustomScene optionsScene;
     private static List<CustomScene> scenesPool = new List<CustomScene>();
     private static CustomScene winingScene;
+    private static CustomScene gameOverScene;
 
-    //private static Vector3 menuStartPosition;
     private static int index = 0;
 
 
@@ -21,14 +20,14 @@ public class SceneManager
     {
         if (!IsSceneLoaded(scene))
         {
+            loadedScenes.Add(scene.sceneName);
+
             AsyncOperation asyncLoad = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(scene.sceneName, LoadSceneMode.Additive);
 
             while (!asyncLoad.isDone)
             {
                 await Task.Yield();
             }
-
-            loadedScenes.Add(scene.sceneName);
         }
 
         SetInputActionMap(scene);
@@ -62,7 +61,6 @@ public class SceneManager
     private static async Task UnloadAll()
     {
         await UnloadSceneAsync(gameLoaderScene);
-        await UnloadSceneAsync(optionsScene);
 
         foreach (CustomScene scene in scenesPool)
         {
@@ -79,12 +77,11 @@ public class SceneManager
         inputManager.SetActionMap(scene.actionMapType);
     }
 
-    public static void SetScenes(CustomScene gameLoader, CustomScene main, CustomScene menu, CustomScene options, List<CustomScene> sceneDictionary, CustomScene win)
+    public static void SetScenes(CustomScene gameLoader, CustomScene main, CustomScene menu, List<CustomScene> sceneDictionary, CustomScene win, CustomScene gameOver)
     {
         gameLoaderScene = gameLoader;
         mainScene = main;
         mainMenuScene = menu;
-        optionsScene = options;
 
         foreach (CustomScene scene in sceneDictionary)
         {
@@ -92,6 +89,7 @@ public class SceneManager
         }
 
         winingScene = win;
+        gameOverScene = gameOver;
     }
 
     public static void LoadNextSceneAsync()
@@ -144,23 +142,14 @@ public class SceneManager
         _ = LoadSceneAsync(winingScene);
     }
 
-    public static void LoadOptionsScene()
+    public static void LoadGameOverScene()
     {
-        _ = LoadSceneAsync(optionsScene);
-    }
-
-    public static void UnloadOptionsScene()
-    {
-        _ = UnloadSceneAsync(optionsScene);
+        _ = UnloadAll();
+        _ = LoadSceneAsync(gameOverScene);
     }
 
     public static bool IsMainMenuSceneLoaded()
     {
         return IsSceneLoaded(mainMenuScene);
     }
-
-    //public static void SetMenuStartPosition(Vector3 position)
-    //{
-    //    menuStartPosition = position;
-    //}
 }

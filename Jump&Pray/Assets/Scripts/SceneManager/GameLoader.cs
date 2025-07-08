@@ -6,14 +6,14 @@ public class GameLoader : MonoBehaviour
     [SerializeField] private CustomScene gameLoader;
     [SerializeField] private CustomScene mainScene;
     [SerializeField] private CustomScene mainMenu;
-    [SerializeField] private CustomScene optionsScene;
     [SerializeField] private List<CustomScene> scenesPool;
     [SerializeField] private CustomScene winingScene;
+    [SerializeField] private CustomScene gameOverScene;
 
 
     void Start()
     {
-        SceneManager.SetScenes(gameLoader, mainScene, mainMenu, optionsScene, scenesPool, winingScene);
+        SceneManager.SetScenes(gameLoader, mainScene, mainMenu, scenesPool, winingScene, gameOverScene);
 
         _ = SceneManager.LoadGame();
     }

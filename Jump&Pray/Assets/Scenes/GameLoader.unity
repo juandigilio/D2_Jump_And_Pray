@@ -157,9 +157,6 @@ MonoBehaviour:
   mainMenu:
     sceneName: MainMenu
     actionMapType: 0
-  optionsScene:
-    sceneName: 
-    actionMapType: 0
   scenesPool:
   - sceneName: Tutorial
     actionMapType: 0
@@ -168,7 +165,10 @@ MonoBehaviour:
   - sceneName: Lvl_2
     actionMapType: 0
   winingScene:
-    sceneName: 
+    sceneName: WinningScene
+    actionMapType: 0
+  gameOverScene:
+    sceneName: GameOverScene
     actionMapType: 0
 --- !u!4 &41245297
 Transform:

@@ -7,14 +7,17 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float groundCheckDistance = 0.1f;
 
     private Rigidbody rigidBody;
+    private CapsuleCollider capsuleCollider;
     private Vector2 inputDirection;
     private bool isGrounded;
     private int availableLifes;
+    private bool isTutorial;
 
 
     private void OnEnable()
     {
         EventManager.Instance.OnMenuLoaded += ResetPosition;
+        EventManager.Instance.OnResetPlayer += TurnOffCollider;
     }
 
     private void OnDisable()
@@ -23,6 +26,7 @@ public class PlayerController : MonoBehaviour
         movementBehaviour.SetInputDirection(inputDirection);
 
         EventManager.Instance.OnMenuLoaded -= ResetPosition;
+        EventManager.Instance.OnResetPlayer -= TurnOffCollider;
     }
 
     private void Start()
@@ -32,10 +36,16 @@ public class PlayerController : MonoBehaviour
         {
             Debug.LogError("Rigidbody not found on the GameObject.");
         }
+        capsuleCollider = GetComponent<CapsuleCollider>();
+
+        if (capsuleCollider == null)
+        {
+            Debug.LogError("CapsuleCollider not found on the GameObject.");
+        }
 
         GameManager.Instance.RegisterPlayer(this);
 
-        availableLifes = 3;
+        availableLifes = 30;
     }
 
     private void Update()
@@ -74,9 +84,34 @@ public class PlayerController : MonoBehaviour
         movementBehaviour.SetGroundedCondition(isGrounded);
     }
 
-    public void ResetPosition(Vector3 startPos)
+    private void TurnOffCollider()
+    {
+        capsuleCollider.enabled = false;
+    }
+
+    private void TurnOnCollider()
+    {
+        capsuleCollider.enabled = true;
+    }
+
+    private void ResetPosition(Vector3 startPos)
     {
         rigidBody.position = startPos;
+    }
+
+    public bool ResetPlayer(Vector3 startPos)
+    {
+        TurnOnCollider();
+
+        if (SubtractLife())
+        {
+            ResetPosition(startPos);
+            return true;
+        }
+        else
+        {
+            return false;
+        }       
     }
 
     public void LoadJumpCharge()
@@ -105,14 +140,30 @@ public class PlayerController : MonoBehaviour
         return isGrounded;
     }
 
-    public void SubtractLife()
+    public bool SubtractLife()
     {
-        availableLifes--;
+        if (!isTutorial)
+        {
+            availableLifes--;
+        } 
 
         if (availableLifes <= 0)
         {
-            //EventManager.Instance.TriggerGameOver();
+            if (isGrounded)
+            {
+
+            }
+            else
+            {
+                EventManager.Instance.TriggerPlayerLost();
+            }
+            
+            return false;
         }
+        else
+        {
+            return true;
+        }  
     }
 
     public void AddLife()
@@ -123,6 +174,11 @@ public class PlayerController : MonoBehaviour
     public void AnimationFinished()
     {
         EventManager.Instance.TriggerAnimationFinished();
+    }
+
+    public void SetTutorial(bool isTutorial)
+    {
+        this.isTutorial = isTutorial;
     }
 
     public Vector3 GetVelocity()
