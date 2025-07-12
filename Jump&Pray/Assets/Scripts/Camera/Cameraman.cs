@@ -31,10 +31,13 @@ public class Cameraman : MonoBehaviour
     private void OnEnable()
     {
         GameManager.Instance.RegisterCameraman(this);
+
+        EventManager.Instance.OnMenuLoaded += SetThirdPersonCamera;
     }
 
     private void OnDisable()
     {
+        EventManager.Instance.OnMenuLoaded -= SetThirdPersonCamera;
     }
 
     private void Start()
@@ -59,7 +62,6 @@ public class Cameraman : MonoBehaviour
         else if (cameraMode == CameraMode.Cinematic)
         {
             UpdateCinematicCamera();
-            Debug.Log("Cinematic Camera Update");
         }
     }
 
@@ -175,6 +177,11 @@ public class Cameraman : MonoBehaviour
     public void SetThirdPersonCamera()
     {
         cameraMode = CameraMode.ThirdPerson;
+    }
+
+    private void SetThirdPersonCamera(Vector3 v)
+    {
+        SetThirdPersonCamera();
     }
 
     public void SetCorridorCamera(Vector3 start, Vector3 end)

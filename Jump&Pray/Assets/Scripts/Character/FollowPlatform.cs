@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class FollowPlatform : MonoBehaviour
 {
@@ -14,12 +15,15 @@ public class FollowPlatform : MonoBehaviour
     private Quaternion currentRotation;
     private Quaternion lastRotation;
 
-    
     private Vector3 gizmoOrigin;
     private Vector3 gizmoDirection;
     private float gizmoRadius;
 
     private bool isGroundedGizmo;
+
+    private GameObject lastGroundObject = null;
+
+    private Dictionary<GameObject, Material> originalMaterials = new Dictionary<GameObject, Material>();
 
     void Start()
     {
@@ -30,14 +34,13 @@ public class FollowPlatform : MonoBehaviour
             Debug.LogError("PlayerController not found", this);
         }
 
-        playerCollider = gameObject.GetComponent<CapsuleCollider>();
+        playerCollider = GetComponent<CapsuleCollider>();
         GetObjectSize();
     }
 
     void Update()
     {
         UpdateGizmoOrigin();
-     
         CheckGround();
     }
 
@@ -45,7 +48,7 @@ public class FollowPlatform : MonoBehaviour
     {
         if (isGroundedGizmo)
         {
-            Gizmos.color = Color.cyan;
+            Gizmos.color = Color.yellow;
         }
         else
         {
@@ -66,11 +69,11 @@ public class FollowPlatform : MonoBehaviour
     {
         RaycastHit hit;
 
-        if (Physics.SphereCast(gizmoOrigin, gizmoRadius, gizmoDirection, out hit, gizmoLength))
+        if (Physics.SphereCast(gizmoOrigin, gizmoRadius, gizmoDirection, out hit, gizmoLength, ~0, QueryTriggerInteraction.Ignore))
         {
             GameObject groundedObject = hit.collider.gameObject;
 
-            if (groundedObject.tag != "Smasher")
+            if (!groundedObject.CompareTag("Smasher"))
             {
                 groundID = groundedObject.GetInstanceID();
                 groundPosition = groundedObject.transform.position;
@@ -78,20 +81,42 @@ public class FollowPlatform : MonoBehaviour
 
                 isGroundedGizmo = true;
 
+                if (lastGroundObject != null && lastGroundObject != groundedObject)
+                {
+                    RestoreMaterial(lastGroundObject);
+                }
+
+                Renderer renderer = groundedObject.GetComponent<Renderer>();
+                if (renderer != null)
+                {
+                    if (!originalMaterials.ContainsKey(groundedObject))
+                    {
+                        originalMaterials[groundedObject] = renderer.material;
+                        renderer.material = new Material(renderer.material);
+                    }
+
+                    renderer.material.color = Color.red;
+                }
+
+                lastGroundObject = groundedObject;
+
                 if (groundID == lastGroundID)
                 {
                     UpdateGroundMovement();
                     UpdateGroundRotation(groundedObject);
+                    Debug.Log("Player is grounded on the same platform: " + groundedObject.name);
                 }
 
                 StoreLastGroundData();
-            }        
+            }
         }
         else
         {
             isGroundedGizmo = false;
             ResetGroundState();
         }
+
+        Debug.DrawRay(gizmoOrigin, gizmoDirection * gizmoLength, Color.cyan);
     }
 
     private void UpdateGroundMovement()
@@ -122,10 +147,28 @@ public class FollowPlatform : MonoBehaviour
 
     private void ResetGroundState()
     {
+        if (lastGroundObject != null)
+        {
+            RestoreMaterial(lastGroundObject);
+            lastGroundObject = null;
+        }
+
         isGroundedGizmo = false;
         lastGroundID = -999;
         lastGroundPosition = Vector3.zero;
         lastRotation = Quaternion.identity;
+    }
+
+    private void RestoreMaterial(GameObject obj)
+    {
+        if (obj == null) return;
+
+        Renderer renderer = obj.GetComponent<Renderer>();
+        if (renderer != null && originalMaterials.ContainsKey(obj))
+        {
+            renderer.material = originalMaterials[obj];
+            originalMaterials.Remove(obj);
+        }
     }
 
     private void GetObjectSize()
@@ -134,12 +177,12 @@ public class FollowPlatform : MonoBehaviour
         {
             width = playerCollider.bounds.size.x;
             gizmoDirection = -transform.up;
-            gizmoRadius = width / 2;
+            gizmoRadius = width / 4;
             gizmoLength = (playerCollider.bounds.size.y - gizmoRadius) * 1.11f;
         }
         else
         {
-            Debug.LogError("El GameObject no tiene un BoxCollider.");
+            Debug.LogError("El GameObject no tiene un CapsuleCollider.");
         }
     }
 }

@@ -16,6 +16,7 @@ public class LevelEnd : MonoBehaviour
             {
                 levelConection.ChangeLevel();
                 nextLevelLoaded = true;
+                this.gameObject.SetActive(false);
             }
         }       
     }

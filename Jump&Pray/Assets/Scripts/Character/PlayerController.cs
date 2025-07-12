@@ -5,6 +5,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private MovementBehaviour movementBehaviour;
     [SerializeField] private JumpBehaviour jumpBehaviour;
     [SerializeField] private float groundCheckDistance = 0.1f;
+    [SerializeField] private float groundCheckRadius = 0.2f;
 
     private Rigidbody rigidBody;
     private CapsuleCollider capsuleCollider;
@@ -12,6 +13,7 @@ public class PlayerController : MonoBehaviour
     private bool isGrounded;
     private int availableLifes;
     private bool isTutorial;
+    private bool isFirstTime;
 
 
     private void OnEnable()
@@ -46,6 +48,7 @@ public class PlayerController : MonoBehaviour
         GameManager.Instance.RegisterPlayer(this);
 
         availableLifes = 1;
+        isFirstTime = true;
     }
 
     private void Update()
@@ -55,14 +58,26 @@ public class PlayerController : MonoBehaviour
 
     private void CheckGround()
     {
-        Vector3 origin = transform.position;
-        float distance = groundCheckDistance;
+        Vector3 origin = transform.position + Vector3.up * 0.1f;
+        float totalDistance = groundCheckDistance + 0.1f;
 
-        bool hit = Physics.Raycast(origin, Vector3.down, distance, ~0, QueryTriggerInteraction.Ignore);
+        RaycastHit hit;
 
-        Debug.DrawRay(origin, Vector3.down * distance, hit ? Color.green : Color.red);
+        bool isHit = Physics.SphereCast(
+            origin,
+            groundCheckRadius,
+            Vector3.down,
+            out hit,
+            totalDistance,
+            ~0,
+            QueryTriggerInteraction.Ignore
+        );
 
-        UpdateGroundedCondition(hit);
+        Debug.DrawRay(origin, Vector3.down * totalDistance, isHit ? Color.green : Color.red);
+        Debug.DrawLine(origin + Vector3.right * groundCheckRadius, origin + Vector3.down * totalDistance + Vector3.right * groundCheckRadius, Color.blue);
+        Debug.DrawLine(origin + Vector3.left * groundCheckRadius, origin + Vector3.down * totalDistance + Vector3.left * groundCheckRadius, Color.blue);
+
+        UpdateGroundedCondition(isHit);
     }
 
     private void UpdateGroundedCondition(bool hit)
@@ -188,5 +203,15 @@ public class PlayerController : MonoBehaviour
     public Transform GetTransform()
     {
         return transform;
+    }
+
+    public bool IsFirstTime()
+    {
+        return isFirstTime;
+    }
+
+    public void SetFirstTime(bool firstTime)
+    {
+        isFirstTime = firstTime;
     }
 }

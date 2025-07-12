@@ -3,11 +3,22 @@ using UnityEngine;
 public class MenuManager : MonoBehaviour
 {
     [SerializeField] private Transform menuStartPosition;
-
+    [SerializeField] private Transform menuRestartPosition;
+    [SerializeField] private CinematicFall cinematicFall;
 
     void Start()
     {
-        EventManager.Instance.TriggerMenuLoaded(menuStartPosition.position);
+        if (GameManager.Instance.GetPlayerController().IsFirstTime())
+        {
+            GameManager.Instance.GetPlayerController().SetFirstTime(false);
+            EventManager.Instance.TriggerMenuLoaded(menuStartPosition.position);
+        }
+        else
+        {
+            EventManager.Instance.TriggerMenuLoaded(menuRestartPosition.position);
+            cinematicFall.StartCinematicFall();
+        }
+        
     }
 
     public void LoadGame()

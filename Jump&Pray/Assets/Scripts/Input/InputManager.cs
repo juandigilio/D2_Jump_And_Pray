@@ -10,6 +10,7 @@ public class InputManager : MonoBehaviour
 
     [SerializeField] private string rotateCameraAction = "MoveCamera";
     [SerializeField] private string moveAction = "Move";
+    //[SerializeField] private string moveCaneraAction = "MoveCameraGamepad";
     [SerializeField] private string jumpAction = "Jump";
     [SerializeField] private string rollAction = "Roll";
 
@@ -18,7 +19,6 @@ public class InputManager : MonoBehaviour
 
     [SerializeField] private string nextLevelAction = "NextLevel";
     //[SerializeField] private string godModeAction = "GodMode";
-    //[SerializeField] private string superSpeedAction = "SuperSpeed";
 
     [SerializeField] private string inGameActionMap = "InGame";
     [SerializeField] private string menuActionMap = "Menu";
@@ -28,6 +28,7 @@ public class InputManager : MonoBehaviour
     private Cameraman cameraman;
     private OptionsManager optionsManager;
     private CheatsManager cheatsManager;
+    private Vector2 inputRotation;
 
     private void Awake()
     {
@@ -64,7 +65,9 @@ public class InputManager : MonoBehaviour
 
     private void Update()
     {
-        SetMouseCameraRotation();
+        //SetMouseCameraRotation();
+        //cameraman.UpdateInputRotation(inputRotation);
+        UpdateCameraRotation();
     }
 
     private void FixedUpdate()
@@ -74,19 +77,41 @@ public class InputManager : MonoBehaviour
 
     private void SetGamepadCameraRotation(InputAction.CallbackContext callbackContext)
     {
-        if (callbackContext.started || callbackContext.performed)
+        if (callbackContext.started)
         {
-            cameraman.UpdateInputRotation(callbackContext.ReadValue<Vector2>() * PlayerConfig.gamepadSensitivity);
+            inputRotation = callbackContext.ReadValue<Vector2>() * PlayerConfig.gamepadSensitivity;
+            //Debug.Log("MoveCamera callbackContext: " + callbackContext);
+            //cameraman.UpdateInputRotation(callbackContext.ReadValue<Vector2>() * PlayerConfig.gamepadSensitivity);
+        }
+        if (callbackContext.performed)
+        {
+            inputRotation = callbackContext.ReadValue<Vector2>() * PlayerConfig.gamepadSensitivity;
+            Debug.Log("MoveCamera callbackContext: " + callbackContext);
+            //cameraman.UpdateInputRotation(callbackContext.ReadValue<Vector2>() * PlayerConfig.gamepadSensitivity);
         }
         if (callbackContext.canceled)
         {
-            cameraman.UpdateInputRotation(Vector2.zero);
+            inputRotation = Vector2.zero;
+            //cameraman.UpdateInputRotation(Vector2.zero);
         }
     }
 
     private void SetMouseCameraRotation()
     {
         cameraman.UpdateInputRotation(Mouse.current.delta.ReadValue() * PlayerConfig.mouseSensitivity);
+    }
+
+    private void UpdateCameraRotation()
+    {
+        if (playerInput.currentControlScheme == "Keyboard")
+        {
+            SetMouseCameraRotation();
+            
+        }
+        else if (playerInput.currentControlScheme == "Gamepad")
+        {
+            cameraman.UpdateInputRotation(inputRotation);
+        }
     }
 
     private void Move(InputAction.CallbackContext callbackContext)

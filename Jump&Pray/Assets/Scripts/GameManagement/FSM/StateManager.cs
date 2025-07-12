@@ -26,6 +26,8 @@ public class StateManager : MonoBehaviour
 
         EventManager.Instance.OnShowOptionsMenu += SetPausedState;
         EventManager.Instance.OnHideOptionsMenu += SetGroundedState;
+
+        EventManager.Instance.OnMenuLoaded += SetGroundedState;
     }
 
     private void OnDisable()
@@ -38,6 +40,8 @@ public class StateManager : MonoBehaviour
 
         EventManager.Instance.OnShowOptionsMenu -= SetPausedState;
         EventManager.Instance.OnHideOptionsMenu -= SetGroundedState;
+
+        EventManager.Instance.OnMenuLoaded -= SetGroundedState;
     }
 
     private void Start()
@@ -57,6 +61,7 @@ public class StateManager : MonoBehaviour
     private void Update()
     {
         currentState.Update();
+        Debug.Log("Current State: " + currentState.GetType().Name);
     }
 
     private void FixedUpdate()
@@ -94,6 +99,11 @@ public class StateManager : MonoBehaviour
     private void SetGroundedState()
     {
         TransitionToState(groundedState);
+    }
+
+    private void SetGroundedState(Vector3 v)
+    {
+        SetGroundedState();
     }
 
     private void SetCinematicState(Vector3 cameraPosition, GameObject target)

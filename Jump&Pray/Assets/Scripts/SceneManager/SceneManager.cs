@@ -11,7 +11,6 @@ public class SceneManager
     private static CustomScene mainMenuScene;
     private static List<CustomScene> scenesPool = new List<CustomScene>();
     private static CustomScene winingScene;
-    private static CustomScene gameOverScene;
 
     private static int index = 0;
 
@@ -89,7 +88,6 @@ public class SceneManager
         }
 
         winingScene = win;
-        gameOverScene = gameOver;
     }
 
     public static void LoadNextSceneAsync()
@@ -140,12 +138,6 @@ public class SceneManager
     public static void LoadWiningScene()
     {
         _ = LoadSceneAsync(winingScene);
-    }
-
-    public static void LoadGameOverScene()
-    {
-        _ = UnloadAll();
-        _ = LoadSceneAsync(gameOverScene);
     }
 
     public static bool IsMainMenuSceneLoaded()

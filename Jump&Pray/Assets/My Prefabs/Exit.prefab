@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 739808574705735419}
   m_Layer: 0
   m_Name: Exit trigger
-  m_TagString: Untagged
+  m_TagString: VoidTarget
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -28,8 +28,8 @@ Transform:
   m_GameObject: {fileID: 887274895871440459}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.012213447, y: -0.804, z: 0.017}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -0.012213447, y: 1.023, z: -0.564}
+  m_LocalScale: {x: 1, y: 0.49956, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3305312788317647189}
@@ -124,7 +124,7 @@ GameObject:
   - component: {fileID: 1085333710878792184}
   m_Layer: 0
   m_Name: Next level target
-  m_TagString: Untagged
+  m_TagString: VoidTarget
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -232,7 +232,7 @@ GameObject:
   - component: {fileID: 5737795355593162938}
   m_Layer: 0
   m_Name: Activated target
-  m_TagString: Untagged
+  m_TagString: VoidTarget
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -340,7 +340,7 @@ GameObject:
   - component: {fileID: 7826074474293517889}
   m_Layer: 0
   m_Name: Camera position
-  m_TagString: Untagged
+  m_TagString: VoidTarget
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -482,6 +482,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02ecbfc439f7e3843a5971867ae8e981, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelManager: {fileID: 0}
   platform: {fileID: 3305312788317647189}
   activatedTarget: {fileID: 367857482928510170}
   nextLevelTarget: {fileID: 1125153561273092586}
@@ -490,6 +491,7 @@ MonoBehaviour:
   moeUpDuration: 3
   nextLevelDuration: 6
   animationPause: 1
+  isLastLevel: 0
 --- !u!1001 &7405718552725903336
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -500,6 +502,10 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 7195035819186706, guid: 2cfd87436f82f694cb1ed07e801a4415, type: 3}
       propertyPath: m_Name
+      value: Platform
+      objectReference: {fileID: 0}
+    - target: {fileID: 7195035819186706, guid: 2cfd87436f82f694cb1ed07e801a4415, type: 3}
+      propertyPath: m_TagString
       value: Platform
       objectReference: {fileID: 0}
     - target: {fileID: 5411270384614237885, guid: 2cfd87436f82f694cb1ed07e801a4415, type: 3}
