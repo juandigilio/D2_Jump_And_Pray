@@ -10,15 +10,12 @@ public class InputManager : MonoBehaviour
 
     [SerializeField] private string rotateCameraAction = "MoveCamera";
     [SerializeField] private string moveAction = "Move";
-    //[SerializeField] private string moveCaneraAction = "MoveCameraGamepad";
     [SerializeField] private string jumpAction = "Jump";
     [SerializeField] private string rollAction = "Roll";
 
     [SerializeField] private string pauseAction = "Pause";
-    //[SerializeField] private string quitAction = "Quit";
 
     [SerializeField] private string nextLevelAction = "NextLevel";
-    //[SerializeField] private string godModeAction = "GodMode";
 
     [SerializeField] private string inGameActionMap = "InGame";
     [SerializeField] private string menuActionMap = "Menu";
@@ -65,8 +62,6 @@ public class InputManager : MonoBehaviour
 
     private void Update()
     {
-        //SetMouseCameraRotation();
-        //cameraman.UpdateInputRotation(inputRotation);
         UpdateCameraRotation();
     }
 
