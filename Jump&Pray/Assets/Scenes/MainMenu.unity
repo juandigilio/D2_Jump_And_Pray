@@ -3467,7 +3467,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 16.56, y: 90, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 23.28, y: 4.04}
+  m_AnchoredPosition: {x: 24.6, y: 2.62}
   m_SizeDelta: {x: 20, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1316624082
@@ -3490,7 +3490,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Creado y programado por \nJuan Ignacio Digilio"
+  m_text: 'Created by
+
+    Juan Ignacio Digilio'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
   m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
