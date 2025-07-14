@@ -4,9 +4,9 @@ using UnityEngine;
 public class JumpBehaviour : MonoBehaviour
 {
     [SerializeField] private float jumpForce = 5f;
-
     [SerializeField] private float maxChargeTime = 1.0f;
     [SerializeField] private float minChargeTime = 0.05f;
+    [SerializeField] private string soundID = "Jump";
 
     private Rigidbody rigidBody;
 
@@ -15,7 +15,6 @@ public class JumpBehaviour : MonoBehaviour
     private bool isCharging = false;
     private float chargingStartTime;
     private float chargeTime;
-    private bool isRolling = false;
 
 
     private void Start()
@@ -48,14 +47,20 @@ public class JumpBehaviour : MonoBehaviour
     {
         if (!isJumping && isGrounded)
         {
-            EventManager.Instance.TriggerPlayerJump();
-
-            Vector3 boostedForce = Vector3.up * (jumpForce * chargeTime);
-
-            rigidBody.AddForce(boostedForce, ForceMode.Impulse);
-
             isJumping = true;
+
+            AddForces();
+
+            EventManager.Instance.TriggerPlayerJump();
+            GameManager.Instance.GetAudioManager().PlayCharacterFx(soundID);
         }
+    }
+
+    private void AddForces()
+    {
+        Vector3 boostedForce = Vector3.up * (jumpForce * chargeTime);
+
+        rigidBody.AddForce(boostedForce, ForceMode.Impulse);
     }
 
     public void StartCharge()
@@ -91,16 +96,6 @@ public class JumpBehaviour : MonoBehaviour
         this.isGrounded = isGrounded;
 
         if (isGrounded)
-        {
-            isJumping = false;
-        }
-    }
-
-    public void SetRollCondition(bool isRolling)
-    {
-        this.isRolling = isRolling;
-
-        if (isRolling)
         {
             isJumping = false;
         }

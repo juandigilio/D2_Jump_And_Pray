@@ -11,7 +11,9 @@ public class MovementBehaviour : MonoBehaviour
     [SerializeField] private float rollingMaxSpeed = 8f;
     [SerializeField] private float rotationSpeed = 9f;
     [SerializeField] private float decelerationSpeed = 8f;
+    [SerializeField] private string rollSoundID = "Roll";
 
+    private Rigidbody rigidBody;
     private Vector2 movementInput;
     private Vector3 movementDirection;
     private Vector2 horizontalVelocity;
@@ -19,8 +21,6 @@ public class MovementBehaviour : MonoBehaviour
     private Vector3 right;
     private bool isGrounded = true;
     private bool isRolling = false;
-
-    private Rigidbody rigidBody;
 
 
     private void OnEnable()
@@ -153,17 +153,23 @@ public class MovementBehaviour : MonoBehaviour
         isRolling = false;
     }
 
+    private void AddRollForces()
+    {
+        rigidBody.AddForce(movementDirection, ForceMode.Impulse);
+
+        NormalizeVelocity();
+    }
+
     public void Roll()
     {
         if (!isRolling && isGrounded)
         {
-            EventManager.Instance.TriggerPlayerRolled();
-
-            rigidBody.AddForce(movementDirection, ForceMode.Impulse);
-
-            NormalizeVelocity();
-
             isRolling = true;
+
+            AddRollForces();
+
+            EventManager.Instance.TriggerPlayerRolled();
+            GameManager.Instance.GetAudioManager().PlayCharacterFx(rollSoundID);
         }
     }
 

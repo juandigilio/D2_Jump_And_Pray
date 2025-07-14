@@ -81,22 +81,7 @@ public class FollowPlatform : MonoBehaviour
 
                 isGroundedGizmo = true;
 
-                if (lastGroundObject != null && lastGroundObject != groundedObject)
-                {
-                    RestoreMaterial(lastGroundObject);
-                }
-
-                Renderer renderer = groundedObject.GetComponent<Renderer>();
-                if (renderer != null)
-                {
-                    if (!originalMaterials.ContainsKey(groundedObject))
-                    {
-                        originalMaterials[groundedObject] = renderer.material;
-                        renderer.material = new Material(renderer.material);
-                    }
-
-                    renderer.material.color = Color.red;
-                }
+                //DebugCurrentGround(groundedObject);
 
                 lastGroundObject = groundedObject;
 
@@ -104,7 +89,6 @@ public class FollowPlatform : MonoBehaviour
                 {
                     UpdateGroundMovement();
                     UpdateGroundRotation(groundedObject);
-                    Debug.Log("Player is grounded on the same platform: " + groundedObject.name);
                 }
 
                 StoreLastGroundData();
@@ -143,6 +127,26 @@ public class FollowPlatform : MonoBehaviour
         lastGroundID = groundID;
         lastGroundPosition = groundPosition;
         lastRotation = currentRotation;
+    }
+
+    private void DebugCurrentGround(GameObject groundedObject)
+    {
+        if (lastGroundObject != null && lastGroundObject != groundedObject)
+        {
+            RestoreMaterial(lastGroundObject);
+        }
+
+        Renderer renderer = groundedObject.GetComponent<Renderer>();
+        if (renderer != null)
+        {
+            if (!originalMaterials.ContainsKey(groundedObject))
+            {
+                originalMaterials[groundedObject] = renderer.material;
+                renderer.material = new Material(renderer.material);
+            }
+
+            renderer.material.color = Color.red;
+        }
     }
 
     private void ResetGroundState()

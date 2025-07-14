@@ -6,6 +6,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private JumpBehaviour jumpBehaviour;
     [SerializeField] private float groundCheckDistance = 0.1f;
     [SerializeField] private float groundCheckRadius = 0.2f;
+    [SerializeField] private string landSoundID = "Land";
+    [SerializeField] private string wtfSoundID = "WhatTheFuck";
+    [SerializeField] private string hitSoundID = "Hit";
 
     private Rigidbody rigidBody;
     private CapsuleCollider capsuleCollider;
@@ -20,6 +23,7 @@ public class PlayerController : MonoBehaviour
     {
         EventManager.Instance.OnMenuLoaded += ResetPosition;
         EventManager.Instance.OnResetPlayer += TurnOffCollider;
+        EventManager.Instance.OnPlayerSmashed += PlayHittedSound;
     }
 
     private void OnDisable()
@@ -29,6 +33,7 @@ public class PlayerController : MonoBehaviour
 
         EventManager.Instance.OnMenuLoaded -= ResetPosition;
         EventManager.Instance.OnResetPlayer -= TurnOffCollider;
+        EventManager.Instance.OnPlayerSmashed -= PlayHittedSound;
     }
 
     private void Start()
@@ -87,6 +92,8 @@ public class PlayerController : MonoBehaviour
             if (!isGrounded)
             {
                 EventManager.Instance.TriggerPlayerLanded();
+                GameManager.Instance.GetAudioManager().PlayCharacterFx(landSoundID);
+                GameManager.Instance.GetAudioManager().PlayCharacterFx(wtfSoundID);
                 isGrounded = true;
             }
         }
@@ -112,6 +119,11 @@ public class PlayerController : MonoBehaviour
     private void ResetPosition(Vector3 startPos)
     {
         rigidBody.position = startPos;
+    }
+
+    private void PlayHittedSound()
+    {
+        GameManager.Instance.GetAudioManager().PlayCharacterFx(hitSoundID);
     }
 
     public bool ResetPlayer(Vector3 startPos)

@@ -7,9 +7,13 @@ public class DamageReaction : MonoBehaviour
     [SerializeField] private float knockbackUpward = 2f;
     [SerializeField] private float invulnerabilityTime = 1f;
     [SerializeField] private float blinkSpeed = 0.1f;
+    [SerializeField] private Color damageColor = Color.red;
+    [SerializeField] private float colorBlendIntensity = 0.7f;
 
     private Rigidbody rb;
     private bool isInvulnerable = false;
+    private Material[] originalMaterials;
+    private Color[] originalColors;
 
     private void Start()
     {
@@ -19,7 +23,24 @@ public class DamageReaction : MonoBehaviour
             Debug.LogError("Player missing Rigidbody!");
         }
 
+        StoreMaterials();
+
         EventManager.Instance.OnPlayerKicked += ReactToDamage;
+    }
+
+    private void StoreMaterials()
+    {
+        originalMaterials = new Material[renderersToBlink.Length];
+        originalColors = new Color[renderersToBlink.Length];
+
+        for (int i = 0; i < renderersToBlink.Length; i++)
+        {
+            if (renderersToBlink[i] != null)
+            {
+                originalMaterials[i] = renderersToBlink[i].material;
+                originalColors[i] = originalMaterials[i].color;
+            }
+        }
     }
 
     private void OnDestroy()
@@ -53,18 +74,33 @@ public class DamageReaction : MonoBehaviour
         {
             visible = !visible;
 
-            foreach (Renderer render in renderersToBlink)
+            for (int i = 0; i < renderersToBlink.Length; i++)
             {
-                render.enabled = visible;
+                if (renderersToBlink[i] != null)
+                {
+                    renderersToBlink[i].enabled = visible;
+                    
+                    if (visible)
+                    {
+                        float blendFactor = Mathf.Sin((timer / blinkSpeed) * Mathf.PI) * 0.5f + 0.5f;
+                        
+                        Color blendedColor = Color.Lerp(originalColors[i], damageColor, blendFactor * colorBlendIntensity);
+                        renderersToBlink[i].material.color = blendedColor;
+                    }
+                }
             }
 
             yield return new WaitForSeconds(blinkSpeed);
             timer += blinkSpeed;
         }
 
-        foreach (Renderer render in renderersToBlink)
+        for (int i = 0; i < renderersToBlink.Length; i++)
         {
-            render.enabled = true;
+            if (renderersToBlink[i] != null)
+            {
+                renderersToBlink[i].enabled = true;
+                renderersToBlink[i].material.color = originalColors[i];
+            }
         }
 
         isInvulnerable = false;
