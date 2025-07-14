@@ -6,7 +6,8 @@ public enum CameraMode
     ThirdPerson,
     FirstPerson,
     Corridor,
-    Cinematic
+    Cinematic,
+    Locked
 }
 
 public class Cameraman : MonoBehaviour
@@ -199,11 +200,25 @@ public class Cameraman : MonoBehaviour
         mainCamera.transform.LookAt(cinematicTarget.transform.position);
 
         cameraMode = CameraMode.Cinematic;
-        Debug.Log("Cinematic Camera Started");
     }
 
     public void SetCameraMode(CameraMode mode)
     {
         cameraMode = mode;
+    }
+
+    public void LockCamera(Vector3 cameraPosition, Vector3 target)
+    {
+        Debug.Log("Locking camera...");
+        mainCamera.transform.position = cameraPosition;
+        mainCamera.transform.LookAt(target);
+
+        cameraMode = CameraMode.Locked;
+    }
+
+    public void UnlockCamera()
+    {
+        Debug.Log("Unlocking camera...");
+        cameraMode = CameraMode.ThirdPerson;
     }
 }

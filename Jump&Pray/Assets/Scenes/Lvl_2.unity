@@ -2670,7 +2670,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 176339983}
-  moveSpeed: 4.5
+  moveSpeed: 5
   rotationSpeed: 360
   groundLayer:
     serializedVersion: 2
@@ -3235,6 +3235,8 @@ MonoBehaviour:
   target: {fileID: 1730131574}
   controlStrength: 3
   maxHorizontalSpeed: 1
+  landedSoundID: Land
+  wtfSoundID: WhatTheFuck
 --- !u!1001 &828259174
 PrefabInstance:
   m_ObjectHideFlags: 0

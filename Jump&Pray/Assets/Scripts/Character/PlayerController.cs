@@ -52,7 +52,7 @@ public class PlayerController : MonoBehaviour
 
         GameManager.Instance.RegisterPlayer(this);
 
-        availableLifes = 1;
+        availableLifes = 3;
         isFirstTime = true;
         isTutorial = false;
     }

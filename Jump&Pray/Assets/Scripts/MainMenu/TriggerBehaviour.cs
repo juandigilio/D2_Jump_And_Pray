@@ -3,43 +3,68 @@ using UnityEngine;
 
 public class TriggerBehaviour : MonoBehaviour
 {
-    public enum TriggerType { Play, Unload, Exit }
+    public enum TriggerType { Play, Instructions, Unload, Exit }
     public TriggerType type;
 
     [SerializeField] private MenuManager menuManager;
+    [SerializeField] private Transform cameraPositon;
+    [SerializeField] private Transform camerTarget;
 
+    private Cameraman cameraman;
 
     private bool fitstTime;
 
-    public void Awake()
+    private void Awake()
     {
         fitstTime = true;
     }
 
+    private void Start()
+    {
+        cameraman = GameManager.Instance.GetCameraman();
+    }
+
     public void OnTriggerEnter(Collider other)
     {
-        if (fitstTime)
+        if (other.CompareTag("Player"))
         {
-            fitstTime = false;
-
-            switch (type)
+            if (fitstTime)
             {
-                case TriggerType.Play:
+                fitstTime = false;
+
+                switch (type)
                 {
-                    menuManager.LoadGame();
-                    break;
-                }
-                case TriggerType.Unload:
-                {
-                    menuManager.Unload();
-                    break;
-                }
-                case TriggerType.Exit:
-                {
-                    menuManager.QuitGame();
-                    break;
+                    case TriggerType.Play:
+                    {
+                        menuManager.LoadGame();
+                        break;
+                    }
+                    case TriggerType.Instructions:
+                    {
+                        cameraman.LockCamera(cameraPositon.position, camerTarget.position);
+                        fitstTime = true;
+                        break;
+                    }
+                    case TriggerType.Unload:
+                    {
+                        menuManager.Unload();
+                        break;
+                    }
+                    case TriggerType.Exit:
+                    {
+                        menuManager.QuitGame();
+                        break;
+                    }
                 }
             }
-        } 
+        }       
+    }
+
+    public void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            cameraman.UnlockCamera();
+        }
     }
 }
