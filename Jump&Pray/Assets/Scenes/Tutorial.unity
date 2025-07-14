@@ -782,6 +782,7 @@ MonoBehaviour:
   cinematicFall: {fileID: 985505675}
   rollingCrusher: {fileID: 0}
   isTutorial: 1
+  levelID: tutorial
 --- !u!4 &391846013
 Transform:
   m_ObjectHideFlags: 0

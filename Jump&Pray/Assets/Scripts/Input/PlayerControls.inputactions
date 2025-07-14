@@ -273,7 +273,7 @@
                 {
                     "name": "binding",
                     "id": "6a3faa06-30fa-4b97-9da7-d2c0b3c6e588",
-                    "path": "<Gamepad>/buttonNorth",
+                    "path": "<Gamepad>/buttonWest",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Gamepad",

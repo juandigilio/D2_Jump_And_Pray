@@ -61,7 +61,6 @@ public class StateManager : MonoBehaviour
     private void Update()
     {
         currentState.Update();
-        Debug.Log("Current State: " + currentState.GetType().Name);
     }
 
     private void FixedUpdate()

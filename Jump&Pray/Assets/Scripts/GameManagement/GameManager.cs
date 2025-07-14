@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     private StateManager stateManager;
     private OptionsManager optionsManager;
     private CheatsManager cheatsManager;
+    private AudioManager audioManager;
 
     private void Awake()
     {
@@ -60,6 +61,11 @@ public class GameManager : MonoBehaviour
         this.cheatsManager = cheatsManager;
     }
 
+    public void RegisterAudioManager(AudioManager audioManager)
+    {
+        this.audioManager = audioManager;
+    }
+
     public Cameraman GetCameraman()
     {
         return cameraman;
@@ -93,5 +99,10 @@ public class GameManager : MonoBehaviour
     public CheatsManager GetCheatsManager()
     {
         return cheatsManager;
+    }
+
+    public AudioManager GetAudioManager()
+    {
+        return audioManager;
     }
 }

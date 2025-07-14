@@ -1252,7 +1252,9 @@ MonoBehaviour:
   startPoint: {fileID: 325748749}
   deathPoint: {fileID: 1462471451}
   cinematicFall: {fileID: 815332187}
+  rollingCrusher: {fileID: 0}
   isTutorial: 0
+  levelID: lvl_1
 --- !u!4 &815332186
 Transform:
   m_ObjectHideFlags: 0

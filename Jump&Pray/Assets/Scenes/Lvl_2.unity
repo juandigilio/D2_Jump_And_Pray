@@ -2670,7 +2670,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 176339983}
-  moveSpeed: 3
+  moveSpeed: 4.5
   rotationSpeed: 360
   groundLayer:
     serializedVersion: 2
@@ -3199,6 +3199,7 @@ MonoBehaviour:
   cinematicFall: {fileID: 815332187}
   rollingCrusher: {fileID: 727865143}
   isTutorial: 0
+  levelID: lvl_2
 --- !u!4 &815332186
 Transform:
   m_ObjectHideFlags: 0

@@ -5,6 +5,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private Transform menuStartPosition;
     [SerializeField] private Transform menuRestartPosition;
     [SerializeField] private CinematicFall cinematicFall;
+    [SerializeField] private string levelID;
 
     void Start()
     {
@@ -18,7 +19,8 @@ public class MenuManager : MonoBehaviour
             EventManager.Instance.TriggerMenuLoaded(menuRestartPosition.position);
             cinematicFall.StartCinematicFall();
         }
-        
+
+        GameManager.Instance.GetAudioManager().PlayLevelMusic(levelID);
     }
 
     public void LoadGame()

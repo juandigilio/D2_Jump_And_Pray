@@ -9,6 +9,8 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private CinematicFall cinematicFall;
     [SerializeField] private RollingCrusher rollingCrusher;
     [SerializeField] private bool isTutorial = false;
+    [SerializeField] private string levelID;
+
 
     private PlayerController playerController;
 
@@ -31,6 +33,14 @@ public class LevelManager : MonoBehaviour
 
         EventManager.Instance.OnPlayerLost += GoToGameOver;
         EventManager.Instance.OnResetGame += ResetGame;
+
+        GameManager.Instance.GetAudioManager().PlayLevelMusic(levelID);
+    }
+
+    private void OnDestroy()
+    {
+        EventManager.Instance.OnPlayerLost -= GoToGameOver;
+        EventManager.Instance.OnResetGame -= ResetGame;
     }
 
     private void FixedUpdate()
