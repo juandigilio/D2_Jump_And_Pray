@@ -16,6 +16,7 @@ public class InputManager : MonoBehaviour
     [SerializeField] private string pauseAction = "Pause";
 
     [SerializeField] private string nextLevelAction = "NextLevel";
+    [SerializeField] private string godModeAction = "GodMode";
 
     [SerializeField] private string inGameActionMap = "InGame";
     [SerializeField] private string menuActionMap = "Menu";
@@ -75,19 +76,15 @@ public class InputManager : MonoBehaviour
         if (callbackContext.started)
         {
             inputRotation = callbackContext.ReadValue<Vector2>() * PlayerConfig.gamepadSensitivity;
-            //Debug.Log("MoveCamera callbackContext: " + callbackContext);
-            //cameraman.UpdateInputRotation(callbackContext.ReadValue<Vector2>() * PlayerConfig.gamepadSensitivity);
         }
         if (callbackContext.performed)
         {
             inputRotation = callbackContext.ReadValue<Vector2>() * PlayerConfig.gamepadSensitivity;
             Debug.Log("MoveCamera callbackContext: " + callbackContext);
-            //cameraman.UpdateInputRotation(callbackContext.ReadValue<Vector2>() * PlayerConfig.gamepadSensitivity);
         }
         if (callbackContext.canceled)
         {
             inputRotation = Vector2.zero;
-            //cameraman.UpdateInputRotation(Vector2.zero);
         }
     }
 
@@ -216,6 +213,14 @@ public class InputManager : MonoBehaviour
         }       
     }
 
+    private void GodMode(InputAction.CallbackContext callbackContext)
+    {
+        if (callbackContext.started)
+        {
+            cheatsManager.ToggleGodMode();
+        }
+    }
+
     private void LoadActions()
     {
         playerInput.ActivateInput();
@@ -241,7 +246,7 @@ public class InputManager : MonoBehaviour
 
             playerInput.currentActionMap.FindAction(nextLevelAction).started += GoToNextLevel;
 
-            //playerInput.currentActionMap.FindAction(quitAction).started += GameManager.Instance.QuitGame;
+            playerInput.currentActionMap.FindAction(godModeAction).started += GodMode;
 
             playerInput.SwitchCurrentActionMap(menuActionMap);
 

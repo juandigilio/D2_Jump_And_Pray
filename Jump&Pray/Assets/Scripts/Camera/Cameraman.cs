@@ -209,7 +209,6 @@ public class Cameraman : MonoBehaviour
 
     public void LockCamera(Vector3 cameraPosition, Vector3 target)
     {
-        Debug.Log("Locking camera...");
         mainCamera.transform.position = cameraPosition;
         mainCamera.transform.LookAt(target);
 
@@ -218,7 +217,6 @@ public class Cameraman : MonoBehaviour
 
     public void UnlockCamera()
     {
-        Debug.Log("Unlocking camera...");
         cameraMode = CameraMode.ThirdPerson;
     }
 }

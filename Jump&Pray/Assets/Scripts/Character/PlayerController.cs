@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private JumpBehaviour jumpBehaviour;
     [SerializeField] private float groundCheckDistance = 0.1f;
     [SerializeField] private float groundCheckRadius = 0.2f;
+    [SerializeField] private bool godMode = false;  
     [SerializeField] private string landSoundID = "Land";
     [SerializeField] private string wtfSoundID = "WhatTheFuck";
     [SerializeField] private string hitSoundID = "Hit";
@@ -17,6 +18,7 @@ public class PlayerController : MonoBehaviour
     private int availableLifes;
     private bool isTutorial;
     private bool isFirstTime = true;
+    private bool isFalling = false;
 
 
     private void OnEnable()
@@ -125,11 +127,16 @@ public class PlayerController : MonoBehaviour
         GameManager.Instance.GetAudioManager().PlayCharacterFx(hitSoundID);
     }
 
+    public void GodMode()
+    {
+        godMode = !godMode;
+    }
+
     public bool ResetPlayer(Vector3 startPos)
     {
         TurnOnCollider();
 
-        if (SubtractLife())
+        if (SubtractLife(true))
         {
             ResetPosition(startPos);
             return true;
@@ -166,11 +173,19 @@ public class PlayerController : MonoBehaviour
         return isGrounded;
     }
 
-    public bool SubtractLife()
+    public bool SubtractLife(bool isFalling)
     {
-        if (!isTutorial)
+        if (!godMode)
         {
-            availableLifes--;
+            if (!isTutorial)
+            {
+                availableLifes--;
+            }
+
+            if (!isFalling)
+            {
+                EventManager.Instance.TriggerPlayerKicked();
+            }           
         } 
 
         if (availableLifes <= 0)
@@ -184,6 +199,11 @@ public class PlayerController : MonoBehaviour
         {
             return true;
         }  
+    }
+
+    public bool SubtractLife()
+    {
+        return SubtractLife(false);
     }
 
     public void AddLife()

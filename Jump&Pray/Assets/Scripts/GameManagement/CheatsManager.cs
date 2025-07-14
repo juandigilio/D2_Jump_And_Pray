@@ -40,6 +40,14 @@ public class CheatsManager : MonoBehaviour
         }
     }
 
+    public void ToggleGodMode()
+    {
+        if (playerController != null)
+        {
+            playerController.GodMode();
+        }
+    }
+
     public void SetCurrentSceneName(string sceneName)
     {
         currentSceneName = sceneName;

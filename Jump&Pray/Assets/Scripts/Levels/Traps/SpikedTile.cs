@@ -21,10 +21,8 @@ public class SpikedTile : MonoBehaviour
         {
             if (Time.time - lastDamageTime >= damageCooldown)
             {
-                EventManager.Instance.TriggerPlayerKicked();
                 playerController.SubtractLife();
                 lastDamageTime = Time.time;
-                Debug.Log("Player Spiked Tile!");
             }
         }
     }
@@ -35,10 +33,8 @@ public class SpikedTile : MonoBehaviour
         {
             if (Time.time - lastDamageTime >= damageCooldown)
             {
-                EventManager.Instance.TriggerPlayerKicked();
                 playerController.SubtractLife();
                 lastDamageTime = Time.time;
-                Debug.Log("Player Spiked Tile!");
             }
         }
     }

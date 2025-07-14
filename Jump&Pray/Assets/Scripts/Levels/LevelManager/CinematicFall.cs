@@ -70,7 +70,6 @@ public class CinematicFall : MonoBehaviour
     {
         if (isCinematicFalling)
         {
-            Debug.Log("Cinematic fall started.");
             isCinematicFalling = false;
             GameManager.Instance.GetAudioManager().PlayCharacterFx(landedSoundID);
             GameManager.Instance.GetAudioManager().PlayCharacterFx(wtfSoundID);
