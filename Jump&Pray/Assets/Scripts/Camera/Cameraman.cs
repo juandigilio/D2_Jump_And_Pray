@@ -215,6 +215,11 @@ public class Cameraman : MonoBehaviour
         cameraMode = CameraMode.Locked;
     }
 
+    public bool IsCameraLocked()
+    {
+        return cameraMode == CameraMode.Locked;
+    }
+
     public void UnlockCamera()
     {
         cameraMode = CameraMode.ThirdPerson;

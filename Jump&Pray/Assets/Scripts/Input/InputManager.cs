@@ -201,7 +201,10 @@ public class InputManager : MonoBehaviour
     {
         if (callbackContext.started)
         {
-            optionsManager.ShowOptions();
+            if (!cameraman.IsCameraLocked())
+            {
+                optionsManager.ShowOptions();
+            }  
         }
     }
 
