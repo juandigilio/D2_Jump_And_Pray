@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e710f5afa6ac64a46be7b528abe904e0, type: 3}
+  m_Name: PlayerAudioLibrary
+  m_EditorClassIdentifier: 
+  audioClips:
+  - key: Jump
+    clip: {fileID: 8300000, guid: 0135cab547ee518478c111d0eb32bea9, type: 3}
+  - key: Falling
+    clip: {fileID: 8300000, guid: 1c634fabc82da624ea1358217306e366, type: 3}
+  - key: Land
+    clip: {fileID: 8300000, guid: 22eff2d93816d9f4d8c35642db6ccbe2, type: 3}
+  - key: WhatTheFuck
+    clip: {fileID: 8300000, guid: 301085aaca415254191472b50231c44a, type: 3}
+  - key: Roll
+    clip: {fileID: 8300000, guid: ca616253a6e54ec4b873d9ac6f4a56b1, type: 3}
+  - key: Hit
+    clip: {fileID: 8300000, guid: f9bec7c5ad93ebe408b8bec5304d6723, type: 3}
