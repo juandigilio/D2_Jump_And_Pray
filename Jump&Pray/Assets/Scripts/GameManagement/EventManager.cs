@@ -102,6 +102,7 @@ public class EventManager : MonoBehaviour
     public void TriggerPlayerSmashed()
     {
         OnPlayerSmashed?.Invoke();
+        OnAnimationStarted?.Invoke();
     }
 
     public void TriggerPlayerLanded()
