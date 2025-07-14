@@ -2835,6 +2835,7 @@ MonoBehaviour:
   jumpForce: 70
   maxChargeTime: 0.1
   minChargeTime: 0.05
+  soundID: Jump
 --- !u!114 &588450883
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2854,6 +2855,7 @@ MonoBehaviour:
   rollingMaxSpeed: 8
   rotationSpeed: 8
   decelerationSpeed: 12
+  rollSoundID: Roll
 --- !u!114 &588450884
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2870,6 +2872,9 @@ MonoBehaviour:
   jumpBehaviour: {fileID: 588450882}
   groundCheckDistance: 1.09
   groundCheckRadius: 0.2
+  landSoundID: Land
+  wtfSoundID: WhatTheFuck
+  hitSoundID: Hit
 --- !u!114 &588450885
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2901,6 +2906,9 @@ MonoBehaviour:
   knockbackUpward: 1
   invulnerabilityTime: 1
   blinkSpeed: 0.1
+  damageColor: {r: 1, g: 0, b: 0, a: 1}
+  colorBlendIntensity: 0.7
+  damageSoundID: WhatTheFuck
 --- !u!82 &588450887
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2920,9 +2928,9 @@ AudioSource:
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 88
   DopplerLevel: 1
-  MinDistance: 1
+  MinDistance: 0.28
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0
@@ -5208,7 +5216,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainSource: {fileID: 1321848738}
   playerSource: {fileID: 588450887}
-  audioLibrary: {fileID: 11400000, guid: 903ed987240396b4d9ace9f31dc3c6cb, type: 2}
+  mainAudioLibrary: {fileID: 11400000, guid: 903ed987240396b4d9ace9f31dc3c6cb, type: 2}
+  characterAudioLibrary: {fileID: 11400000, guid: 5ae4a53186e83da408cfe30d3909f454, type: 2}
+  fadeDuration: 0.7
 --- !u!4 &1078522213
 Transform:
   m_ObjectHideFlags: 0
@@ -6063,13 +6073,13 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.754
   m_Pitch: 1
   Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 216
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500

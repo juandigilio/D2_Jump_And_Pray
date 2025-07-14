@@ -9,6 +9,7 @@ public class DamageReaction : MonoBehaviour
     [SerializeField] private float blinkSpeed = 0.1f;
     [SerializeField] private Color damageColor = Color.red;
     [SerializeField] private float colorBlendIntensity = 0.7f;
+    [SerializeField] private string damageSoundID = "WhatTheFuck";
 
     private Rigidbody rb;
     private bool isInvulnerable = false;
@@ -28,6 +29,11 @@ public class DamageReaction : MonoBehaviour
         EventManager.Instance.OnPlayerKicked += ReactToDamage;
     }
 
+    private void OnDestroy()
+    {
+        EventManager.Instance.OnPlayerKicked -= ReactToDamage;
+    }
+
     private void StoreMaterials()
     {
         originalMaterials = new Material[renderersToBlink.Length];
@@ -41,11 +47,6 @@ public class DamageReaction : MonoBehaviour
                 originalColors[i] = originalMaterials[i].color;
             }
         }
-    }
-
-    private void OnDestroy()
-    {
-        EventManager.Instance.OnPlayerKicked -= ReactToDamage;
     }
 
     private void ReactToDamage()
@@ -63,6 +64,8 @@ public class DamageReaction : MonoBehaviour
         rb.AddForce(knockbackDir * knockbackForce, ForceMode.Impulse);
 
         StartCoroutine(InvulnerabilityCoroutine());
+
+        GameManager.Instance.GetAudioManager().PlayCharacterFx(damageSoundID);
     }
 
     private System.Collections.IEnumerator InvulnerabilityCoroutine()

@@ -45,8 +45,11 @@ public class LevelManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        CheckCoins();
-        CheckPlayerStatus();
+        if (isCurrentLevel)
+        {
+            CheckCoins();
+            CheckPlayerStatus();
+        }    
     }
 
     private void CheckCoins()

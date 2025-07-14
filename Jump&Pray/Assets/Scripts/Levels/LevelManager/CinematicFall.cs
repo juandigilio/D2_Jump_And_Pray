@@ -5,6 +5,8 @@ public class CinematicFall : MonoBehaviour
     [SerializeField] private Transform target;
     [SerializeField] private float controlStrength = 3f;
     [SerializeField] private float maxHorizontalSpeed = 1f;
+    [SerializeField] private string landedSoundID = "Land";
+    [SerializeField] private string wtfSoundID = "WhatTheFuck";
 
     private Rigidbody rb;
     private bool isCinematicFalling = false;
@@ -22,6 +24,7 @@ public class CinematicFall : MonoBehaviour
     private void Start()
     {
         firstTime = true;
+        isCinematicFalling = false;
     }
 
     private void FixedUpdate()
@@ -51,6 +54,7 @@ public class CinematicFall : MonoBehaviour
             {
                 firstTime = false;
                 StartCinematicFall();
+                GameManager.Instance.GetPlayerController().TurnOnCollider();
             }
         }
     }
@@ -64,6 +68,17 @@ public class CinematicFall : MonoBehaviour
 
     public void StopCinematicFall()
     {
-        isCinematicFalling = false;
+        if (isCinematicFalling)
+        {
+            Debug.Log("Cinematic fall started.");
+            isCinematicFalling = false;
+            GameManager.Instance.GetAudioManager().PlayCharacterFx(landedSoundID);
+            GameManager.Instance.GetAudioManager().PlayCharacterFx(wtfSoundID);
+        }    
+    }
+
+    public bool IsCinematicFalling()
+    {
+        return isCinematicFalling;
     }
 }

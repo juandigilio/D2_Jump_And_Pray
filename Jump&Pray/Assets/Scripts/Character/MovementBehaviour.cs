@@ -14,6 +14,7 @@ public class MovementBehaviour : MonoBehaviour
     [SerializeField] private string rollSoundID = "Roll";
 
     private Rigidbody rigidBody;
+    private JumpBehaviour jumpBehaviour;
     private Vector2 movementInput;
     private Vector3 movementDirection;
     private Vector2 horizontalVelocity;
@@ -36,10 +37,15 @@ public class MovementBehaviour : MonoBehaviour
     private void Start()
     {
         rigidBody = GetComponent<Rigidbody>();
-
         if (rigidBody == null)
         {
             Debug.LogError("Rigidbody not found on the GameObject.");
+        }
+
+        jumpBehaviour = GetComponent<JumpBehaviour>();
+        if (jumpBehaviour == null)
+        {
+            Debug.LogError("JumpBehaviour not found on the GameObject.");
         }
     }
 
@@ -151,6 +157,7 @@ public class MovementBehaviour : MonoBehaviour
     private void RollFinished()
     {
         isRolling = false;
+        jumpBehaviour.SetRollingCondition(isRolling);
     }
 
     private void AddRollForces()
@@ -165,6 +172,7 @@ public class MovementBehaviour : MonoBehaviour
         if (!isRolling && isGrounded)
         {
             isRolling = true;
+            jumpBehaviour.SetRollingCondition(isRolling);
 
             AddRollForces();
 
@@ -186,10 +194,5 @@ public class MovementBehaviour : MonoBehaviour
     public void SetGroundedCondition(bool isGrounded)
     {
         this.isGrounded = isGrounded;
-    }
-
-    public void SetRollCondition(bool isRolling)
-    {
-        this.isRolling = isRolling;
     }
 }

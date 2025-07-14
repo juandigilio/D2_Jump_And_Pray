@@ -13,11 +13,13 @@ public class MenuManager : MonoBehaviour
         {
             GameManager.Instance.GetPlayerController().SetFirstTime(false);
             EventManager.Instance.TriggerMenuLoaded(menuStartPosition.position);
+            Debug.Log("Menu loaded at start position: " + menuStartPosition.position);
         }
         else
         {
             EventManager.Instance.TriggerMenuLoaded(menuRestartPosition.position);
             cinematicFall.StartCinematicFall();
+            Debug.Log("Menu loaded at restart position: " + menuRestartPosition.position);
         }
 
         GameManager.Instance.GetAudioManager().PlayLevelMusic(levelID);

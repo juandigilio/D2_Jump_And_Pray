@@ -3223,16 +3223,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1316624080}
-  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: 0.10183102, y: 0.699736, z: -0.10183102, w: 0.699736}
   m_LocalPosition: {x: 0, y: 0, z: -0.99}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 205953666}
-  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+  m_LocalEulerAnglesHint: {x: 16.56, y: 90, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 18.95, y: 4.99}
+  m_AnchoredPosition: {x: 18.95, y: 4.04}
   m_SizeDelta: {x: 20, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1316624082
@@ -3866,7 +3866,7 @@ Transform:
   m_GameObject: {fileID: 1541527496}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 12.89, y: 146.8, z: 12.29}
+  m_LocalPosition: {x: 12.89, y: 76.2, z: 12.29}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3936,6 +3936,8 @@ MonoBehaviour:
   target: {fileID: 831363516}
   controlStrength: 3
   maxHorizontalSpeed: 1
+  landedSoundID: Land
+  wtfSoundID: WhatTheFuck
 --- !u!1001 &1662284434
 PrefabInstance:
   m_ObjectHideFlags: 0

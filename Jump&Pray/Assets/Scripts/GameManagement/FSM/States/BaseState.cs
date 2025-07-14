@@ -27,6 +27,7 @@ public abstract class BaseState
     public void DisablePlayerUpdate()
     {
         GameManager.Instance.GetPlayerInput().enabled = false;
+        cameraman.UpdateInputRotation(Vector2.zero);
     }
 
     public void SetCinematicCamera(Vector3 cameraPosition, GameObject target)

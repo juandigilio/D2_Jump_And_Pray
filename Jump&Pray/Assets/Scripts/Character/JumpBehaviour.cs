@@ -13,6 +13,7 @@ public class JumpBehaviour : MonoBehaviour
     private bool isJumping = false;
     private bool isGrounded = false;
     private bool isCharging = false;
+    private bool isRolling = false;
     private float chargingStartTime;
     private float chargeTime;
 
@@ -52,7 +53,11 @@ public class JumpBehaviour : MonoBehaviour
             AddForces();
 
             EventManager.Instance.TriggerPlayerJump();
-            GameManager.Instance.GetAudioManager().PlayCharacterFx(soundID);
+
+            if (!isRolling)
+            {
+                GameManager.Instance.GetAudioManager().PlayCharacterFx(soundID);
+            }
         }
     }
 
@@ -99,5 +104,10 @@ public class JumpBehaviour : MonoBehaviour
         {
             isJumping = false;
         }
+    }
+
+    public void SetRollingCondition(bool isRolling)
+    {
+        this.isRolling = isRolling;
     }
 }

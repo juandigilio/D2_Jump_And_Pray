@@ -24,6 +24,7 @@ public class LevelConection : MonoBehaviour
         if (isActivated && !hasMoved)
         {
             StartCoroutine(MoveRoutine(nextLevelTarget));
+            levelManager.TurnOffLevel();
         }       
     }
 

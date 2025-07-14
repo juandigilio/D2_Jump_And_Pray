@@ -15,8 +15,6 @@ MonoBehaviour:
   audioClips:
   - key: Jump
     clip: {fileID: 8300000, guid: 0135cab547ee518478c111d0eb32bea9, type: 3}
-  - key: Falling
-    clip: {fileID: 8300000, guid: 1c634fabc82da624ea1358217306e366, type: 3}
   - key: Land
     clip: {fileID: 8300000, guid: 22eff2d93816d9f4d8c35642db6ccbe2, type: 3}
   - key: WhatTheFuck

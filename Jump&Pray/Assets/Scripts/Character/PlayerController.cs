@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
     private bool isGrounded;
     private int availableLifes;
     private bool isTutorial;
-    private bool isFirstTime;
+    private bool isFirstTime = true;
 
 
     private void OnEnable()
@@ -54,6 +54,7 @@ public class PlayerController : MonoBehaviour
 
         availableLifes = 1;
         isFirstTime = true;
+        isTutorial = false;
     }
 
     private void Update()
@@ -92,8 +93,6 @@ public class PlayerController : MonoBehaviour
             if (!isGrounded)
             {
                 EventManager.Instance.TriggerPlayerLanded();
-                GameManager.Instance.GetAudioManager().PlayCharacterFx(landSoundID);
-                GameManager.Instance.GetAudioManager().PlayCharacterFx(wtfSoundID);
                 isGrounded = true;
             }
         }
@@ -111,7 +110,7 @@ public class PlayerController : MonoBehaviour
         capsuleCollider.enabled = false;
     }
 
-    private void TurnOnCollider()
+    public void TurnOnCollider()
     {
         capsuleCollider.enabled = true;
     }

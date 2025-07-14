@@ -6,9 +6,12 @@ public class CinematicTarget : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (cinematicFall.IsCinematicFalling())
         {
-            cinematicFall.StopCinematicFall();
-        }
+            if (other.CompareTag("Player"))
+            {
+                cinematicFall.StopCinematicFall();
+            }
+        } 
     }
 }
