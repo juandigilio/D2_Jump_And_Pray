@@ -2872,6 +2872,7 @@ MonoBehaviour:
   jumpBehaviour: {fileID: 588450882}
   groundCheckDistance: 1.09
   groundCheckRadius: 0.2
+  godMode: 0
   landSoundID: Land
   wtfSoundID: WhatTheFuck
   hitSoundID: Hit
@@ -4943,6 +4944,9 @@ MonoBehaviour:
   minVerticalAngle: -60
   maxVerticalAngle: 60
   corridorDistance: -10
+  victoryOrbitSpeed: 70
+  victoryOrbitDistance: 5
+  victoryOrbitHeight: 2
 --- !u!114 &1038504580
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6581,6 +6585,7 @@ MonoBehaviour:
   rollAction: Roll
   pauseAction: Pause
   nextLevelAction: NextLevel
+  godModeAction: GodMode
   inGameActionMap: InGame
   menuActionMap: Menu
 --- !u!114 &1419394354

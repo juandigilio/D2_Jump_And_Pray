@@ -7,7 +7,8 @@ public enum CameraMode
     FirstPerson,
     Corridor,
     Cinematic,
-    Locked
+    Locked,
+    Victory
 }
 
 public class Cameraman : MonoBehaviour
@@ -18,6 +19,9 @@ public class Cameraman : MonoBehaviour
     [SerializeField] private float minVerticalAngle = -60f;
     [SerializeField] private float maxVerticalAngle = 60f;
     [SerializeField] private float corridorDistance = 1;
+    [SerializeField] private float victoryOrbitSpeed = 20f;
+    [SerializeField] private float victoryOrbitDistance = 4f;
+    [SerializeField] private float victoryOrbitHeight = 2f;
 
     private Camera mainCamera;
     private Transform target;
@@ -27,6 +31,7 @@ public class Cameraman : MonoBehaviour
     private GameObject cinematicTarget;
     private Vector3 corridorStart;
     private Vector3 corridorEnd;
+    private float victoryOrbitAngle = 0f;
 
 
     private void OnEnable()
@@ -34,11 +39,13 @@ public class Cameraman : MonoBehaviour
         GameManager.Instance.RegisterCameraman(this);
 
         EventManager.Instance.OnMenuLoaded += SetThirdPersonCamera;
+        EventManager.Instance.OnPlayerWon += SetVictoryCamera;
     }
 
     private void OnDisable()
     {
         EventManager.Instance.OnMenuLoaded -= SetThirdPersonCamera;
+        EventManager.Instance.OnPlayerWon -= SetVictoryCamera;
     }
 
     private void Start()
@@ -63,6 +70,10 @@ public class Cameraman : MonoBehaviour
         else if (cameraMode == CameraMode.Cinematic)
         {
             UpdateCinematicCamera();
+        }
+        else if (cameraMode == CameraMode.Victory)
+        {
+            UpdateVictoryCamera();
         }
     }
 
@@ -101,6 +112,17 @@ public class Cameraman : MonoBehaviour
     private void UpdateCinematicCamera()
     {
         mainCamera.transform.LookAt(cinematicTarget.transform.position);
+    }
+
+    private void UpdateVictoryCamera()
+    {
+        victoryOrbitAngle += victoryOrbitSpeed * Time.deltaTime;
+        float rad = victoryOrbitAngle * Mathf.Deg2Rad;
+
+        Vector3 offset = new Vector3(Mathf.Sin(rad) * victoryOrbitDistance, victoryOrbitHeight, Mathf.Cos(rad) * victoryOrbitDistance);
+        mainCamera.transform.position = target.position + offset;
+
+        mainCamera.transform.LookAt(target.position + Vector3.up);
     }
 
     private Vector3 CalculateThirdPersonPosition()
@@ -200,6 +222,12 @@ public class Cameraman : MonoBehaviour
         mainCamera.transform.LookAt(cinematicTarget.transform.position);
 
         cameraMode = CameraMode.Cinematic;
+    }
+
+    public void SetVictoryCamera()
+    {
+        cameraMode = CameraMode.Victory;
+        victoryOrbitAngle = 0f;
     }
 
     public void SetCameraMode(CameraMode mode)
