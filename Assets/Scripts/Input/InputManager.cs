@@ -204,7 +204,11 @@ public class InputManager : MonoBehaviour
             if (!cameraman.IsCameraLocked())
             {
                 optionsManager.ShowOptions();
-            }  
+            }
+            else
+            {
+                cameraman.UnlockCamera();
+            }
         }
     }
 
