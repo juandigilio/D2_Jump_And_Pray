@@ -28,10 +28,27 @@ public class Cameraman : MonoBehaviour
     private CameraMode cameraMode;
     private Vector2 inputRotation;
     private Vector2 cameraRotation;
+
     private GameObject cinematicTarget;
+
     private Vector3 corridorStart;
     private Vector3 corridorEnd;
+
     private float victoryOrbitAngle = 0f;
+
+    private Vector3 lockTargetPosition;
+    private Vector3 lockLookAtTarget;
+    private Vector3 lockStartPosition;
+    private Quaternion lockStartRotation;
+    private bool isLockingCamera = false;
+    private float lockLerpTime = 1f;
+    private float lockLerpTimer = 0f;
+
+    private bool isUnlockingCamera = false;
+    private float unlockLerpTime = 1f;
+    private float unlockLerpTimer = 0f;
+    private Vector3 unlockStartPosition;
+    private Quaternion unlockStartRotation;
 
 
     private void OnEnable()
@@ -55,6 +72,11 @@ public class Cameraman : MonoBehaviour
 
     public void UpdateCamera()
     {
+        if (LockingCamera() || UnlockingCamera())
+        {
+            return;
+        }
+
         if (cameraMode == CameraMode.ThirdPerson)
         {
             UpdateThirdPersonCamera();
@@ -187,6 +209,56 @@ public class Cameraman : MonoBehaviour
         }
     }
 
+    private bool LockingCamera()
+    {
+        if (isLockingCamera)
+        {
+            lockLerpTimer += Time.deltaTime;
+            float t = Mathf.Clamp01(lockLerpTimer / lockLerpTime);
+
+            Vector3 newPos = Vector3.Lerp(lockStartPosition, lockTargetPosition, t);
+            Quaternion newRot = Quaternion.Slerp(lockStartRotation, Quaternion.LookRotation(lockLookAtTarget - newPos), t);
+
+            mainCamera.transform.position = newPos;
+            mainCamera.transform.rotation = newRot;
+
+            if (t >= 1f)
+            {
+                isLockingCamera = false;
+                cameraMode = CameraMode.Locked;
+            }
+            return true;
+        }
+        return false;
+    }
+
+    private bool UnlockingCamera()
+    {
+        if (isUnlockingCamera)
+        {
+            unlockLerpTimer += Time.deltaTime;
+            float t = Mathf.Clamp01(unlockLerpTimer / unlockLerpTime);
+
+            Vector3 targetPosition = CalculateThirdPersonPosition();
+            Quaternion targetRotation = Quaternion.LookRotation(target.position - targetPosition);
+
+            Vector3 newPos = Vector3.Lerp(unlockStartPosition, targetPosition, t);
+            Quaternion newRot = Quaternion.Slerp(unlockStartRotation, targetRotation, t);
+
+            mainCamera.transform.position = newPos;
+            mainCamera.transform.rotation = newRot;
+
+            if (t >= 1f)
+            {
+                isUnlockingCamera = false;
+                cameraMode = CameraMode.ThirdPerson;
+            }
+
+            return true;
+        }
+        return false;
+    }
+
     public void UpdateInputRotation(Vector2 input)
     {
         inputRotation = input;
@@ -202,7 +274,7 @@ public class Cameraman : MonoBehaviour
         cameraMode = CameraMode.ThirdPerson;
     }
 
-    private void SetThirdPersonCamera(Vector3 v)
+    public void SetThirdPersonCamera(Vector3 v)
     {
         SetThirdPersonCamera();
     }
@@ -237,19 +309,27 @@ public class Cameraman : MonoBehaviour
 
     public void LockCamera(Vector3 cameraPosition, Vector3 target)
     {
-        mainCamera.transform.position = cameraPosition;
-        mainCamera.transform.LookAt(target);
+        lockTargetPosition = cameraPosition;
+        lockLookAtTarget = target;
 
-        cameraMode = CameraMode.Locked;
+        lockLerpTimer = 0f;
+        isLockingCamera = true;
+
+        lockStartPosition = mainCamera.transform.position;
+        lockStartRotation = mainCamera.transform.rotation;
+    }
+
+    public void UnlockCamera()
+    {
+        isUnlockingCamera = true;
+        unlockLerpTimer = 0f;
+
+        unlockStartPosition = mainCamera.transform.position;
+        unlockStartRotation = mainCamera.transform.rotation;
     }
 
     public bool IsCameraLocked()
     {
         return cameraMode == CameraMode.Locked;
-    }
-
-    public void UnlockCamera()
-    {
-        cameraMode = CameraMode.ThirdPerson;
     }
 }
