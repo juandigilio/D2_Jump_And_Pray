@@ -17,6 +17,8 @@ public class AnimatorManager : MonoBehaviour
         EventManager.Instance.OnPlayerWon += AnimateWinningDance;
         EventManager.Instance.OnPlayerStandDied += AnimateStandDeath;
         EventManager.Instance.OnPlayerSmashed += AnimateSmash;
+        EventManager.Instance.OnPlayerStartedDriving += SetSittingMotion;
+        EventManager.Instance.OnPlayerStoppedDriving += SetStandingMotion;
     }
 
     private void OnDisable()
@@ -29,6 +31,8 @@ public class AnimatorManager : MonoBehaviour
         EventManager.Instance.OnPlayerWon -= AnimateWinningDance;
         EventManager.Instance.OnPlayerStandDied -= AnimateStandDeath;
         EventManager.Instance.OnPlayerSmashed -= AnimateSmash;
+        EventManager.Instance.OnPlayerStartedDriving -= SetSittingMotion;
+        EventManager.Instance.OnPlayerStoppedDriving -= SetStandingMotion;
     }
 
     private void Update()
@@ -83,8 +87,18 @@ public class AnimatorManager : MonoBehaviour
         animator.SetTrigger("standDied");
     }
 
-    public void AnimateSmash()
+    private void AnimateSmash()
     {
         animator.SetTrigger("wasSmashed");
+    }
+
+    private void SetSittingMotion()
+    {
+        animator.SetTrigger("startedDriving");
+    }
+
+    private void SetStandingMotion()
+    {
+        animator.SetTrigger("stoppedDriving");
     }
 }

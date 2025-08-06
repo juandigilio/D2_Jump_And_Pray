@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,17 +8,18 @@ public class LinearPlatformMovement : MonoBehaviour
     [SerializeField] private float speed = 2f;
     [SerializeField] private bool loopContinuously = false;
     [SerializeField] private bool waitAtEndUntilPlayerLeaves = true;
+    [SerializeField] private float startDelay = 0.5f;
 
     private int currentTargetIndex = 0;
     private bool movingForward = true;
     private bool isActive = false;
     private bool playerOnPlatform = false;
+    private bool isStarting = false;
 
     private void Start()
     {
         if (targets == null || targets.Count < 2)
         {
-            Debug.LogError("La plataforma necesita al menos 2 puntos en 'targets'.");
             enabled = false;
         }
 
@@ -79,16 +81,14 @@ public class LinearPlatformMovement : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (!other.CompareTag("Player")) return;
-        
-        Debug.Log("Player entered the platform trigger");
 
         playerOnPlatform = true;
 
-        if (!isActive && (!loopContinuously || currentTargetIndex == 0))
+        if (isActive || isStarting) return;
+
+        if (!loopContinuously || currentTargetIndex == 0)
         {
-            isActive = true;
-            movingForward = true;
-            currentTargetIndex = 1;
+            StartCoroutine(StartPlatformWithDelay());
         }
     }
 
@@ -102,5 +102,17 @@ public class LinearPlatformMovement : MonoBehaviour
         {
             isActive = false;
         }
+    }
+
+    private IEnumerator StartPlatformWithDelay()
+    {
+        isStarting = true;
+
+        yield return new WaitForSeconds(startDelay);
+
+        isActive = true;
+        movingForward = true;
+        isStarting = false;
+        currentTargetIndex = 1;
     }
 }

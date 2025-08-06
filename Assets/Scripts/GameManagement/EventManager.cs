@@ -35,6 +35,9 @@ public class EventManager : MonoBehaviour
     public event Action OnShowOptionsMenu;
     public event Action OnHideOptionsMenu;
 
+    public event Action OnPlayerStartedDriving;
+    public event Action OnPlayerStoppedDriving;
+
 
     private void Awake()
     {
@@ -154,5 +157,15 @@ public class EventManager : MonoBehaviour
     public void TriggerPlayerLost()
     {
         OnPlayerLost?.Invoke();
+    }
+
+    public void TriggerPlayerStartedDriving()
+    {
+        OnPlayerStartedDriving?.Invoke();
+    }
+
+    public void TriggerPlayerStoppedDriving()
+    {
+        OnPlayerStoppedDriving?.Invoke();
     }
 }

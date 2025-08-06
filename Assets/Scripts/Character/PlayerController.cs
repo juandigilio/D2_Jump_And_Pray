@@ -26,6 +26,8 @@ public class PlayerController : MonoBehaviour
         EventManager.Instance.OnMenuLoaded += ResetPosition;
         EventManager.Instance.OnResetPlayer += TurnOffCollider;
         EventManager.Instance.OnPlayerSmashed += PlayHittedSound;
+        EventManager.Instance.OnPlayerStartedDriving += LockDriving;
+        EventManager.Instance.OnPlayerStoppedDriving += UnlockDriving;
     }
 
     private void OnDisable()
@@ -36,6 +38,8 @@ public class PlayerController : MonoBehaviour
         EventManager.Instance.OnMenuLoaded -= ResetPosition;
         EventManager.Instance.OnResetPlayer -= TurnOffCollider;
         EventManager.Instance.OnPlayerSmashed -= PlayHittedSound;
+        EventManager.Instance.OnPlayerStartedDriving -= LockDriving;
+        EventManager.Instance.OnPlayerStoppedDriving -= UnlockDriving;
     }
 
     private void Start()
@@ -244,5 +248,19 @@ public class PlayerController : MonoBehaviour
     public void SetFirstTime(bool firstTime)
     {
         isFirstTime = firstTime;
+    }
+
+    private void LockDriving()
+    {
+        movementBehaviour.enabled = false;
+        jumpBehaviour.enabled = false;
+        rigidBody.isKinematic = true;
+    }
+
+    private void UnlockDriving()
+    {
+        movementBehaviour.enabled = true;
+        jumpBehaviour.enabled = true;
+        rigidBody.isKinematic = false;
     }
 }
