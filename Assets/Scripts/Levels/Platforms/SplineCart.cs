@@ -4,10 +4,11 @@ using UnityEngine;
 public class SplineCart : MonoBehaviour
 {
     [SerializeField] private SplineFollower follower;
+    [SerializeField] private Transform attachPoint;
     [SerializeField] private float targetSpeed = 5f;
     [SerializeField] private float acceleration = 2f;
 
-    private Vector3 playerOffset;
+    //private Vector3 playerOffset;
     private Vector3 startPos;
     private GameObject attachedPlayer;
     private bool isActivated = false;
@@ -49,7 +50,8 @@ public class SplineCart : MonoBehaviour
     private void AttachPlayer(GameObject player)
     {
         attachedPlayer = player;
-        playerOffset = player.transform.position - transform.position;
+        attachedPlayer.transform.position = attachPoint.position;
+        attachedPlayer.transform.rotation = attachPoint.rotation;
     }
 
     private void MoveCart()
@@ -62,8 +64,8 @@ public class SplineCart : MonoBehaviour
             currentSpeed = Mathf.MoveTowards(currentSpeed, targetSpeed, acceleration * Time.deltaTime);
             follower.followSpeed = currentSpeed;
 
-            attachedPlayer.transform.position = transform.position + playerOffset;
-            //attachedPlayer.transform.position = Vector3.Lerp(attachedPlayer.transform.position, transform.position + playerOffset, Time.deltaTime * 10f);
+            attachedPlayer.transform.position = attachPoint.position;
+            attachedPlayer.transform.rotation = attachPoint.rotation;
         }
     }
 
