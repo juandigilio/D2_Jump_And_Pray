@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody rigidBody;
     private CapsuleCollider capsuleCollider;
+    private RailSwitcher railSwitcher;
     private Vector2 inputDirection;
     private bool isGrounded;
     private int availableLifes;
@@ -172,6 +173,22 @@ public class PlayerController : MonoBehaviour
         movementBehaviour.Roll();
     }
 
+    public void SwitchLeft()
+    {
+        if (railSwitcher != null)
+        {
+            railSwitcher.SwitchLeft();
+        }
+    }
+
+    public void SwitchRight()
+    {
+        if (railSwitcher != null)
+        {
+            railSwitcher.SwitchRight();
+        }
+    }
+
     public bool IsGrounded()
     {
         return isGrounded;
@@ -262,5 +279,10 @@ public class PlayerController : MonoBehaviour
         movementBehaviour.enabled = true;
         jumpBehaviour.enabled = true;
         rigidBody.isKinematic = false;
+    }
+
+    public void SetRailSwitcher(RailSwitcher railSwitcher)
+    {
+        this.railSwitcher = railSwitcher;
     }
 }

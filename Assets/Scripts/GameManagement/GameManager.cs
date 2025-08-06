@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     private OptionsManager optionsManager;
     private CheatsManager cheatsManager;
     private AudioManager audioManager;
+    private RailSwitcher railSwitcher;
 
     private void Awake()
     {
@@ -66,6 +67,11 @@ public class GameManager : MonoBehaviour
         this.audioManager = audioManager;
     }
 
+    public void RegisterRailSwitcher(RailSwitcher railSwitcher)
+    {
+        this.railSwitcher = railSwitcher;
+    }
+
     public Cameraman GetCameraman()
     {
         return cameraman;
@@ -104,5 +110,10 @@ public class GameManager : MonoBehaviour
     public AudioManager GetAudioManager()
     {
         return audioManager;
+    }
+
+    public RailSwitcher GetRailSwitcher()
+    {
+        return railSwitcher;
     }
 }

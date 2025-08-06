@@ -13,12 +13,16 @@ public class InputManager : MonoBehaviour
     [SerializeField] private string jumpAction = "Jump";
     [SerializeField] private string rollAction = "Roll";
 
+    [SerializeField] private string switchLeftAction = "SwitchLeft";
+    [SerializeField] private string switchRightAction = "SwitchRight";
+
     [SerializeField] private string pauseAction = "Pause";
 
     [SerializeField] private string nextLevelAction = "NextLevel";
     [SerializeField] private string godModeAction = "GodMode";
 
     [SerializeField] private string inGameActionMap = "InGame";
+    [SerializeField] private string drivingActionMap = "Driving";
     [SerializeField] private string menuActionMap = "Menu";
 
     private PlayerInput playerInput;
@@ -52,7 +56,6 @@ public class InputManager : MonoBehaviour
         {
             Debug.LogError("CheatsManager not found in GameManager.");
         }
-
 
         LoadActions();
 
@@ -142,6 +145,22 @@ public class InputManager : MonoBehaviour
         }
     }
 
+    private void SwitchLeft(InputAction.CallbackContext callbackContext)
+    {
+        if (callbackContext.started)
+        {
+            playerController.SwitchLeft();
+        }
+    }
+
+    private void SwitchRight(InputAction.CallbackContext callbackContext)
+    {
+        if (callbackContext.started)
+        {
+            playerController.SwitchRight();
+        }
+    }
+
     private void CheckPlayerConfig()
     {
         if (PlayerConfig.mouseSensitivity != mouseSensitivity)
@@ -173,6 +192,14 @@ public class InputManager : MonoBehaviour
     public void SetMenuActionMap()
     {
         playerInput.SwitchCurrentActionMap(menuActionMap);
+    }
+
+    public void SetDrivingActionMap()
+    {
+        if (playerInput.inputIsActive)
+        {
+            playerInput.SwitchCurrentActionMap(drivingActionMap);
+        }
     }
 
     public void SetActionMap(ActionMapType type)
@@ -252,7 +279,16 @@ public class InputManager : MonoBehaviour
             playerInput.currentActionMap.FindAction(pauseAction).started += ShowOptions;
 
             playerInput.currentActionMap.FindAction(nextLevelAction).started += GoToNextLevel;
+            playerInput.currentActionMap.FindAction(godModeAction).started += GodMode;
 
+            playerInput.SwitchCurrentActionMap(drivingActionMap);
+
+            playerInput.currentActionMap.FindAction(switchLeftAction).started += SwitchLeft;
+            playerInput.currentActionMap.FindAction(switchRightAction).started += SwitchRight;
+
+            playerInput.currentActionMap.FindAction(pauseAction).started += ShowOptions;
+
+            playerInput.currentActionMap.FindAction(nextLevelAction).started += GoToNextLevel;
             playerInput.currentActionMap.FindAction(godModeAction).started += GodMode;
 
             playerInput.SwitchCurrentActionMap(menuActionMap);

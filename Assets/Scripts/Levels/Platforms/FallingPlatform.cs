@@ -15,7 +15,7 @@ public class FallingPlatform : MonoBehaviour
     private Rigidbody rb;
     private bool isTriggered = false;
 
-    void Start()
+    private void Start()
     {
         initialPosition = transform.position;
         initialRotation = transform.rotation;

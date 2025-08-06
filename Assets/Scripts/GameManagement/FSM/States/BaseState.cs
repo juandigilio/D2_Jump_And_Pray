@@ -44,4 +44,14 @@ public abstract class BaseState
     {
         GameManager.Instance.GetInputManager().SetInGameActionMap();
     }
+
+    public void SetDrivingInput()
+    {
+        GameManager.Instance.GetInputManager().SetDrivingActionMap();
+    }
+
+    public void SetDrivingCamera()
+    {
+        cameraman.SetDrivingCamera();
+    }
 }

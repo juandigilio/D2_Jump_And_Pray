@@ -7,6 +7,7 @@ public class GroundedState : BaseState
     public override void Enter()
     {
         cameraman.SetThirdPersonCamera();
+        SetInGameInput();
         EnablePlayerUpdate();
     }
 

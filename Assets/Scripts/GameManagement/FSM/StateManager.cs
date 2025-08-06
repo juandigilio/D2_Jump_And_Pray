@@ -9,6 +9,7 @@ public class StateManager : MonoBehaviour
     public BaseState cinematicState;
     public BaseState animationState;
     public BaseState corridorState;
+    public BaseState drivingState;
     public BaseState pausedState;
 
     private void Awake()
@@ -24,6 +25,9 @@ public class StateManager : MonoBehaviour
         EventManager.Instance.OnCinematicStarted += SetCinematicState;
         EventManager.Instance.OnCinematicFinished += SetGroundedState;
 
+        EventManager.Instance.OnPlayerStartedDriving += SetDrivingState;
+        EventManager.Instance.OnPlayerStoppedDriving += SetGroundedState;
+
         EventManager.Instance.OnShowOptionsMenu += SetPausedState;
         EventManager.Instance.OnHideOptionsMenu += SetGroundedState;
 
@@ -37,6 +41,9 @@ public class StateManager : MonoBehaviour
 
         EventManager.Instance.OnCinematicStarted -= SetCinematicState;
         EventManager.Instance.OnCinematicFinished -= SetGroundedState;
+
+        EventManager.Instance.OnPlayerStartedDriving -= SetDrivingState;
+        EventManager.Instance.OnPlayerStoppedDriving -= SetGroundedState;
 
         EventManager.Instance.OnShowOptionsMenu -= SetPausedState;
         EventManager.Instance.OnHideOptionsMenu -= SetGroundedState;
@@ -53,6 +60,7 @@ public class StateManager : MonoBehaviour
         cinematicState = new CinematicState(this, cameraman);
         animationState = new AnimationState(this, cameraman);
         corridorState = new CorridorState(this, cameraman);
+        drivingState = new DrivingState(this, cameraman);
         pausedState = new PausedState(this, cameraman);
 
         SetGroundedState();
@@ -118,6 +126,11 @@ public class StateManager : MonoBehaviour
     private void SetCorridorState()
     {
         TransitionToState(corridorState);
+    }
+
+    private void SetDrivingState()
+    {
+        TransitionToState(drivingState);
     }
 
     private void SetPausedState()

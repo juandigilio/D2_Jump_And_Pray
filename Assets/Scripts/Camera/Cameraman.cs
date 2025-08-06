@@ -7,6 +7,7 @@ public enum CameraMode
     FirstPerson,
     Corridor,
     Cinematic,
+    Driving,
     Locked,
     Victory
 }
@@ -97,6 +98,10 @@ public class Cameraman : MonoBehaviour
         {
             UpdateVictoryCamera();
         }
+        else if (cameraMode == CameraMode.Driving)
+        {
+            UpdateDrivingCamera();
+        }
     }
 
     private void UpdateThirdPersonCamera()
@@ -129,6 +134,13 @@ public class Cameraman : MonoBehaviour
 
         Quaternion targetRotation = Quaternion.LookRotation(player - mainCamera.transform.position);
         mainCamera.transform.rotation = Quaternion.Slerp(mainCamera.transform.rotation, targetRotation, Time.deltaTime * 5f);
+    }
+
+    private void UpdateDrivingCamera()
+    {
+        mainCamera.transform.position =  GameManager.Instance.GetRailSwitcher().GetCameraPosition();
+
+        mainCamera.transform.LookAt(target);
     }
 
     private void UpdateCinematicCamera()
@@ -284,6 +296,11 @@ public class Cameraman : MonoBehaviour
         corridorStart = start;
         corridorEnd = end;
         cameraMode = CameraMode.Corridor;
+    }
+
+    public void SetDrivingCamera()
+    {
+        cameraMode = CameraMode.Driving;
     }
 
     public void SetCinematicCamera(Vector3 cameraPosition, GameObject target)
